@@ -1,0 +1,28 @@
+{
+  "name": "wechat-public-account-push",
+  "version": "1.0.0",
+  "description": "微信公众号推送-给女朋友的浪漫",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangxinleo/wechat-public-account-push.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "wangxinleo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wangxinleo/wechat-public-account-push/issues"
+  },
+  "homepage": "https://github.com/wangxinleo/wechat-public-account-push#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dayjs": "^1.11.5"
+  }
+}
