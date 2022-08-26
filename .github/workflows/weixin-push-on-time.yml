@@ -4,10 +4,6 @@
 name: weixin-push-on-time
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
   workflow_dispatch:
   schedule:
     # 每天国际时间0:00 运行, 即北京时间 8:00 运行
