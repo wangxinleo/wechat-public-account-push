@@ -8,14 +8,11 @@ import dayjs from 'dayjs'
  * @returns accessToken
  */
  export const getAccessToken = async () => {
-    // appId
-    const appId = config.appId
-    // appSecret
-    const appSecret = config.appSecret
     // accessToken
-    let accessToken = null
+    const accessToken = config.accessToken
+
     
-    const postUrl = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appId}&secret=${appSecret}`
+    const postUrl = `https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${accessToken}`
 
     try {
         const res = await axios.get(postUrl).catch(err => err)
