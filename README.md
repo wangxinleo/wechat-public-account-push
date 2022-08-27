@@ -17,22 +17,30 @@ wechat-public-account-push
 **wechat-public-account-push 是一个用于微信公众号/微信测试号给用户执行微信推送的脚本，改编自目前小红书/知乎突然火起来的【给女朋友的七夕浪漫，微信自动推送消息】，用Nodejs实现而成。**
 
 目前可被推送模板获取的字段如下：
+> <span style="color:red">* 为新增的可配置参数<span>
 
 | 参数 | 详细 | 示例 |
 |-----|-----|-----|
 |date.DATA | YYYY-MM-DD 星期d | 2022-08-26 星期五 |
+|<span style="color:red">*<span> province.DATA | 省份 |  广东 |
 |city.DATA | 城市 |  惠州 |
 |weather.DATA | 天气 | 阵雨转多云 |
 |min_temperature.DATA | 最低气温 | 25℃ |
 |max_temperature.DATA | 最高气温 | 25℃ |
+|<span style="color:red">*<span> wind_direction.DATA | 风向 | 持续东南风 |
+|<span style="color:red">*<span> wind_scale.DATA | 风级 | <3级 |
 |love_day.DATA | 在一起N天 | 2674 |
 |marry_day.DATA | 结婚N天 | 965 |
-|birthday_message | 生日消息 | 距离 宝贝 的生日还有122天 |
+|birthday_message.DATA | 生日消息 | 距离 宝贝 的生日还有122天 |
 |note_en.DATA | 金山每日一句英文 | Nothing in this world that's worth having comes easy. |
 |note_ch.DATA | 金山每日一句中文 | 这世界上凡是值得拥有的东西，都不易获得。 |
 
 
 **Github 仓库地址：[wangxinleo/wechat-public-account-push](https://github.com/wangxinleo/wechat-public-account-push)**
+
+**Github 镜像仓库地址（国内备用）：[wangxinleo/wechat-public-account-push](https://hub.fastgit.xyz/wangxinleo/wechat-public-account-push)**
+
+
 
 **注意：**
 
@@ -46,13 +54,15 @@ wechat-public-account-push
 ![运行图示](img/run-img.jpg)
 
 ## 1.0.1 预计更新
+
+- [√] （已完成）优化仓库目录结构，主脚本代码更清爽了！
 - [×] 增加可被推送模板获取的字段:
 
     描述: 允许用户自定义推送字符串或预设一个数组可以随机选择一段预设的字符串进行推送
 
     示例: 亲爱的宝贝,今天也要开心哦!
 
-- [×] 增加更多天气预设的字段, 由用户自由选择想要展示的字段
+- [√] （已完成）增加更多天气预设的字段, 由用户自由选择想要展示的字段
 
 - [×] 尝试加入链接跳转, 丰富交互模式
 
