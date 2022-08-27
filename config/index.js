@@ -16,8 +16,8 @@ export const config = {
     city: "安庆",
     // 生日，修改名字为对应需要显示的名字，如果生日为农历， type为 r
     birthdays: [
-      {"name": "兰兰", "year": "2003", "date": "12-05", "type": 'r'},
-      {"name": "涛涛", "year": "2001", "date": "08-28", "type": 'r'},
+      {"name": "兰兰", "year": "2003", "date": "12-24", "type": 'r'},
+      {"name": "涛涛", "year": "2001", "date": "10-14", "type": 'r'},
     ],
     // 在一起的日子，格式同上
     loveDate: "2022-08-21",
