@@ -110,21 +110,26 @@ import dayjs from 'dayjs'
  export const getBirthdayMessage = () => {
     // 计算生日倒数
     const birthdayList = config.birthdays
-    let resMessage = ''
+    let resMessage = ""
+    console.log("生日列表：",birthdayList)
     birthdayList.forEach(birthday => {
-        let birthdayMessage = null
+        console.log("生日：",birthday)
+
+        let newbirthdayMessage = null
         // 获取距离下次生日的时间
-        const nextBir = dayjs(dayjs().format('YYYY') + '-' + birthday.date).diff(dayjs(), 'day')
-        
+        const nextBir = dayjs(dayjs().format('YYYY') + '-' + birthday.date).diff(dayjs(), "day")
+        // 判断生日还有多久
         if (nextBir === 0) {
-            birthdayMessage = `今天是 ${birthday.name} 生日哦，祝${birthday.name}生日快乐！`
+            newbirthdayMessage = `今天是 ${birthday.name} 生日哦，祝${birthday.name}生日快乐！`
         } else if (nextBir > 0 ) {
-            birthdayMessage = `距离 ${birthday.name} 的生日还有${nextBir}天`
+            newbirthdayMessage = `距离 ${birthday.name} 的生日还有${nextBir}天`
+        } else {
+            newbirthdayMessage = `${birthday.name} 的生日已经过去了 ${nextBir * -1} 天, 明年不要忘记哦`
         }
-        // 存储数据
-        if (birthdayMessage) {
-            resMessage += `${birthdayMessage} \n`
-        }
+        // 存储生日提示信息
+        console.log("生日详情：",newbirthdayMessage)
+
+        resMessage += `${newbirthdayMessage} \n`
     })
 
     return resMessage
