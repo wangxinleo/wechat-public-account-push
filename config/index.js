@@ -1,4 +1,5 @@
 export const config = {
+
     // 公众号配置
     // 公众号appId
     appId: "wx9ada1233fa97354b",
@@ -8,8 +9,14 @@ export const config = {
     templateId: "ByvcQZm9ZmSOC5W5bnX8Ka4rhUntg4x8z2S1CmEs5WI",
     // 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如["wx1", "wx2"]
     user: ["oWjzm5lYCS0qu9yXq5Q0xKSU7k_c","oWjzm5lj9W7o5QsYBqk4tEq7GMNc"],
+
      
-    // 信息配置
+    /**
+     * 信息配置
+     */
+
+    /** 天气相关 */
+
     // 所在省份
     province: "山东",
     // 所在城市
@@ -19,10 +26,22 @@ export const config = {
       {"name": "老婆", "year": "1993", "date": "12-27", "type": 'new'},
       {"name": "家公", "year": "1993", "date": "08-09", "type": 'new'},
     ],
+
+    /** 日期相关 */
+
     // 在一起的日子，格式同上
     loveDate: "2021-07-01",
+    LOVE_DATE: "2015-05-01",
     // 结婚纪念日
-    marryDate: "2020-01-04"
+    MARRY_DATE: "2020-01-04",
+
+
+    /** 好文节选 */
+
+    // 好文节选的内容类型
+    // 可以填写【动画，漫画，游戏，小说，原创，网络，其他】； 随机则填写 ""
+    LITERARY_PREFERENCE: ""
+
     }
 
 // {{date.DATA}}  
