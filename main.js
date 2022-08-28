@@ -33,7 +33,7 @@ const main = async () => {
     // TODO:获取毕业日期差
     const graduateDay = dayjs().diff(dayjs(config.GRADUATE_Date), 'day')
     // 获取结婚的日期差
-    const marryDay = dayjs().diff(dayjs(config.MARRY_DATE), 'day')
+    const marryDay = dayjs().diff(dayjs(config.MARRY_DATE), 'day') * -1
     // 获取生日信息
     const birthdayMessage = getBirthdayMessage()
 

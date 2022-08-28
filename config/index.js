@@ -8,9 +8,11 @@ export const config = {
     // 公众号APP_SECRET
     APP_SECRET: "c4a758f7458ba2a0905cdff7d228ebac",
     // 模板消息id
-    TEMPLATE_ID: "0E2lcoBaijVZvGIiR1yWtT9nAZ2NIX-0uNO3sIEU9eE",
+    TEMPLATE_ID: "UzGvye9sn4zmEK_irwvgQUgPM0GySPSzC70KhKcXoew",
     // 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如["wx1", "wx2"]
-    USERS: ["oi-Mf5gQn-Hqg76ydp3RV39-1FB4"],
+    USERS: ["oi-Mf5gQn-Hqg76ydp3RV39-1FB4",// lordon
+            "oi-Mf5hv4XAkssvXHqJu9oFz0RZE" // sharry liu
+            ],
      
     /**
      * 信息配置
@@ -29,8 +31,8 @@ export const config = {
     BIRTHDAYS: [
       {"name": "小兔子公历生日", "year": "1995", "date": "10-04", "type": 'new'},
       // {"name": "小兔子农历生日", "year": "1995", "date": "12-04", "type": 'r'},
-      // {"name": "猪蹄子公历生日", "year": "1997", "date": "02-02", "type": 'new'},
-      {"name": "猪蹄子农历生日", "year": "1996", "date": "12-25", "type": 'r'}
+      {"name": "猪蹄子公历生日", "year": "1997", "date": "02-02", "type": 'new'},
+      // {"name": "猪蹄子农历生日", "year": "1996", "date": "12-25", "type": 'r'}
     ],
 
     /** 日期相关 */
@@ -52,19 +54,19 @@ export const config = {
     }
 
 /*
-{{date.DATA}}  
-城市：{{city.DATA}}  
-天气：{{weather.DATA}}  
-最低气温: {{min_temperature.DATA}}  
-最高气温: {{max_temperature.DATA}}  
-今天是我们恋爱的第{{love_day.DATA}}天
-今天是我们结婚的第{{marry_day.DATA}}天
-恭喜你已经步入社会{{graduate_day.DATA}}天
+{{date.DATA}} 
+当前城市：{{city.DATA}} 
+今天天气：{{weather.DATA}} 
+今天最低气温: {{min_temperature.DATA}} 
+今天最高气温: {{max_temperature.DATA}} 
+今天是我们恋爱的第 {{love_day.DATA}} 天 
+我们还有 {{marry_day.DATA}} 天就结婚啦 
+恭喜冬冬步入社会 {{graduate_day.DATA}} 天 
 {{birthday_message.DATA}}
-
-{{note_en.DATA}}  
-{{note_ch.DATA}}
-
+{{note_en.DATA}} 
+{{note_ch.DATA}} 
+{{one_talk.DATA}} 
+{{talk_from.DATA}}
 
         { name: toLowerLine('minTemperature'), value: minTemperature, color: getColor() },
         { name: toLowerLine('maxTemperature'), value: maxTemperature, color: getColor() },
