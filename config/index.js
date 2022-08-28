@@ -2,10 +2,10 @@ export const config = {
     // 公众号配置
     // 公众号appId
     // appId: "wxe01fac26b8d34c0b",
-    appId: "wx1a1ad6c8238ced4d", // for test
+    appId: "wx1a1ad6c8238ced4d",
     // 公众号appSecret
     // appSecret: "65d7f90aff8cd8a79c2812432cf5a723",
-    appSecret: "c4a758f7458ba2a0905cdff7d228ebac", // for test
+    appSecret: "c4a758f7458ba2a0905cdff7d228ebac",
     // 模板消息id
     templateId: "5fM0r0zZG5jR292Ek1oTXdVgxtkdE0gsZ4aCrAtw4Is	",
     // 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如["wx1", "wx2"]
