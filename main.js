@@ -28,6 +28,8 @@ const main = async () => {
     const { content: noteCh, note: noteEn } = await getCIBA()
     // 获取在一起的日期差
     const loveDay = dayjs().diff(dayjs(config.loveDate), 'day')
+    // TODO:获取毕业日期差
+    const graduateDay = dayjs().diff(dayjs(config.graduateDate), 'day')
     // 获取结婚的日期差
     const marryDay = dayjs().diff(dayjs(config.marryDate), 'day')
     // 获取生日信息
@@ -46,6 +48,7 @@ const main = async () => {
         { name: toLowerLine('windDirection'), value: windDirection, color: getColor() },
         { name: toLowerLine('windScale'), value: windScale, color: getColor() },
         { name: toLowerLine('loveDay'), value: loveDay, color: getColor() },
+        { name: toLowerLine('graduateDay'), value: graduateDay, color: getColor() },
         { name: toLowerLine('marryDay'), value: marryDay, color: getColor() },
         { name: toLowerLine('birthdayMessage'), value: birthdayMessage, color: getColor() },
         { name: toLowerLine('noteEn'), value: noteEn, color: getColor() },
