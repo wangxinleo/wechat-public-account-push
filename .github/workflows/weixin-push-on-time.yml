@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   schedule:
     # TODO(lordon):每天国际时间0:00 运行, 即北京时间 8:00 运行
-    - cron: '10 * * * *'
+    - cron: '0/20 * * * *'
 
 jobs:
   build:
