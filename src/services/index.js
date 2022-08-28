@@ -1,17 +1,18 @@
 import { config } from '../../config/index.js'
-import { cityInfo } from '../../config/city-info.js'
+import { CITY_INFO, TYPE_LIST } from '../store/index.js'
 import axios from 'axios'
 import dayjs from 'dayjs'
+import { randomNum } from '../utils/index.js'
 
 /**
  * 获取 accessToken
  * @returns accessToken
  */
- export const getAccessToken = async () => {
-    // appId
-    const appId = config.appId
-    // appSecret
-    const appSecret = config.appSecret
+export const getAccessToken = async () => {
+    // APP_ID
+    const appId = config.APP_ID
+    // APP_SECRET
+    const appSecret = config.APP_SECRET
     // accessToken
     let accessToken = null
     
@@ -22,10 +23,10 @@ import dayjs from 'dayjs'
         if (res.status === 200 && res.data && res.data.access_token) {
             accessToken = res.data.access_token
         } else {
-            console.error('请求失败', res.data.errmsg)
+            console.error('获取 accessToken: 请求失败', res.data.errmsg)
         }
     } catch(e) {
-        console.error('try抛出错误', e)
+        console.error('获取 accessToken: ', e)
     }
 
     return accessToken
@@ -36,12 +37,12 @@ import dayjs from 'dayjs'
  * @param {*} province 省份
  * @param {*} city 城市
  */
- export const getWeather = async (province, city) => {
-    if (!cityInfo[province] || !cityInfo[province][city] || !cityInfo[province][city]["AREAID"]) {
+export const getWeather = async (province, city) => {
+    if (!CITY_INFO[province] || !CITY_INFO[province][city] || !CITY_INFO[province][city]["AREAID"]) {
         console.error('配置文件中找不到相应的省份或城市')
         return null
     }
-    const address = cityInfo[province][city]["AREAID"]
+    const address = CITY_INFO[province][city]["AREAID"]
 
     const url = `http://d1.weather.com.cn/dingzhi/${address}.html?_=${new Date()}` 
 
@@ -60,16 +61,16 @@ import dayjs from 'dayjs'
             if (weather.weatherinfo) {
                 return weather.weatherinfo
             } else {
-                throw new Error ('找不到weatherinfo属性, 获取失败')
+                throw new Error ('天气情况: 找不到weatherinfo属性, 获取失败')
             }
         } else {
             throw new Error(res)
         }
     } catch(e) {
         if (e instanceof SyntaxError ) {
-            console.error('序列化错误', e)
+            console.error('天气情况: 序列化错误', e)
         } else {
-            console.error(e)
+            console.error('天气情况: ', e)
         }
         return null
     }
@@ -79,7 +80,7 @@ import dayjs from 'dayjs'
  * 金山词霸每日一句
  * @returns 
  */
- export const getCIBA = async () => {
+export const getCIBA = async () => {
     const url = 'http://open.iciba.com/dsapi/'
     const res = await axios.get(url, {
         headers: {
@@ -91,27 +92,40 @@ import dayjs from 'dayjs'
     if (res.status === 200 && res) {
         return res.data
     }
-    console.error('发生错误', res)
+    console.error('金山词霸每日一句: 发生错误', res)
     return null
 }
 
 /**
- * 获取随机颜色
+ * 好文节选
+ * @param {*} type 
  * @returns 
  */
- export const getColor = () => {
-    return `#${Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0")}`
+export const getOneTalk = async (type) => {
+
+    const filterQuery = TYPE_LIST.filter(item => item.name === type);
+    const query = filterQuery.length ? filterQuery[0].type : TYPE_LIST[randomNum(0, 7)].type
+    const url = `https://v1.hitokoto.cn/?c=${query}`
+
+    const res = await axios.get(url).catch(err => err)
+
+    if (res.status === 200 && res) {
+        return res.data
+    }
+
+    console.error('好文节选: 发生错误', res)
+    return null
+
 }
 
 /**
  * 获取生日信息
  * @returns 
  */
- export const getBirthdayMessage = () => {
+export const getBirthdayMessage = () => {
     // 计算生日倒数
-    const birthdayList = config.birthdays
-    let resMessage = ""
-    console.log("生日列表：",birthdayList)
+    const birthdayList = config.BIRTHDAYS
+    let resMessage = ''
     birthdayList.forEach(birthday => {
         console.log("生日：",birthday)
 
@@ -141,7 +155,7 @@ import dayjs from 'dayjs'
  * @param {*} user 
  * @param {*} params 
  */
- export const sendMessage = async (accessToken, user, params) => {
+export const sendMessage = async (accessToken, user, params) => {
     const url = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${accessToken}`
 
     const wxTemplateData = {}
@@ -155,13 +169,13 @@ import dayjs from 'dayjs'
     // 组装数据
     const data = {
         "touser": user,
-        "template_id": config.templateId,
+        "template_id": config.TEMPLATE_ID,
         "url": "http://weixin.qq.com/download",
         "topcolor": "#FF0000",
         "data": wxTemplateData
     }
 
-    console.log('将要发送以下内容：', data)
+    console.log('将要发送以下内容: ', data)
 
     // 发送消息
     const res = await axios.post(url, data, {
