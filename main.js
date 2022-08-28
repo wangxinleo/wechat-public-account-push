@@ -1,16 +1,16 @@
-import { getAccessToken, getWeather, getCIBA, getBirthdayMessage, sendMessage, getColor } from './src/services/index.js'
+import { getAccessToken, getWeather, getCIBA, getOneTalk, getBirthdayMessage, sendMessage } from './src/services/index.js'
 import { config } from './config/index.js'
 import dayjs from 'dayjs'
-import { toLowerLine } from './src/utils/index.js'
+import { toLowerLine, getColor } from './src/utils/index.js'
 
 const main = async () => {
     // 获取accessToken
     const accessToken =  await getAccessToken()
     // 接收的用户
-    const users = config.user
+    const users = config.USERS
     // 省份和市
-    const province = config.province
-    const city = config.city
+    const province = config.PROVINCE
+    const city = config.CITY
     // 获取每日天气
     const {
         // 天气
@@ -26,10 +26,12 @@ const main = async () => {
     } = await getWeather(province, city)
     // 获取金山词霸每日一句
     const { content: noteEn, note: noteCh} = await getCIBA()
+    // 获取好文节选
+    const { hitokoto: oneTalk, from: talkFrom} = await getOneTalk(config.LITERARY_PREFERENCE)
     // 获取在一起的日期差
-    const loveDay = dayjs().diff(dayjs(config.loveDate), 'day')
+    const loveDay = dayjs().diff(dayjs(config.LOVE_DATE), 'day')
     // 获取结婚的日期差
-    const marryDay = dayjs().diff(dayjs(config.marryDate), 'day')
+    const marryDay = dayjs().diff(dayjs(config.MARRY_DATE), 'day')
     // 获取生日信息
     const birthdayMessage = getBirthdayMessage()
 
@@ -50,6 +52,8 @@ const main = async () => {
         { name: toLowerLine('birthdayMessage'), value: birthdayMessage, color: getColor() },
         { name: toLowerLine('noteEn'), value: noteEn, color: getColor() },
         { name: toLowerLine('noteCh'), value: noteCh, color: getColor() },
+        { name: toLowerLine('oneTalk'), value: oneTalk, color: getColor() },
+        { name: toLowerLine('talkFrom'), value: talkFrom, color: getColor() },
     ]
     // 公众号推送消息
     users.forEach(async user => {

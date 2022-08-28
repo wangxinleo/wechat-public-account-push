@@ -19,6 +19,8 @@ wechat-public-account-push
 目前可被推送模板获取的字段如下：
 > <span style="color:red">* 为新增的可配置参数<span>
 
+**天气类**
+
 | 参数 | 详细 | 示例 |
 |-----|-----|-----|
 |date.DATA | YYYY-MM-DD 星期d | 2022-08-26 星期五 |
@@ -29,12 +31,24 @@ wechat-public-account-push
 |max_temperature.DATA | 最高气温 | 25℃ |
 |<span style="color:red">*<span> wind_direction.DATA | 风向 | 持续东南风 |
 |<span style="color:red">*<span> wind_scale.DATA | 风级 | <3级 |
+
+
+**计时类**
+
+| 参数 | 详细 | 示例 |
+|-----|-----|-----|
 |love_day.DATA | 在一起N天 | 2674 |
 |marry_day.DATA | 结婚N天 | 965 |
 |birthday_message.DATA | 生日消息 | 距离 宝贝 的生日还有122天 |
-|note_en.DATA | 金山每日一句英文 | Nothing in this world that's worth having comes easy. |
-|note_ch.DATA | 金山每日一句中文 | 这世界上凡是值得拥有的东西，都不易获得。 |
 
+**每日N句**
+
+| 参数 | 详细 | 示例 |
+|-----|-----|-----|
+|note_en.DATA | 金山每日一句-英文 | Nothing in this world that's worth having comes easy. |
+|note_ch.DATA | 金山每日一句-中文 | 这世界上凡是值得拥有的东西，都不易获得。 |
+|<span style="color:red">*<span> one_talk.DATA | 好文节选-内容 | 愿你遍布祖国山河，觉得人生也值得 |
+|<span style="color:red">*<span> talk_from.DATA | 好文节选-来源 | 晓良 |
 
 **Github 仓库地址：[wangxinleo/wechat-public-account-push](https://github.com/wangxinleo/wechat-public-account-push)**
 
@@ -63,6 +77,8 @@ wechat-public-account-push
     示例: 亲爱的宝贝,今天也要开心哦!
 
 - [√] （已完成）增加更多天气预设的字段, 由用户自由选择想要展示的字段
+
+- [√] （已完成）加入了文艺青年专属每日一句！
 
 - [×] 尝试加入链接跳转, 丰富交互模式
 
@@ -175,6 +191,8 @@ on:
 
 [Issues（议题）](https://github.com/wangxinleo/wechat-public-account-push/issues)板块可以用来提交**Bug**和**建议**；
 
+[Discussions（讨论）](https://github.com/wangxinleo/wechat-public-account-push/discussions)板块可以用来**提问**和**讨论**。
+
 所以如果你有疑问，
 
 * 请先确认是否可以通过升级到最新版本解决
@@ -182,7 +200,24 @@ on:
 
 如果确认还未解决，可以自己提交 Issue，我会尽快确认并解决。
 
-## 4. 成为开源贡献成员
+## 4. 版本发布及更新
+
+关于新版本发布后，如何同步最新的内容到自己 Fork 的仓库
+
+目前仅支持 **删掉自己的仓库再重新Fork**
+
+**删掉后重新Fork会导致之前配置过的GitHub Secrets和提交的代码更改全部丢掉，只能重新部署。**
+
+以后会考虑加入actions 脚本每周自动更新fork仓库，但是目前精力不足，只能采用上述保守方案
+
+建议每个人先看看更新的内容是否是自己需要的再进行更新。
+
+也建议把右上角的 Star 点一下，这样有重要更新时就会有邮件推送了。
+
+
+## 5. 成为开源贡献成员
+
+### 5.1 贡献代码
 
 如果你有好的想法，欢迎向仓库贡献你的代码，贡献步骤：
 
@@ -194,7 +229,18 @@ on:
 
 我会尽快进行代码审核，测试成功后会合并入 main 主分支，提前感谢您的贡献。
 
-## 5. 其他
+### 5.2 贡献文档
+文档部分由于我个人精力有限（写文档比写代码累多了），所以有些地方写的很简略，甚至有遗漏和错别字，不能贡献代码的朋友也欢迎来一起维护文档，欢迎 PR 来纠正我，一样都算是对开源做贡献了。
+
+## 6. 致谢
+
+### 贡献/参与者
+
+@LordonCN Lordon
+
+感谢所有参与到开发/测试中的朋友们，是大家的帮助让 TA 越来越好！ (*´▽｀)ノノ
+
+## 7. 其他
 
 **这个仓库只能算是重复实现一下别人的想法, 主要是了解到了这个想法却一直找不到原作者的源码很是苦恼, 结果还遇到了要求加关注的情况**
 
