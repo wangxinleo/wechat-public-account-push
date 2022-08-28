@@ -29,9 +29,9 @@ export const config = {
 
     // 生日，修改名字为对应需要显示的名字, data 仅填月日即可, 请严格按照示例填写
     BIRTHDAYS: [
-      {"name": "小兔子公历生日", "year": "1995", "date": "10-04", "type": 'new'},
+      {"name": "小兔子", "year": "1995", "date": "10-13", "type": 'new'},
       // {"name": "小兔子农历生日", "year": "1995", "date": "12-04", "type": 'r'},
-      {"name": "猪蹄子公历生日", "year": "1997", "date": "02-02", "type": 'new'},
+      {"name": "猪蹄子", "year": "1997", "date": "02-02", "type": 'new'},
       // {"name": "猪蹄子农历生日", "year": "1996", "date": "12-25", "type": 'r'}
     ],
 
