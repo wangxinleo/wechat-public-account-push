@@ -1,16 +1,15 @@
 export const config = {
-    /**
-     * 公众号配置
-     */
 
-    // 公众号APP_ID
-    APP_ID: "",
-    // 公众号APP_SECRET
-    APP_SECRET: "",
+    // 公众号配置
+    // 公众号appId
+    appId: "wx9ada1233fa97354b",
+    // 公众号appSecret
+    appSecret: "43e28ef2489258b83b4f0e8bf003ec36",
     // 模板消息id
-    TEMPLATE_ID: "",
+    templateId: "SV04gwSFkOElYBOe05lKbsaY3T-UnoKI8IQC4n9EA2c",
     // 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如["wx1", "wx2"]
-    USERS: [""],
+    user: ["oWjzm5lYCS0qu9yXq5Q0xKSU7k_c","oWjzm5lj9W7o5QsYBqk4tEq7GMNc"],
+
      
     /**
      * 信息配置
@@ -19,21 +18,19 @@ export const config = {
     /** 天气相关 */
 
     // 所在省份
-    PROVINCE: "广东",
+    province: "山东",
     // 所在城市
-    CITY: "惠州",
-
-    /** 生日相关 */
-
-    // 生日，修改名字为对应需要显示的名字, data 仅填月日即可, 请严格按照示例填写
-    BIRTHDAYS: [
-      {"name": "老婆", "year": "1993", "date": "12-27"},
-      {"name": "家公", "year": "1993", "date": "08-09"},
+    city: "济南",
+    // 生日，修改名字为对应需要显示的名字，如果生日为农历， type为 r
+    birthdays: [
+      {"name": "老婆", "year": "1993", "date": "12-27", "type": 'new'},
+      {"name": "家公", "year": "1993", "date": "08-09", "type": 'new'},
     ],
 
     /** 日期相关 */
 
     // 在一起的日子，格式同上
+    loveDate: "2021-07-01",
     LOVE_DATE: "2015-05-01",
     // 结婚纪念日
     MARRY_DATE: "2020-01-04",
@@ -44,7 +41,6 @@ export const config = {
     // 好文节选的内容类型
     // 可以填写【动画，漫画，游戏，小说，原创，网络，其他】； 随机则填写 ""
     LITERARY_PREFERENCE: ""
-
 
     }
 
