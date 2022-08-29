@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 /**
  * 驼峰转下划线
  * @param {*} str 
@@ -32,3 +34,22 @@ export const getColor = () => {
 export const randomNum = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
+
+/**
+ * 对生日时间倒计时进行排序
+ * @param {*} list 
+ * @returns 
+ */
+export const sortBirthdayTime = (list) => {
+  list.forEach(item => {
+    const diffDay = dayjs(dayjs().format('YYYY') + '-' + item.date).diff(dayjs(), 'day')
+    if (diffDay >= 0) {
+      item['diffDay'] = diffDay
+    } else {
+      item['diffDay'] = dayjs(dayjs().add(1, 'year').format('YYYY') + '-' + item.date).diff(dayjs(), 'day')
+    }
+  })
+  return list.sort((a, b) =>
+    a.diffDay > b.diffDay ? 1 : -1
+  );
+};
