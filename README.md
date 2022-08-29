@@ -47,8 +47,8 @@ wechat-public-account-push
 |-----|-----|-----|
 |note_en.DATA | 金山每日一句-英文 | Nothing in this world that's worth having comes easy. |
 |note_ch.DATA | 金山每日一句-中文 | 这世界上凡是值得拥有的东西，都不易获得。 |
-|<span style="color:red">*<span> one_talk.DATA | 好文节选-内容 | 愿你遍布祖国山河，觉得人生也值得 |
-|<span style="color:red">*<span> talk_from.DATA | 好文节选-来源 | 晓良 |
+|<span style="color:red">*<span> one_talk.DATA | 每日一言-内容 | 愿你遍布祖国山河，觉得人生也值得 |
+|<span style="color:red">*<span> talk_from.DATA | 每日一言-来源 | 晓良 |
 
 **Github 仓库地址：[wangxinleo/wechat-public-account-push](https://github.com/wangxinleo/wechat-public-account-push)**
 
@@ -70,6 +70,7 @@ wechat-public-account-push
 ## 1.0.1 预计更新
 
 - [√] （已完成）优化仓库目录结构，主脚本代码更清爽了！
+- [√] （已完成）节日推送千呼万唤，现在可以根据配置就近推送前N个节日了，就算节日过了也不怕啦！
 - [×] 增加可被推送模板获取的字段:
 
     描述: 允许用户自定义推送字符串或预设一个数组可以随机选择一段预设的字符串进行推送
