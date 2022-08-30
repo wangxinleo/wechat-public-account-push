@@ -4,13 +4,13 @@ export const config = {
      */
 
     // 公众号APP_ID
-    APP_ID: "",
+    APP_ID: "wx9b020493de90e532",
     // 公众号APP_SECRET
-    APP_SECRET: "",
+    APP_SECRET: "57fd76bc1d65f048615891ac3dad53bb",
     // 模板消息id
-    TEMPLATE_ID: "",
+    TEMPLATE_ID: "5CLj1poK8ee62J4dOmg8JAh6r4ymxKribYfMkaRipUQ",
     // 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如["wx1", "wx2"]
-    USERS: [""],
+    USERS: ["oFQYU6VUbL-Qc39Mv8rzrmZbbCxI"],
      
     /**
      * 信息配置
