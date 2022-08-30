@@ -170,11 +170,13 @@ export const getBirthdayMessage = () => {
 
 /**
  * 发送消息模板
- * @param {*} accessToken 
+ * @param {*} templateId 
  * @param {*} user 
+ * @param {*} accessToken 
  * @param {*} params 
+ * @returns 
  */
-export const sendMessage = async (accessToken, user, params) => {
+export const sendMessage = async (templateId, user, accessToken, params) => {
   const url = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${accessToken}`
 
   const wxTemplateData = {}
@@ -187,8 +189,8 @@ export const sendMessage = async (accessToken, user, params) => {
 
   // 组装数据
   const data = {
-    "touser": user,
-    "template_id": config.TEMPLATE_ID,
+    "touser": user.id,
+    "template_id": templateId,
     "url": "http://weixin.qq.com/download",
     "topcolor": "#FF0000",
     "data": wxTemplateData
@@ -207,8 +209,75 @@ export const sendMessage = async (accessToken, user, params) => {
 
   if (res.data && res.data.errcode === 0) {
       console.log('推送消息成功')
-      return true
+      return {
+        name: user.name,
+        success: true
+      }
   }
   console.error('推送失败！', res.data)
-  return false
+  return {
+    name: user.name,
+    success: false
+  }
+}
+
+/**
+ * 推送消息, 进行成功失败统计
+ * @param {*} templateId 
+ * @param {*} users 
+ * @param {*} accessToken 
+ * @param {*} params 
+ * @returns 
+ */
+export const sendMessageReply = async (templateId, users, accessToken, params) => {
+  const allPormise = []
+  const needPostNum = users.length
+  let successPostNum = 0
+  let failPostNum = 0
+  const successPostIds = []
+  const failPostIds = []
+  users.forEach(async user => {
+    allPormise.push(sendMessage(
+      templateId,
+      user,
+      accessToken,
+      params
+    ))
+  })
+  const resList = await Promise.all(allPormise)
+  resList.forEach(item => {
+    if (item.success) {
+      successPostNum ++
+      successPostIds.push(item.name)
+    } else {
+      failPostNum ++
+      failPostIds.push(item.name)
+    }
+  })
+
+  return {
+    needPostNum,
+    successPostNum,
+    failPostNum,
+    successPostIds: successPostIds.length ? successPostIds.join(',') : '无',
+    failPostIds: failPostIds.length ? failPostIds.join(',') : '无'
+  }
+}
+
+/**
+ * 推送回执
+ * @param {*} templateId 
+ * @param {*} users 
+ * @param {*} accessToken 
+ * @param {*} params 
+ */
+export const callbackReply = async (templateId, users, accessToken, params) => {
+  users.forEach(async user => {
+    await sendMessage(
+      templateId,
+      user,
+      accessToken,
+      params
+    )
+  })
 }
