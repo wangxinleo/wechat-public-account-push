@@ -73,7 +73,7 @@ const main = async () => {
         { name: toLowerLine('talkFrom'), value: '', color: getColor() },
     ]
     // 公众号推送消息
-    users.forEach(async user => {
+    users.split(',').forEach(async user => {
         await sendMessage(
             accessToken,
             user,

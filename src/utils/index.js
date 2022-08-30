@@ -5,13 +5,13 @@ import dayjs from 'dayjs'
  * @param {*} str 
  * @returns 
  */
-export const toLowerLine =  (str) => {
-  var temp = str.replace(/[A-Z]/g, function (match) { 
+export const toLowerLine = (str) => {
+  var temp = str.replace(/[A-Z]/g, function (match) {
     return "_" + match.toLowerCase();
-    });
-    if(temp.slice(0,1) === '_'){ //如果首字母是大写，执行replace时会多一个_，这里需要去掉
-      temp = temp.slice(1);
-    }
+  });
+  if (temp.slice(0, 1) === '_') { //如果首字母是大写，执行replace时会多一个_，这里需要去掉
+    temp = temp.slice(1);
+  }
   return temp;
 };
 
@@ -35,6 +35,24 @@ export const randomNum = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+/**
+ * 对生日时间进行解析
+ * @param {*} str 
+ * @returns 
+ */
+export const parseBirthdayMessage = (str) => {
+  var birthdayMessageList = []
+  str.split(';').forEach(element => {
+    const [msgType, msgName, msgYear, msgDate] = element.split(',')
+    birthdayMessageList.push({
+      'type': msgType,
+      'name': msgName,
+      'year': msgYear,
+      'date': msgDate
+    })
+  })
+  return birthdayMessageList
+}
 /**
  * 对生日时间倒计时进行排序
  * @param {*} list 

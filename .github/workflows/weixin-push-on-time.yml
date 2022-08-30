@@ -28,3 +28,14 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run dev --if-present
+      env:
+          CI: true
+          APP_ID: ${{ secrets.APP_ID }}
+          APP_SECRET: ${{ secrets.APP_SECRET }}
+          TEMPLATE_ID: ${{ secrets.TEMPLATE_ID }}
+          USERS: ${{ secrets.USERS }}
+          PROVINCE: ${{ secrets.PROVINCE }}
+          CITY: ${{ secrets.CITY }}
+          FESTIVALS: ${{ secrets.FESTIVALS }}
+          LOVE_DATE: ${{ secrets.LOVE_DATE }}
+          MARRY_DATE: ${{ secrets.MARRY_DATE }}
