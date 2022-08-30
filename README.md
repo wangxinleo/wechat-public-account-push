@@ -55,8 +55,8 @@ wechat-public-account-push
 | 参数 | 详细 | 示例 |
 |-----|-----|-----|
 |<span style="color:red">*<span> need_post_num.DATA | 共需推送N人 | 4 |
-|<span style="color:red">*<span> success_post_num.DATA | 共需推送N人 | 1 |
-|<span style="color:red">*<span> fail_post_num.DATA | 共需推送N人 | 3 |
+|<span style="color:red">*<span> success_post_num.DATA | 成功推送N人 | 1 |
+|<span style="color:red">*<span> fail_post_num.DATA | 推送失败N人 | 3 |
 |<span style="color:red">*<span> success_post_ids.DATA | 推送成功的用户 | 老婆0 |
 |<span style="color:red">*<span> fail_post_ids.DATA | 推送失败的用户 | 老婆1,老婆2,老婆3 |
 
