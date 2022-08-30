@@ -20,9 +20,9 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
       with:
-          ref: ${{ env.DELAYED_JOB_CHECKOUT_REF }} # SHA that triggered your original job 
+          ref: 'DEV_xld'
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
