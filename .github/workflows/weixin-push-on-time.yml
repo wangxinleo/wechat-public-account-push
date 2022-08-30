@@ -8,10 +8,6 @@ on:
   schedule:
     # TODO(lordon):每天国际时间0:00 运行, 即北京时间 8:00 运行
     - cron: '1 * * * *'
-    
-  pull_request:
-    branches:
-      - 'DEV_xld'
       
 jobs:
   build:
@@ -25,6 +21,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+          ref: ${{ env.DELAYED_JOB_CHECKOUT_REF }} # SHA that triggered your original job 
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
