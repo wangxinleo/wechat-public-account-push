@@ -1,4 +1,6 @@
-import { getAccessToken, getWeather, getCIBA, getOneTalk, getBirthdayMessage, sendMessage } from './src/services/index.js'
+import { getAccessToken, getWeather,getCIBA,
+    getOneTalk, getBirthdayMessage, sendMessageReply,
+    callbackReply } from './src/services/index.js'
 import { config } from './config/index.js'
 import dayjs from 'dayjs'
 import { toLowerLine, getColor } from './src/utils/index.js'
@@ -55,14 +57,28 @@ const main = async () => {
         { name: toLowerLine('oneTalk'), value: oneTalk, color: getColor() },
         { name: toLowerLine('talkFrom'), value: talkFrom, color: getColor() },
     ]
+
     // 公众号推送消息
-    users.forEach(async user => {
-        await sendMessage(
-            accessToken,
-            user,
-            wxTemplateParams
-        )
-    })
+    const sendMessageTemplateId = config.TEMPLATE_ID
+    const {
+        needPostNum,
+        successPostNum,
+        failPostNum,
+        successPostIds,
+        failPostIds
+    } = await sendMessageReply(sendMessageTemplateId, users, accessToken, wxTemplateParams)
+
+    // 推送结果回执
+    const callbackTemplateParams = [
+        { name: toLowerLine('needPostNum'), value: needPostNum, color: getColor() },
+        { name: toLowerLine('successPostNum'), value: successPostNum, color: getColor() },
+        { name: toLowerLine('failPostNum'), value: failPostNum, color: getColor() },
+        { name: toLowerLine('successPostIds'), value: successPostIds, color: getColor() },
+        { name: toLowerLine('failPostIds'), value: failPostIds, color: getColor() },
+    ]
+
+    const callbackTemplateId = config.CALLBACK_TEMPLATE_ID
+    await callbackReply(callbackTemplateId, config.CALLBACK_USERS, accessToken, callbackTemplateParams)
 
 }
 

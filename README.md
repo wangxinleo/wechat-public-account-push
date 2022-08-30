@@ -50,6 +50,43 @@ wechat-public-account-push
 |<span style="color:red">*<span> one_talk.DATA | 每日一言-内容 | 愿你遍布祖国山河，觉得人生也值得 |
 |<span style="color:red">*<span> talk_from.DATA | 每日一言-来源 | 晓良 |
 
+**推送回执**
+
+| 参数 | 详细 | 示例 |
+|-----|-----|-----|
+|<span style="color:red">*<span> need_post_num.DATA | 共需推送N人 | 4 |
+|<span style="color:red">*<span> success_post_num.DATA | 共需推送N人 | 1 |
+|<span style="color:red">*<span> fail_post_num.DATA | 共需推送N人 | 3 |
+|<span style="color:red">*<span> success_post_ids.DATA | 推送成功的用户 | 老婆0 |
+|<span style="color:red">*<span> fail_post_ids.DATA | 推送失败的用户 | 老婆1,老婆2,老婆3 |
+
+目前可参考的推送模板如下：
+
+**亲爱的, 早上好**
+
+```
+{{date.DATA}}  
+城市：{{city.DATA}}  
+天气：{{weather.DATA}}  
+最低气温: {{min_temperature.DATA}}  
+最高气温: {{max_temperature.DATA}}  
+今天是我们恋爱的第{{love_day.DATA}}天
+今天是我们结婚的第{{marry_day.DATA}}天
+{{birthday_message.DATA}}
+
+{{note_en.DATA}}  
+{{note_ch.DATA}}
+```
+
+**推送提醒**
+
+```
+共推送 {{need_post_num.DATA}}  人
+成功: {{success_post_num.DATA}} | 失败: {{fail_post_num.DATA}}
+成功用户: {{success_post_ids.DATA}}
+失败用户: {{fail_post_ids.DATA}}
+```
+
 **Github 仓库地址：[wangxinleo/wechat-public-account-push](https://github.com/wangxinleo/wechat-public-account-push)**
 
 **Github 镜像仓库地址（国内备用）：[wangxinleo/wechat-public-account-push](https://hub.fastgit.xyz/wangxinleo/wechat-public-account-push)**
@@ -67,21 +104,15 @@ wechat-public-account-push
 
 ![运行图示](img/run-img.jpg)
 
+![运行图示](img/run-img-2.jpg)
+
 ## 1.0.1 预计更新
 
+- [√] （已完成）增加推送回执，不用去看控制台咯！
 - [√] （已完成）优化仓库目录结构，主脚本代码更清爽了！
 - [√] （已完成）节日推送千呼万唤，现在可以根据配置就近推送前N个节日了，就算节日过了也不怕啦！
-- [×] 增加可被推送模板获取的字段:
-
-    描述: 允许用户自定义推送字符串或预设一个数组可以随机选择一段预设的字符串进行推送
-
-    示例: 亲爱的宝贝,今天也要开心哦!
-
-- [√] （已完成）增加更多天气预设的字段, 由用户自由选择想要展示的字段
-
 - [√] （已完成）加入了文艺青年专属每日一句！
-
-- [×] 尝试加入链接跳转, 丰富交互模式
+- [√] （已完成）增加更多天气预设的字段, 由用户自由选择想要展示的字段
 
 ## 1. 如何使用(以测试号为例)
 
@@ -104,6 +135,8 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 新增测试模板, 点击 `新增测试模板` , 进行以下设置
 
 > 这里面的每一个{{***.DATA}}都对应相应的数据，需要就保留，不需要就删掉
+
+> **更多模板** 请查看上方更新内容
 
 模板标题: 自定义，例如: `亲爱的，早上好!`
 
