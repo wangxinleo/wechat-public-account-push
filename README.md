@@ -273,17 +273,24 @@ on:
 
 **删掉后重新Fork会导致之前配置过的GitHub Secrets和提交的代码更改全部丢掉，只能重新部署。**
 
-### 4.2 pull request 拉取最新代码
+### 4.2 pull request（这个方法太多人不会用了, 删除）
 
-> 使用此方法如果发生代码冲突，还是建议使用重新fork的方式进行更新。避免把自己搞懵。
+### 4.3 GitHub Fetch Upstream Branch
 
-- 在自己的项目仓库中选择 "pull requests"
+- 在自己的项目仓库中选择 "Sync fork"
 
-- 左边选择自己仓库中fork后的项目的master分支, 右边选取源项目的master分支
+- 点击 "Update branch" 完成
 
-- 点击 "Create pull request" 进入页面, 填写信息后提交
+![](img/pr-1.png)
 
-- 点击 "Merge pull request" 合并代码
+
+可能会遇到 **因为冲突需要你们删除你们已经更改的记录**
+
+如果只是纯粹更改配置，放心大胆的点删除, 然后更新最新代码仓库就好了。
+
+如果**你更改了源代码进行了部分定制**, 请注意备份代码段。
+
+### 4.4 actions 脚本自动
 
 **以后会考虑加入actions 脚本每周自动更新fork仓库，但是目前精力不足，只能采用上述保守方案**
 
