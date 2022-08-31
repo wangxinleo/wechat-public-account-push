@@ -50,10 +50,12 @@ wechat-public-account-push
 |<span style="color:red">*<span> one_talk.DATA | 每日一言-内容 | 愿你遍布祖国山河，觉得人生也值得 |
 |<span style="color:red">*<span> talk_from.DATA | 每日一言-来源 | 晓良 |
 
-**推送回执**
+**推送回执(特有, 仅在其他模板发送完成后才能获取)**
 
 | 参数 | 详细 | 示例 |
 |-----|-----|-----|
+|<span style="color:red">*<span> post_time_zone.DATA | 服务器时区 | Asia/Shanghai |
+|<span style="color:red">*<span> post_time.DATA | 服务器执行脚本时间 | 2022-08-31 19:41:57 |
 |<span style="color:red">*<span> need_post_num.DATA | 共需推送N人 | 4 |
 |<span style="color:red">*<span> success_post_num.DATA | 成功推送N人 | 1 |
 |<span style="color:red">*<span> fail_post_num.DATA | 推送失败N人 | 3 |
@@ -72,7 +74,10 @@ wechat-public-account-push
 最高气温: {{max_temperature.DATA}}  
 今天是我们恋爱的第{{love_day.DATA}}天
 今天是我们结婚的第{{marry_day.DATA}}天
+
 {{birthday_message.DATA}}
+
+{{one_talk.DATA}} -- {{talk_from.DATA}}
 
 {{note_en.DATA}}  
 {{note_ch.DATA}}
@@ -81,6 +86,8 @@ wechat-public-account-push
 **推送提醒**
 
 ```
+服务器信息：{{post_time_zone.DATA}} {{post_time.DATA}}
+
 共推送 {{need_post_num.DATA}}  人
 成功: {{success_post_num.DATA}} | 失败: {{fail_post_num.DATA}}
 成功用户: {{success_post_ids.DATA}}
@@ -89,7 +96,9 @@ wechat-public-account-push
 
 **Github 仓库地址：[wangxinleo/wechat-public-account-push](https://github.com/wangxinleo/wechat-public-account-push)**
 
-**Github 镜像仓库地址（国内备用）：[wangxinleo/wechat-public-account-push](https://hub.fastgit.xyz/wangxinleo/wechat-public-account-push)**
+**Github 镜像仓库地址（国内备用01）：[wangxinleo/wechat-public-account-push](https://hub.fastgit.xyz/wangxinleo/wechat-public-account-push)**
+
+**Github 镜像仓库地址（国内备用02）：[wangxinleo/wechat-public-account-push](https://hub.njuu.cf/wangxinleo/wechat-public-account-push)**
 
 
 
@@ -108,6 +117,7 @@ wechat-public-account-push
 
 ## 1.0.1 预计更新
 
+- [√] （已完成）修复github action默认使用utc时区，导致北京时间8点前的推送不显示为当天。现在会强制回显为PRC时区。
 - [√] （已完成）增加推送回执，不用去看控制台咯！
 - [√] （已完成）优化仓库目录结构，主脚本代码更清爽了！
 - [√] （已完成）节日推送千呼万唤，现在可以根据配置就近推送前N个节日了，就算节日过了也不怕啦！
@@ -209,7 +219,7 @@ wechat-public-account-push/.github/workflows/weixin-push-on-time.yml
 
 这里简单说明一下如何更改自动执行时间
 
-目前脚本默认执行时间为 **每天的 北京时间上午 8:00**
+目前脚本默认执行时间为 **每天的 北京时间上午 10:10**
 
 如果想要变更脚本定时任务执行时间,可以更改以下代码段
 
@@ -217,15 +227,34 @@ wechat-public-account-push/.github/workflows/weixin-push-on-time.yml
 on:
   workflow_dispatch:
   schedule:
-    # 每天国际时间4:00 运行, 即北京时间 12:00 运行
-    - cron: '0 4 * * *'
+    # 每天国际时间2:10 运行, 即北京时间 10:10 运行
+    - cron: '10 2 * * *'
 ```
+
+**推荐设置: `10 2 * * *` 或 `10 22 * * *` 等冷门时间，拥堵率低**
+
+**定时任务注意尽量避免设置在 `utc 0:00, XX:00` 这类高拥堵时段。**
+
+**定时任务注意尽量避免设置在 `utc 0:00, XX:00` 这类高拥堵时段。**
+
+**定时任务注意尽量避免设置在 `utc 0:00, XX:00` 这类高拥堵时段。**
+
+![](img/action-cron.png)
 
 ## 3. 常见问题
 
 [Issues（议题）](https://github.com/wangxinleo/wechat-public-account-push/issues)板块可以用来提交**Bug**和**建议**；
 
 [Discussions（讨论）](https://github.com/wangxinleo/wechat-public-account-push/discussions)板块可以用来**提问**和**讨论**。
+
+### 3.1 问题导航
+[关于获取accessToken:请求失败invalid appsecret rid xxxxx](https://github.com/wangxinleo/wechat-public-account-push/discussions/68)
+
+[关于推送失败，报40001- 4000X](https://github.com/wangxinleo/wechat-public-account-push/discussions/39)
+
+[关于目前仅支持测试号的问题](https://github.com/wangxinleo/wechat-public-account-push/discussions/23)
+
+[关于定时任务好像没有自动执行（?）](https://github.com/wangxinleo/wechat-public-account-push/discussions/20)
 
 所以如果你有疑问，
 
@@ -236,11 +265,11 @@ on:
 
 ## 4. 版本发布及更新
 
-### 4.1 重新fork
-
 关于新版本发布后，如何同步最新的内容到自己 Fork 的仓库
 
-目前仅支持 **删掉自己的仓库再重新Fork**
+目前最简单也最不需要想其他的方法就是 **删掉自己的仓库再重新Fork**
+
+### 4.1 重新fork
 
 **删掉后重新Fork会导致之前配置过的GitHub Secrets和提交的代码更改全部丢掉，只能重新部署。**
 
@@ -286,9 +315,15 @@ on:
 
 @LordonCN Lordon
 
+感谢那些默默支持我, 鼓励我继续更新这个小玩具的朋友。
+
 感谢所有参与到开发/测试中的朋友们，是大家的帮助让 TA 越来越好！ (*´▽｀)ノノ
 
 ## 7. 其他
+
+时区查询: [https://www.zeitverschiebung.net/cn/all-time-zones.html](https://www.zeitverschiebung.net/cn/all-time-zones.html)
+
+## 8. 叨叨两句
 
 **这个仓库只能算是重复实现一下别人的想法, 主要是了解到了这个想法却一直找不到原作者的源码很是苦恼, 结果还遇到了要求加关注的情况**
 

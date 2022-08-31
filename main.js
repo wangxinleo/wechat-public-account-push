@@ -1,8 +1,9 @@
+import dayjs from 'dayjs'
+import { selfDayjs, timeZone } from './src/utils/set-def-dayjs.js'
 import { getAccessToken, getWeather,getCIBA,
     getOneTalk, getBirthdayMessage, sendMessageReply,
     callbackReply } from './src/services/index.js'
 import { config } from './config/index.js'
-import dayjs from 'dayjs'
 import { toLowerLine, getColor } from './src/utils/index.js'
 
 const main = async () => {
@@ -31,9 +32,9 @@ const main = async () => {
     // 获取每日一言
     const { hitokoto: oneTalk, from: talkFrom} = await getOneTalk(config.LITERARY_PREFERENCE)
     // 获取在一起的日期差
-    const loveDay = dayjs().diff(dayjs(config.LOVE_DATE), 'day')
+    const loveDay = Math.ceil(dayjs().diff(dayjs(config.LOVE_DATE), 'day', true))
     // 获取结婚的日期差
-    const marryDay = dayjs().diff(dayjs(config.MARRY_DATE), 'day')
+    const marryDay = Math.ceil(dayjs().diff(dayjs(config.MARRY_DATE), 'day', true))
     // 获取生日信息
     const birthdayMessage = getBirthdayMessage()
 
@@ -41,7 +42,7 @@ const main = async () => {
     // 集成所需信息
     const week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     const wxTemplateParams = [
-        { name: toLowerLine('date'), value: `${dayjs().format('YYYY-MM-DD')} ${week_list[dayjs().format('d')]}`, color: getColor() },
+        { name: toLowerLine('date'), value: `${selfDayjs().format('YYYY-MM-DD')} ${week_list[selfDayjs().format('d')]}`, color: getColor() },
         { name: toLowerLine('province'), value: province, color: getColor() },
         { name: toLowerLine('city'), value: city, color: getColor() },
         { name: toLowerLine('weather'), value: weather, color: getColor() },
@@ -69,13 +70,17 @@ const main = async () => {
     } = await sendMessageReply(sendMessageTemplateId, users, accessToken, wxTemplateParams)
 
     // 推送结果回执
+    const postTimeZone = timeZone()
+    const postTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
     const callbackTemplateParams = [
+        { name: toLowerLine('postTimeZone'), value: postTimeZone, color: getColor() },
+        { name: toLowerLine('postTime'), value: postTime, color: getColor() },
         { name: toLowerLine('needPostNum'), value: needPostNum, color: getColor() },
         { name: toLowerLine('successPostNum'), value: successPostNum, color: getColor() },
         { name: toLowerLine('failPostNum'), value: failPostNum, color: getColor() },
         { name: toLowerLine('successPostIds'), value: successPostIds, color: getColor() },
         { name: toLowerLine('failPostIds'), value: failPostIds, color: getColor() },
-    ]
+    ].concat(wxTemplateParams)
 
     const callbackTemplateId = config.CALLBACK_TEMPLATE_ID
     await callbackReply(callbackTemplateId, config.CALLBACK_USERS, accessToken, callbackTemplateParams)
