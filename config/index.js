@@ -4,13 +4,13 @@ export const config = {
      */
 
     // 公众号APP_ID
-    APP_ID: "",
+    APP_ID: "wxac5b05d681a8759a",
 
     // 公众号APP_SECRET
-    APP_SECRET: "",
+    APP_SECRET: "934d03ac17d8ca2d3fb3fd1652220b38",
 
     // 模板消息id
-    TEMPLATE_ID: "xxxxxxxxxxxxx-y你懂的,填错狗头打烂VRMpu",
+    TEMPLATE_ID: "y7NrWUv-gYn7gbo3-fhsN8en5r_WLuvHx7M-auqacUQ",
 
     // 回调消息模板id, 用来看自己有没有发送成功的那个模板
     CALLBACK_TEMPLATE_ID: "xxxxxxxxxxxxx-y你懂的,填错狗头打烂VRMpu",
@@ -42,9 +42,9 @@ export const config = {
     /** 天气相关 */
 
     // 所在省份
-    PROVINCE: "广东",
+    PROVINCE: "江苏",
     // 所在城市
-    CITY: "惠州",
+    CITY: "南京",
 
     /** 重要节日相关 */
 
