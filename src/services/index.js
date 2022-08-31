@@ -44,7 +44,7 @@ export const getWeather = async (province, city) => {
   }
   const address = CITY_INFO[province][city]["AREAID"]
 
-  const url = `http://d1.weather.com.cn/dingzhi/${address}.html?_=${new Date()}`
+  const url = `http://d1.weather.com.cn/dingzhi/${address}.html?_=${dayjs().valueOf()}`
 
   const res = await axios.get(url, {
     headers: {
