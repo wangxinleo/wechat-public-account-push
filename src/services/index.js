@@ -169,6 +169,36 @@ export const getBirthdayMessage = () => {
 }
 
 /**
+ * 计算每个重要日子的日期差
+ * @returns 
+ */
+export const getDateDiffList = () => {
+  const dateList = config.CUSTOMIZED_DATE_LIST
+  
+  dateList.forEach(item => {
+    item['diffDay'] = Math.floor(dayjs().diff(dayjs(item.date), 'day', true))
+  })
+
+  return dateList
+}
+
+export const getSlotList = () => {
+  const slotList = config.SLOT_LIST
+
+  slotList.forEach(item => {
+    if (Object.prototype.toString.call(item.contents) === '[object Array]' && item.contents.length > 0) {
+      item['checkout'] = item.contents[Math.floor(Math.random() * item.contents.length + 1) - 1]
+    } else if (Object.prototype.toString.call(item.contents) === '[object String]') {
+      item['checkout'] = item.contents
+    } else {
+      item['checkout'] = ''
+    }
+  })
+
+  return slotList
+}
+
+/**
  * 发送消息模板
  * @param {*} templateId 
  * @param {*} user 
