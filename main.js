@@ -1,10 +1,17 @@
 import dayjs from 'dayjs'
 import { selfDayjs, timeZone } from './src/utils/set-def-dayjs.js'
-import { getAccessToken, getWeather,getCIBA,
-    getOneTalk, getBirthdayMessage, sendMessageReply,
+import { 
+    getAccessToken, 
+    getWeather,
+    getCIBA,
+    getOneTalk, 
+    getEarthyLoveWords,
+    getBirthdayMessage, 
+    sendMessageReply,
     callbackReply, 
     getDateDiffList,
-    getSlotList} from './src/services/index.js'
+    getSlotList
+} from './src/services/index.js'
 import { config } from './config/index.js'
 import { toLowerLine, getColor } from './src/utils/index.js'
 
@@ -33,6 +40,8 @@ const main = async () => {
     const { content: noteEn, note: noteCh} = await getCIBA()
     // 获取每日一言
     const { hitokoto: oneTalk, from: talkFrom} = await getOneTalk(config.LITERARY_PREFERENCE)
+    // 获取土味情话
+    const earthyLoveWords = await getEarthyLoveWords()
     // 统计日列表计算日期差
     const dateDiffParams = getDateDiffList().map(item => {
         return { name: item.keyword, value: item.diffDay, color: getColor() }
@@ -63,6 +72,7 @@ const main = async () => {
         { name: toLowerLine('noteCh'), value: noteCh, color: getColor() },
         { name: toLowerLine('oneTalk'), value: oneTalk, color: getColor() },
         { name: toLowerLine('talkFrom'), value: talkFrom, color: getColor() },
+        { name: toLowerLine('earthyLoveWords'), value: earthyLoveWords, color: getColor() },
     ].concat(dateDiffParams.concat(slotParams))
 
     // 公众号推送消息
