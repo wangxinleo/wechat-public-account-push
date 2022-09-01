@@ -123,12 +123,12 @@ export const getOneTalk = async (type) => {
  * @returns {String} 土味情话内容
  */
 export const getEarthyLoveWords = async () => {
-  const url = 'https://api.1314.cool/words/api.php?return=json'
+  const url = 'https://api.shadiao.pro/chp'
   try {
     const res = await axios.get(url, {
       responseType: 'json'
     });
-    return res.data && res.data.word && res.data.word.replace(/<br>/g, '\n') || ''
+    return res.data && res.data.data && res.data.data.text || ''
   } catch (e) {
     console.error('土味情话：发生错误', e)
     return ''
