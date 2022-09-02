@@ -1,7 +1,7 @@
 /**
  * Created by isee15 on 15/1/14.
  */
-class Lunar {
+export class Lunar {
     constructor() {
         this.isleap = false;
         this.lunarDay = 0;
@@ -10,7 +10,7 @@ class Lunar {
     }
 }
 
-class Solar {
+export class Solar {
     constructor() {
         this.solarDay = 0;
         this.solarMonth = 0;
@@ -18,7 +18,7 @@ class Solar {
     }
 }
 
-class LunarSolarConverter {
+export class LunarSolarConverter {
     constructor() {
         /*
          * |----4位闰月|-------------13位1为30天，0为29天|
