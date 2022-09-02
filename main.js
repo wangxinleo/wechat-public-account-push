@@ -10,9 +10,9 @@ import { toLowerLine, getColor } from './src/utils/index.js'
 import { Solar, LunarSolarConverter } from './src/LunarSolarConverter/LunarSolarConverter.js'
 
 const main = async () => {
-    /*
-    for solar and lunar test
-    */
+    /***************************************
+    TODO(lordon):for solar and lunar test
+    ***************************************/
     var solar = new Solar()
     solar.solarYear = parseInt(2022)
     solar.solarMonth = parseInt(9)
@@ -22,7 +22,7 @@ const main = async () => {
 
     var lunar_day = solar2lunar.SolarToLunar(solar)
     console.log("lunar day is :",lunar_day);
-
+    /**************************************/
 
     // 获取accessToken
     const accessToken = await getAccessToken()
