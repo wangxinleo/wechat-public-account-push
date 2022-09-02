@@ -7,7 +7,7 @@ import { getAccessToken, getWeather,getCIBA,
     getSlotList} from './src/services/index.js'
 import { config } from './config/index.js'
 import { toLowerLine, getColor } from './src/utils/index.js'
-import { Lunar, Solar, LunarSolarConverter } from './src/LunarSolarConverter/LunarSolarConverter.js'
+import { Solar, LunarSolarConverter } from './src/LunarSolarConverter/LunarSolarConverter.js'
 
 const main = async () => {
     /*

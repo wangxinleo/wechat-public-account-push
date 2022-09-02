@@ -1,7 +1,7 @@
 /**
  * Created by isee15 on 15/1/14.
  */
- class Lunar {
+class Lunar {
     constructor() {
         this.isleap = false;
         this.lunarDay = 0;
