@@ -119,6 +119,23 @@ export const getOneTalk = async (type) => {
 }
 
 /**
+ * 土味情话
+ * @returns {String} 土味情话内容
+ */
+export const getEarthyLoveWords = async () => {
+  const url = 'https://api.shadiao.pro/chp'
+  try {
+    const res = await axios.get(url, {
+      responseType: 'json'
+    });
+    return res.data && res.data.data && res.data.data.text || ''
+  } catch (e) {
+    console.error('土味情话：发生错误', e)
+    return ''
+  }
+}
+
+/**
  * 获取重要节日信息
  * @returns 
  */
