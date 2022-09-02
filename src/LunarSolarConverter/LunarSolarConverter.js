@@ -11,10 +11,10 @@ class Lunar {
 }
 
 class Solar {
-    constructor() {
-        this.solarDay = 0;
-        this.solarMonth = 0;
-        this.solarYear = 0;
+    constructor(year, month, day) {
+        this.solarDay = day;
+        this.solarMonth = month;
+        this.solarYear = year;
     }
 }
 

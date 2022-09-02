@@ -13,10 +13,10 @@ const main = async () => {
     /*
     for solar and lunar test
     */
-    var solar = new Solar()
-    solar.solarYear = parseInt(2022)
-    solar.solarMonth = parseInt(9)
-    solar.solarDay = parseInt(2)
+    var solar = new Solar(2022, 9, 2)
+    // solar.solarYear = parseInt(2022)
+    // solar.solarMonth = parseInt(9)
+    // solar.solarDay = parseInt(2)
 
     var solar2lunar = new LunarSolarConverter()
 
