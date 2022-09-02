@@ -9,10 +9,10 @@ export const config = {
     APP_SECRET: "c4a758f7458ba2a0905cdff7d228ebac",
 
     // 模板消息id
-    TEMPLATE_ID: "c4a758f7458ba2a0905cdff7d228ebac",
+    TEMPLATE_ID: "CwdJIHncn6BaFb4gbcWoQhjO7S5yI4PyzBznsVveO0Q",
 
     // 回调消息模板id, 用来看自己有没有发送成功的那个模板
-    CALLBACK_TEMPLATE_ID: "c4a758f7458ba2a0905cdff7d228ebac",
+    CALLBACK_TEMPLATE_ID: "CwdJIHncn6BaFb4gbcWoQhjO7S5yI4PyzBznsVveO0Q",
 
 
     /**
@@ -114,6 +114,7 @@ export const config = {
 {{date.DATA}} 
 当前城市：{{city.DATA}} 
 今天天气：{{weather.DATA}} 
+风力：{{wind_scale.DATA}}
 今天最低气温: {{min_temperature.DATA}} 
 今天最高气温: {{max_temperature.DATA}} 
 今天是我们恋爱的第 {{love_day.DATA}} 天 
@@ -123,18 +124,9 @@ export const config = {
 {{note_en.DATA}} 
 {{note_ch.DATA}} 
 {{one_talk.DATA}} 
-{{talk_from.DATA}}
+{{encourage_oneself.DATA}}
+{{post_time.DATA}}
 
-        { name: toLowerLine('minTemperature'), value: minTemperature, color: getColor() },
-        { name: toLowerLine('maxTemperature'), value: maxTemperature, color: getColor() },
-        { name: toLowerLine('windDirection'), value: windDirection, color: getColor() },
-        { name: toLowerLine('windScale'), value: windScale, color: getColor() },
-        { name: toLowerLine('loveDay'), value: loveDay, color: getColor() },
-        { name: toLowerLine('marryDay'), value: marryDay, color: getColor() },
-        { name: toLowerLine('graduateDay'), value: graduateDay, color: getColor() },
-        { name: toLowerLine('birthdayMessage'), value: birthdayMessage, color: getColor() },
-        { name: toLowerLine('noteEn'), value: noteEn, color: getColor() },
-        { name: toLowerLine('noteCh'), value: noteCh, color: getColor() },
 */
 
 
