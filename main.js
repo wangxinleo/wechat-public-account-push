@@ -1,4 +1,10 @@
-import { getAccessToken, getWeather, getCIBA, getOneTalk, getBirthdayMessage, sendMessage } from './src/services/index.js'
+import dayjs from 'dayjs'
+import { selfDayjs, timeZone } from './src/utils/set-def-dayjs.js'
+import { getAccessToken, getWeather,getCIBA,
+    getOneTalk, getBirthdayMessage, sendMessageReply,
+    callbackReply, 
+    getDateDiffList,
+    getSlotList} from './src/services/index.js'
 import { config } from './config/index.js'
 import dayjs from 'dayjs'
 import { toLowerLine, getColor } from './src/utils/index.js'
@@ -26,14 +32,18 @@ const main = async () => {
     } = await getWeather(province, city)
     // 获取金山词霸每日一句
     const { content: noteEn, note: noteCh} = await getCIBA()
-    // 获取好文节选
+    // 获取每日一言
     const { hitokoto: oneTalk, from: talkFrom} = await getOneTalk(config.LITERARY_PREFERENCE)
-    // 获取在一起的日期差
-    const loveDay = dayjs().diff(dayjs(config.LOVE_DATE), 'day')
-    // TODO:获取毕业日期差
-    const graduateDay = dayjs().diff(dayjs(config.GRADUATE_Date), 'day')
-    // 获取结婚的日期差
-    const marryDay = dayjs().diff(dayjs(config.MARRY_DATE), 'day') * -1
+    // 统计日列表计算日期差
+    const dateDiffParams = getDateDiffList().map(item => {
+        return { name: item.keyword, value: item.diffDay, color: getColor() }
+    })
+
+    // 获取插槽中的数据
+    const slotParams = getSlotList().map(item => {
+        return { name: item.keyword, value: item.checkout, color: getColor() }
+    })
+
     // 获取生日信息
     const birthdayMessage = getBirthdayMessage()
 
@@ -41,7 +51,7 @@ const main = async () => {
     // 集成所需信息
     const week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     const wxTemplateParams = [
-        { name: toLowerLine('date'), value: `${dayjs().format('YYYY-MM-DD')} ${week_list[dayjs().format('d')]}`, color: getColor() },
+        { name: toLowerLine('date'), value: `${selfDayjs().format('YYYY-MM-DD')} ${week_list[selfDayjs().format('d')]}`, color: getColor() },
         { name: toLowerLine('province'), value: province, color: getColor() },
         { name: toLowerLine('city'), value: city, color: getColor() },
         { name: toLowerLine('weather'), value: weather, color: getColor() },
@@ -57,15 +67,33 @@ const main = async () => {
         { name: toLowerLine('noteCh'), value: noteCh, color: getColor() },
         { name: toLowerLine('oneTalk'), value: oneTalk, color: getColor() },
         { name: toLowerLine('talkFrom'), value: talkFrom, color: getColor() },
-    ]
+    ].concat(dateDiffParams.concat(slotParams))
+
     // 公众号推送消息
-    users.forEach(async user => {
-        await sendMessage(
-            accessToken,
-            user,
-            wxTemplateParams
-        )
-    })
+    const sendMessageTemplateId = config.TEMPLATE_ID
+    const {
+        needPostNum,
+        successPostNum,
+        failPostNum,
+        successPostIds,
+        failPostIds
+    } = await sendMessageReply(sendMessageTemplateId, users, accessToken, wxTemplateParams)
+
+    // 推送结果回执
+    const postTimeZone = timeZone()
+    const postTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    const callbackTemplateParams = [
+        { name: toLowerLine('postTimeZone'), value: postTimeZone, color: getColor() },
+        { name: toLowerLine('postTime'), value: postTime, color: getColor() },
+        { name: toLowerLine('needPostNum'), value: needPostNum, color: getColor() },
+        { name: toLowerLine('successPostNum'), value: successPostNum, color: getColor() },
+        { name: toLowerLine('failPostNum'), value: failPostNum, color: getColor() },
+        { name: toLowerLine('successPostIds'), value: successPostIds, color: getColor() },
+        { name: toLowerLine('failPostIds'), value: failPostIds, color: getColor() },
+    ].concat(wxTemplateParams)
+
+    const callbackTemplateId = config.CALLBACK_TEMPLATE_ID
+    await callbackReply(callbackTemplateId, config.CALLBACK_USERS, accessToken, callbackTemplateParams)
 
 }
 
