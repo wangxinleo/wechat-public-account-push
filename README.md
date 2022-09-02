@@ -185,7 +185,8 @@ wechat-public-account-push
 
 ## 1.0.1 预计更新
 
-
+- [√] （已完成）现在可以指定每个人推送不同的模板了，而且每个模板消息支持自定义打开一个你想要展示的网址。
+- [√] （已完成）添加workflow执行指定分支脚本配置 感谢 @LordonCN
 - [√] （已完成）修复github action默认使用utc时区，导致北京时间8点前的推送不显示为当天。现在会强制回显为PRC时区。
 - [√] （已完成）增加推送回执，不用去看控制台咯！
 - [√] （已完成）优化仓库目录结构，主脚本代码更清爽了！
@@ -241,8 +242,10 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 最高气温: {{max_temperature.DATA}}  
 今天是我们恋爱的第{{love_day.DATA}}天
 今天是我们结婚的第{{marry_day.DATA}}天
+
 {{birthday_message.DATA}}
 
+{{one_talk.DATA}} -- {{talk_from.DATA}}
 
 {{note_en.DATA}}  
 {{note_ch.DATA}}
