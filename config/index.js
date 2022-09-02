@@ -9,10 +9,10 @@ export const config = {
     APP_SECRET: "c4a758f7458ba2a0905cdff7d228ebac",
 
     // 模板消息id
-    TEMPLATE_ID: "CwdJIHncn6BaFb4gbcWoQhjO7S5yI4PyzBznsVveO0Q",
+    TEMPLATE_ID: "rJZlilfZhQHLCwcCMOiSb3dLXTYJi_xt-Sl04CoEark",
 
     // 回调消息模板id, 用来看自己有没有发送成功的那个模板
-    CALLBACK_TEMPLATE_ID: "CwdJIHncn6BaFb4gbcWoQhjO7S5yI4PyzBznsVveO0Q",
+    CALLBACK_TEMPLATE_ID: "rJZlilfZhQHLCwcCMOiSb3dLXTYJi_xt-Sl04CoEark",
 
 
     /**
@@ -74,7 +74,7 @@ export const config = {
       {"keyword": "love_day", date: "2019-11-30"},
       // 结婚纪念日
       {"keyword": "marry_day", date: "2022-09-09"},
-      // 结婚纪念日
+      // 毕业纪念日
       {"keyword": "graduate_day", date: "2022-06-25"},
       // 退伍日, 不用可以删掉
       // {"keyword": "ex_day", date: "2022-08-31"},
