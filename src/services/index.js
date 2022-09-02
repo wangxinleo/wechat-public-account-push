@@ -237,8 +237,8 @@ export const sendMessage = async (templateId, user, accessToken, params) => {
   // 组装数据
   const data = {
     "touser": user.id,
-    "template_id": templateId,
-    "url": "http://weixin.qq.com/download",
+    "template_id": user.useTemplateId || templateId,
+    "url": user.openUrl || "https://wangxinleo.cn",
     "topcolor": "#FF0000",
     "data": wxTemplateData
   }

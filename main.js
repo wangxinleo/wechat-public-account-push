@@ -17,7 +17,7 @@ import { toLowerLine, getColor } from './src/utils/index.js'
 
 const main = async () => {
     // 获取accessToken
-    const accessToken =  await getAccessToken()
+    const accessToken = await getAccessToken()
     // 接收的用户
     const users = config.USERS
     // 省份和市
@@ -99,7 +99,10 @@ const main = async () => {
     ].concat(wxTemplateParams)
 
     const callbackTemplateId = config.CALLBACK_TEMPLATE_ID
-    await callbackReply(callbackTemplateId, config.CALLBACK_USERS, accessToken, callbackTemplateParams)
+    if (callbackTemplateId) {
+        await callbackReply(callbackTemplateId, config.CALLBACK_USERS, accessToken, callbackTemplateParams)
+    }
+
 
 }
 
