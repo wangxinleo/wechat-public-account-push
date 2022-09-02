@@ -52,7 +52,7 @@ wechat-public-account-push
 |note_ch.DATA | 金山每日一句-中文 | 这世界上凡是值得拥有的东西，都不易获得。 |
 |\* one_talk.DATA | 每日一言-内容 | 愿你遍布祖国山河，觉得人生也值得 |
 |\* talk_from.DATA | 每日一言-来源 | 晓良 |
-|\* earthy_love_words.DATA | 土味情话(彩虹屁) |  我今晚会很忙，忙着跟你过日子 |
+|\* earthy_love_words.DATA | 土味情话(彩虹屁) | 我今晚会很忙，忙着跟你过日子 |
 
 **计时类**
 
