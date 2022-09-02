@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   schedule:
     # 每天国际时间 02:10 运行, 即北京时间 10:10 运行
-    - cron: '30 9 * * *'
+    - cron: '10 2 * * *'
     
 jobs:
   build:
@@ -20,10 +20,10 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    # 添加定时任务指定运行分支
-    - uses: actions/checkout@v2
+    # 添加定时任务指定运行分支 默认为master
+    - uses: actions/checkout@v3
       with:
-          ref: 'DEV_xld'# master
+          ref: 'master'
           
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
