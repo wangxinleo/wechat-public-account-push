@@ -71,9 +71,11 @@ export const config = {
       * */
     CUSTOMIZED_DATE_LIST: [
       // 在一起的日子
-      {"keyword": "love_day", date: "2019-11-30"},
+      {"keyword": "loveDay", date: "2019-11-30"},
       // 结婚纪念日
-      {"keyword": "marry_day", date: "2022-09-09"},
+      {"keyword": "marryDay", date: "2022-09-09"},
+      // 毕业纪念日
+      {"keyword": "graduateDay", date: "2022-06-25"},
       // 退伍日, 不用可以删掉
       // {"keyword": "ex_day", date: "2022-08-31"},
       // sakana日
