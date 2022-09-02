@@ -7,8 +7,23 @@ import { getAccessToken, getWeather,getCIBA,
     getSlotList} from './src/services/index.js'
 import { config } from './config/index.js'
 import { toLowerLine, getColor } from './src/utils/index.js'
+import { Lunar, Solar, LunarSolarConverter } from './src/LunarSolarConverter/LunarSolarConverter.js'
 
 const main = async () => {
+    /*
+    for solar and lunar test
+    */
+    var solar = new Solar()
+    solar.solarYear = parseInt(2022)
+    solar.solarMonth = parseInt(9)
+    solar.solarDay = parseInt(2)
+
+    var solar2lunar = new LunarSolarConverter()
+
+    var lunar_day = solar2lunar.SolarToLunar(solar)
+    console.log("lunar day is :",lunar_day);
+
+
     // 获取accessToken
     const accessToken =  await getAccessToken()
     // 接收的用户
