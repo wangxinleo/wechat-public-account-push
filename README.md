@@ -52,6 +52,7 @@ wechat-public-account-push
 |note_ch.DATA | 金山每日一句-中文 | 这世界上凡是值得拥有的东西，都不易获得。 |
 |\* one_talk.DATA | 每日一言-内容 | 愿你遍布祖国山河，觉得人生也值得 |
 |\* talk_from.DATA | 每日一言-来源 | 晓良 |
+|\* earthy_love_words.DATA | 土味情话(彩虹屁) | 我今晚会很忙，忙着跟你过日子 |
 
 **计时类**
 
@@ -185,6 +186,7 @@ wechat-public-account-push
 
 ## 1.0.1 预计更新
 
+- [√] （已完成）现在大家可以使用每天不同的彩虹屁了 感谢 @ZzqiZQute
 - [√] （已完成）现在可以指定每个人推送不同的模板了，而且每个模板消息支持自定义打开一个你想要展示的网址。
 - [√] （已完成）添加workflow执行指定分支脚本配置 感谢 @LordonCN
 - [√] （已完成）修复github action默认使用utc时区，导致北京时间8点前的推送不显示为当天。现在会强制回显为PRC时区。
