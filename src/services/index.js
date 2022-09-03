@@ -129,10 +129,10 @@ export const getWordsFromApiShadiao = async (type) => {
     du: '毒鸡汤'
   }
   if (!['chp', 'pyq', 'du'].includes(type)) {
-    console.error('type参数有误，应为chp, pyq, du的其中一个');
+    console.error('type参数有误，应为chp, pyq, du的其中一个')
     return ''
   }
-  const url = `https://api.shadiao.pro/${ type }`;
+  const url = `https://api.shadiao.pro/${ type }`
   try {
     const res = await axios.get(url, {
       responseType: 'json'
