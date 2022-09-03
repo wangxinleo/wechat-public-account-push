@@ -2,11 +2,11 @@ import dayjs from 'dayjs'
 
 /**
  * 驼峰转下划线
- * @param {*} str 
- * @returns 
+ * @param {*} str
+ * @returns
  */
 export const toLowerLine =  (str) => {
-  var temp = str.replace(/[A-Z]/g, function (match) { 
+  var temp = str.replace(/[A-Z]/g, function (match) {
     return "_" + match.toLowerCase();
     });
     if(temp.slice(0,1) === '_'){ //如果首字母是大写，执行replace时会多一个_，这里需要去掉
@@ -18,7 +18,7 @@ export const toLowerLine =  (str) => {
 
 /**
  * 获取随机颜色
- * @returns 
+ * @returns
  */
 export const getColor = () => {
   return `#${Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0")}`
@@ -27,9 +27,9 @@ export const getColor = () => {
 
 /**
  * 生成一个从min 到 max 的随机数
- * @param {*} min 
- * @param {*} max 
- * @returns 
+ * @param {*} min
+ * @param {*} max
+ * @returns
  */
 export const randomNum = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min
@@ -37,8 +37,8 @@ export const randomNum = (min, max) => {
 
 /**
  * 对生日时间倒计时进行排序
- * @param {*} list 
- * @returns 
+ * @param {*} list
+ * @returns
  */
 export const sortBirthdayTime = (list) => {
   list.forEach(item => {
