@@ -4,21 +4,21 @@ export const config = {
    */
 
   // 公众号APP_ID
-  APP_ID: "wx3ec01ce7c3946a2b",
+  APP_ID: "wx13314e1804a6529e",
 
   // 公众号APP_SECRET
-  APP_SECRET: "d187d9075b998fe23e894d79519d3809",
+  APP_SECRET: "10f3f209b0c8a8f8c38f6cd2f05829ed",
 
   /**
    * 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如
    * [
    *  {
    *    // 想要发送的人的名字
-   *    name: "亲爱的马女士",
+   *    name: "亲爱的陈先生",
    *    // 扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-   *    id: "owWTa5zMogqCG_Gd10lOBGiLFIFs",
+   *    id: "opgNz6J0TOn_yO2dJ4spGBxC5r08",
    *    // 你想对他发送的模板消息的模板ID
-   *    useTemplateId: "mB_pAtP8WOAggM8Qub78dd66P8JMUBG4RLwKNByYIKM",
+   *    useTemplateId: "YLNf7qbXt4ZiAWaV48KEWTrWMyM_BarvsnbyzZplT84",
    *    // 他点击详情后跳转的页面,你可以设置成微博的热榜，也可以设置成其他，网址一定要填对；不填对也没关系，随便你，会打不开而已。
    *    openUrl: "https://wangxinleo.cn"
    *   }, 
@@ -27,11 +27,11 @@ export const config = {
   USERS: [
     {
       // 想要发送的人的名字
-      name: "亲爱的马女士",
+      name: "亲爱的陈先生",
       // 扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: "owWTa5zMogqCG_Gd10lOBGiLFIFs",
+      id: "opgNz6J0TOn_yO2dJ4spGBxC5r08",
       // 你想对他发送的模板消息的模板ID
-      useTemplateId: "mB_pAtP8WOAggM8Qub78dd66P8JMUBG4RLwKNByYIKM",
+      useTemplateId: "YLNf7qbXt4ZiAWaV48KEWTrWMyM_BarvsnbyzZplT84",
       // 他点击详情后跳转的页面,你可以设置成微博的热榜，也可以设置成其他，网址一定要填对；不填对也没关系，随便你，会打不开而已。
       openUrl: "https://wangxinleo.cn"
     }, 
@@ -68,7 +68,7 @@ export const config = {
       // 一般都填自己
       name: "自己",
       // 自己的微信id，扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: "owWTa5yFYOK9ggLeZ_e7s8AkRlB8",
+      id: "opgNz6J_nw2jiA7VGGbR3B0XQQDQ",
     }, 
   ],
     
@@ -79,9 +79,9 @@ export const config = {
   /** 天气相关 */
 
   // 所在省份
-  PROVINCE: "江西",
+  PROVINCE: "广东",
   // 所在城市
-  CITY: "九江",
+  CITY: "湛江",
 
   /** 重要节日相关 */
 
@@ -92,10 +92,10 @@ export const config = {
    * 节日时，name填写相应展示的节日，你可以填“被搭讪纪念日”
    */
   FESTIVALS: [
-    {"type": "生日", "name": "亲爱的马女士", "year": "2001", "date": "09-11"},
-    {"type": "节日", "name": "纪念日", "year": "2020", "date": "02-15"},
-    {"type": "生日", "name": "亲爱的李先生", "year": "2001", "date": "09-16"},
-    {"type": "节日", "name": "被搭讪纪念日", "year": "2020", "date": "02-15"},
+    {"type": "生日", "name": "亲爱的陈先生", "year": "2004", "date": "02-23"},
+    {"type": "节日", "name": "纪念日", "year": "2022", "date": "08-04"},
+    {"type": "生日", "name": "亲爱的揭女生", "year": "2002", "date": "06-20"},
+//     {"type": "节日", "name": "被搭讪纪念日", "year": "2020", "date": "02-15"},
   ],
 
   /**
@@ -113,9 +113,9 @@ export const config = {
     * */
   CUSTOMIZED_DATE_LIST: [
     // 在一起的日子
-    {"keyword": "love_day", date: "2020-02-15"},
+    {"keyword": "love_day", date: "2022-08-04"},
     // 结婚纪念日
-    {"keyword": "marry_day", date: "2020-02-15"},
+//     {"keyword": "marry_day", date: "2020-02-15"},
     // 退伍日, 不用可以删掉
     // sakana日
     // {"keyword": "sakana_day", date: "2022-01-06"},
