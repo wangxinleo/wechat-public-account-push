@@ -175,7 +175,6 @@ export const getPoisonChickenSoup = async () => {
 export const getBirthdayMessage = () => {
   // 计算重要节日倒数
   const birthdayList = sortBirthdayTime(config.FESTIVALS)
-  console.log(birthdayList)
   let resMessage = ''
 
   birthdayList.forEach((item, index) => {
@@ -260,20 +259,24 @@ export const sendMessage = async (templateId, user, accessToken, params) => {
   const url = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${ accessToken }`
 
   const wxTemplateData = {}
-  params.map(item => {
-    wxTemplateData[item.name] = {
-      value: item.value,
-      color: item.color
-    }
-  })
+  console.log('params', params)
+  if (Object.prototype.toString.call(params) === '[object Array]') {
+    params.map(item => {
+      wxTemplateData[item.name] = {
+        value: item.value,
+        color: item.color
+      }
+    })
+  }
+
 
   // 组装数据
   const data = {
-    'touser': user.id,
-    'template_id': user.useTemplateId || templateId,
-    'url': user.openUrl || 'https://wangxinleo.cn',
-    'topcolor': '#FF0000',
-    'data': wxTemplateData
+    "touser": user.id,
+    "template_id": templateId,
+    "url": user.openUrl || "https://wangxinleo.cn",
+    "topcolor": "#FF0000",
+    "data": wxTemplateData
   }
 
   console.log('将要发送以下内容: ', data)
@@ -303,13 +306,13 @@ export const sendMessage = async (templateId, user, accessToken, params) => {
 
 /**
  * 推送消息, 进行成功失败统计
- * @param {*} templateId
  * @param {*} users
  * @param {*} accessToken
+ * @param {*} templateId
  * @param {*} params
  * @returns
  */
-export const sendMessageReply = async (templateId, users, accessToken, params) => {
+export const sendMessageReply = async (users, accessToken, templateId = null, params = null) => {
   const allPromise = []
   const needPostNum = users.length
   let successPostNum = 0
@@ -318,10 +321,10 @@ export const sendMessageReply = async (templateId, users, accessToken, params) =
   const failPostIds = []
   users.forEach(async user => {
     allPromise.push(sendMessage(
-      templateId,
+      templateId || user.useTemplateId,
       user,
       accessToken,
-      params
+      params || user.wxTemplateParams
     ))
   })
   const resList = await Promise.all(allPromise)
@@ -342,23 +345,4 @@ export const sendMessageReply = async (templateId, users, accessToken, params) =
     successPostIds: successPostIds.length ? successPostIds.join(',') : '无',
     failPostIds: failPostIds.length ? failPostIds.join(',') : '无'
   }
-}
-
-/**
- * 推送回执
- * @param {*} templateId
- * @param {*} users
- * @param {*} accessToken
- * @param {*} params
- */
-/* istanbul ignore next */
-export const callbackReply = async (templateId, users, accessToken, params) => {
-  users.forEach(async user => {
-    await sendMessage(
-      templateId,
-      user,
-      accessToken,
-      params
-    )
-  })
 }
