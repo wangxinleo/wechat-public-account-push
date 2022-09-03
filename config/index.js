@@ -4,10 +4,10 @@ export const config = {
    */
 
   // 公众号APP_ID
-  APP_ID: "",
+  APP_ID: "wxdbae6a089f997567",
 
   // 公众号APP_SECRET
-  APP_SECRET: "",
+  APP_SECRET: "67a73e14533065456fc42a3ef5818855",
 
   /**
    * 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如
@@ -27,32 +27,33 @@ export const config = {
   USERS: [
     {
       // 想要发送的人的名字
-      name: "老婆0",
+      name: "梅大🐷",
       // 扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: "ohxO123O6Vsk2Yv0Kuf-ywIZ3VRMpuXhk",
+      // id: "ohxO123O6Vsk2Yv0Kuf-ywIZ3VRMpuXhk",
+      id: "oSANz6J3m_X9T1xkcWAkyjzn0Rvs",
       // 你想对他发送的模板消息的模板ID
-      useTemplateId: "zjVglIuC2Xo4CsraXWEio1iP7sZJ37IQEES9lD3sgc4yOU",
+      useTemplateId: "VI8bp3jwT_BVOR4t5a7G0HhDEWLHsTsqcgijzh1ijbY",
       // 他点击详情后跳转的页面,你可以设置成微博的热榜，也可以设置成其他，网址一定要填对；不填对也没关系，随便你，会打不开而已。
       openUrl: "https://wangxinleo.cn"
     }, 
-    {
-      name: "老婆1", 
-      id: "ohxOO6VskYv20Kuf-ywIZVR3MpuXhk",
-      useTemplateId: "Wue80GrtY1nAia24tam-FDxZF9WNx39pwcBc0LMpANnu8",
-      openUrl: "https://baidu.com"
-    }, 
-    {
-      name: "老婆2",
-      id: "ohxOO6VskYv30Kuf-ywIZV3RMpuXhk",
-      useTemplateId: "zjVglIuCXo4CsraXW3Eio1iP7sZJ7IQEES9lDsgc4yOU",
-      openUrl: "https://weibo.com"
-    }, 
-    {
-      name: "老婆3", 
-      id: "ohxOO63VskYv0Kuf-ywIZV3RMpuXhk", 
-      useTemplateId: "Wue80GrtY1nA3ia4tam-FDxZF9WNx9pw3cBc0LMpANnu8",
-      openUrl: "https://wangxinleo.cn"
-    }, 
+    // {
+    //   name: "自己",
+    //   id: "ohxOO6VskYv20Kuf-ywIZVR3MpuXhk",
+    //   useTemplateId: "Wue80GrtY1nAia24tam-FDxZF9WNx39pwcBc0LMpANnu8",
+    //   openUrl: "https://baidu.com"
+    // },
+    // {
+    //   name: "老婆2",
+    //   id: "ohxOO6VskYv30Kuf-ywIZV3RMpuXhk",
+    //   useTemplateId: "zjVglIuCXo4CsraXW3Eio1iP7sZJ7IQEES9lDsgc4yOU",
+    //   openUrl: "https://weibo.com"
+    // },
+    // {
+    //   name: "老婆3",
+    //   id: "ohxOO63VskYv0Kuf-ywIZV3RMpuXhk",
+    //   useTemplateId: "Wue80GrtY1nA3ia4tam-FDxZF9WNx9pw3cBc0LMpANnu8",
+    //   openUrl: "https://wangxinleo.cn"
+    // },
   ],
 
   /**
@@ -60,7 +61,7 @@ export const config = {
    */
 
   // 回调消息模板id, 用来看自己有没有发送成功的那个模板
-  CALLBACK_TEMPLATE_ID: "zjVglIuCXo34CsraXWEio1i3P7sZJ7IQEES93lDsgc4yOU",
+  CALLBACK_TEMPLATE_ID: "3rRVen-UW4YLLKiQo56Y6kaZncAZl1oUP2MlZ5BbwqA",
 
   // 接收成功回调消息的微信号，（一般来说只填自己的微信号, name填不填无所谓）
   CALLBACK_USERS: [
@@ -68,7 +69,7 @@ export const config = {
       // 一般都填自己
       name: "自己",
       // 自己的微信id，扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: "ohxOO36VskY3v0Kuf-ywIZVR3MpuXhk",
+      id: "oSANz6DpIWmvSC6hjxa4ySaBGc-w",
     }, 
   ],
     
@@ -79,9 +80,9 @@ export const config = {
   /** 天气相关 */
 
   // 所在省份
-  PROVINCE: "广东",
+  PROVINCE: "河南",
   // 所在城市
-  CITY: "惠州",
+  CITY: "开封",
 
   /** 重要节日相关 */
 
@@ -92,10 +93,10 @@ export const config = {
    * 节日时，name填写相应展示的节日，你可以填“被搭讪纪念日”
    */
   FESTIVALS: [
-    {"type": "生日", "name": "老婆", "year": "1996", "date": "09-02"},
-    {"type": "节日", "name": "结婚纪念日", "year": "2020", "date": "09-03"},
-    {"type": "生日", "name": "李四", "year": "1996", "date": "09-31"},
-    {"type": "节日", "name": "被搭讪纪念日", "year": "2021", "date": "09-01"},
+    {"type": "考研", "name": "考研日", "year": "2022", "date": "12-24"},
+    {"type": "节日", "name": "第一次见面纪念日", "year": "2019", "date": "08-24"},
+    // {"type": "生日", "name": "李四", "year": "1996", "date": "09-31"},
+    // {"type": "节日", "name": "被搭讪纪念日", "year": "2021", "date": "09-01"},
   ],
 
   /**
@@ -113,11 +114,11 @@ export const config = {
     * */
   CUSTOMIZED_DATE_LIST: [
     // 在一起的日子
-    {"keyword": "love_day", date: "2015-05-01"},
+    // {"keyword": "love_day", date: "2015-05-01"},
     // 结婚纪念日
-    {"keyword": "marry_day", date: "2020-01-04"},
+    // {"keyword": "marry_day", date: "2020-01-04"},
     // 退伍日, 不用可以删掉
-    {"keyword": "ex_day", date: "2022-08-31"},
+    // {"keyword": "ex_day", date: "2022-08-31"},
     // sakana日
     // {"keyword": "sakana_day", date: "2022-01-06"},
     // ... 

@@ -173,6 +173,15 @@ export const getBirthdayMessage = () => {
         }
       }
 
+      if (item.type === '考研') {
+        if (item.diffDay === 0) {
+          message = `今天是 ${item.name}的日子哦，加油喔！冲冲冲！！！`
+        } else {
+          message = `距离 ${item.name} 还有${item.diffDay}天(暂定12月24)，加油喔！冲冲冲！！！`
+        }
+      }
+
+
       // 存储数据
       if (message) {
         resMessage += `${message} \n`
