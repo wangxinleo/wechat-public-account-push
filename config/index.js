@@ -4,10 +4,10 @@ export const config = {
    */
 
   // 公众号APP_ID
-  APP_ID: "wxab1981180f309e82",
+  APP_ID: "",
 
   // 公众号APP_SECRET
-  APP_SECRET: "2d51ac5a89274c7ecd891575cfe5e58f",
+  APP_SECRET: "",
 
   /**
    * 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如
@@ -29,7 +29,7 @@ export const config = {
       // 想要发送的人的名字
       name: "老婆0",
       // 扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: "ohxOO6VskYv0Kuf-ywIZVRMpuXhk",
+      id: "ohxO123O6Vsk2Yv0Kuf-ywIZ3VRMpuXhk",
       // 你想对他发送的模板消息的模板ID
       useTemplateId: "Wue80GrtY1nAia4tam-FDxZF9WNx9pwcBc0LMpANnu8",
       // 所在省份
@@ -70,7 +70,7 @@ export const config = {
    */
 
   // 回调消息模板id, 用来看自己有没有发送成功的那个模板
-  CALLBACK_TEMPLATE_ID: "zjVglIuCXo4CsraXWEio1iP7sZJ7IQEES9lDsgc4yOU",
+  CALLBACK_TEMPLATE_ID: "zjVglIuCXo34CsraXWEio1i3P7sZJ7IQEES93lDsgc4yOU",
 
   // 接收成功回调消息的微信号，（一般来说只填自己的微信号, name填不填无所谓）
   CALLBACK_USERS: [
@@ -78,7 +78,7 @@ export const config = {
       // 一般都填自己
       name: "自己",
       // 自己的微信id，扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: "ohxOO6VskYv0Kuf-ywIZVRMpuXhk",
+      id: "ohxOO36VskY3v0Kuf-ywIZVR3MpuXhk",
     }, 
   ],
     
