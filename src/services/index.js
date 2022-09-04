@@ -24,8 +24,8 @@ export const getAccessToken = async () => {
       accessToken = res.data.access_token
       console.log('---')
       console.error('获取 accessToken: 成功', res.data)
-      console.error('获取 accessToken: 成功', appId)
-      console.error('获取 accessToken: 成功', appSecret)
+      console.error('获取 accessToken: 成功', appId + '123')
+      console.error('获取 accessToken: 成功', appSecret + '123')
       console.log('---')
     } else {
       console.error('获取 accessToken: 请求失败', res.data.errmsg)
