@@ -11,6 +11,9 @@ import {
     getCIBA,
     getOneTalk,
     getEarthyLoveWords,
+    getPoisonChickenSoup,
+    getWordsFromApiShadiao,
+    getMomentCopyrighting,
     getDateDiffList,
     getSlotList,
     getBirthdayMessage,
@@ -20,7 +23,7 @@ import {
 import MockDate from 'mockdate'
 
 describe('services', () => {
-    test.concurrent('getWeather', async () => {
+    test('getWeather', async () => {
         expect(await getWeather('', '')).toBeNull()
         axios.get = async () => {
             return {
@@ -54,7 +57,7 @@ describe('services', () => {
         }
         expect(await getWeather('北京', '北京')).toBeNull()
     })
-    test.concurrent('getAccessToken', async () => {
+    test('getAccessToken', async () => {
         axios.get = async () => {
             throw new Error
         }
@@ -88,7 +91,7 @@ describe('services', () => {
         }
         expect(await getAccessToken()).toEqual('123456')
     })
-    test.concurrent('getCIBA', async function () {
+    test('getCIBA', async function () {
         axios.get = async () => {
             throw new Error
         }
@@ -113,7 +116,7 @@ describe('services', () => {
         }
         expect(await getCIBA()).toEqual('test')
     })
-    test.concurrent('getOneTalk', async () => {
+    test('getOneTalk', async () => {
         axios.get = async () => {
             throw new Error
         }
@@ -127,17 +130,18 @@ describe('services', () => {
         }
         expect(await getOneTalk('动画')).toEqual('test')
     })
-    test.concurrent('getEarthyLoveWords', async () => {
+    test('getWordsFromApiShadiao', async () => {
+        expect(await getWordsFromApiShadiao('other')).toEqual('')
         axios.get = async () => {
             throw new Error
         }
-        expect(await getEarthyLoveWords()).toEqual('')
+        expect(await getWordsFromApiShadiao('chp')).toEqual('')
         axios.get = async () => {
             return {
                 data: null
             }
         }
-        expect(await getEarthyLoveWords()).toEqual('')
+        expect(await getWordsFromApiShadiao('pyq')).toEqual('')
         axios.get = async () => {
             return {
                 data: {
@@ -154,9 +158,39 @@ describe('services', () => {
                 }
             }
         }
-        expect(await getEarthyLoveWords()).toEqual('test')
+        expect(await getWordsFromApiShadiao('du')).toEqual('test')
+        axios.get = async () => {
+            return {
+                data: {
+                    data: {
+                        text: '彩虹屁'
+                    }
+                }
+            }
+        }
+        expect(await getEarthyLoveWords()).toEqual('彩虹屁')
+        axios.get = async () => {
+            return {
+                data: {
+                    data: {
+                        text: '朋友圈文案'
+                    }
+                }
+            }
+        }
+        expect(await getMomentCopyrighting()).toEqual('朋友圈文案')
+        axios.get = async () => {
+            return {
+                data: {
+                    data: {
+                        text: '毒鸡汤'
+                    }
+                }
+            }
+        }
+        expect(await getPoisonChickenSoup()).toEqual('毒鸡汤')
     })
-    test.concurrent('getBirthdayMessage', () => {
+    test('getBirthdayMessage', () => {
         config.FESTIVALS = [
             { type: '生日', name: '老婆', year: '1996', date: '09-02' },
             { type: '节日', name: '结婚纪念日', year: '2020', date: '09-03' },
@@ -201,7 +235,7 @@ describe('services', () => {
         ]
         expect(getBirthdayMessage()).toEqual('')
     })
-    test.concurrent('getDateDiffList', () => {
+    test('getDateDiffList', () => {
         config.CUSTOMIZED_DATE_LIST = [
             // 在一起的日子
             { keyword: 'love_day', date: '2015-05-01' },
@@ -225,7 +259,7 @@ describe('services', () => {
         }])
         MockDate.reset()
     })
-    test.concurrent('getSlotList', () => {
+    test('getSlotList', () => {
         config.SLOT_LIST = [
             // 这样配置的话，就会每次发送这句话
             { keyword: 'encourage_oneself', contents: '你主要的问题在于读书太少而想得太多' },
@@ -267,14 +301,16 @@ describe('services', () => {
             }
         ])
     })
-    test.concurrent('sendMessage', async () => {
+    test('sendMessage', async () => {
         axios.post = async () => {
             throw new Error
         }
         expect(await sendMessage('templateId', { id: '123', name: 'me' }, 'accessToken', [{
+            name: 'name1',
             value: 'value1',
             color: 'color1'
         }, {
+            name: 'name2',
             value: 'value2',
             color: 'color2'
         }])).toEqual({
@@ -289,9 +325,11 @@ describe('services', () => {
             }
         }
         expect(await sendMessage('templateId', { id: '123', name: 'me' }, 'accessToken', [{
+            name: 'name1',
             value: 'value1',
             color: 'color1'
         }, {
+            name: 'name2',
             value: 'value2',
             color: 'color2'
         }])).toEqual({
@@ -299,20 +337,35 @@ describe('services', () => {
             success: true
         })
     })
-    test.concurrent('sendMessageReply', async () => {
+    test('sendMessageReply', async () => {
         axios.post = async () => {
             throw new Error
         }
-        expect(await sendMessageReply('templateId', [
+        expect(await sendMessageReply([
             { id: '123', name: 'me' },
             { id: '456', name: 'you' }
-        ], 'accessToken', [{
+        ],'accessToken','templateId', [{
+            name: 'name1',
             value: 'value1',
             color: 'color1'
         }, {
+            name: 'name2',
             value: 'value2',
             color: 'color2'
         }])).toEqual({
+            failPostIds: 'me,you',
+            failPostNum: 2,
+            needPostNum: 2,
+            successPostIds: '无',
+            successPostNum: 0
+        })
+        axios.post = async () => {
+            throw new Error
+        }
+        expect(await sendMessageReply([
+            { id: '123', name: 'me' },
+            { id: '456', name: 'you' }
+        ],'accessToken')).toEqual({
             failPostIds: 'me,you',
             failPostNum: 2,
             needPostNum: 2,
@@ -326,13 +379,15 @@ describe('services', () => {
                 }
             }
         }
-        expect(await sendMessageReply('templateId', [
+        expect(await sendMessageReply([
             { id: '123', name: 'me' },
             { id: '456', name: 'you' }
-        ], 'accessToken', [{
+        ],'accessToken','templateId', [{
+            name: 'name1',
             value: 'value1',
             color: 'color1'
         }, {
+            name: 'name2',
             value: 'value2',
             color: 'color2'
         }])).toEqual({

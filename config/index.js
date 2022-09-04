@@ -29,9 +29,9 @@ export const config = {
       // 想要发送的人的名字
       name: "老婆0",
       // 扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: "ohxO123O6Vsk2Yv0Kuf-ywIZ3VRMpuXhk",
+      id: "ohxOO6VskY2v40Kuf5ywIZVRM3puXhk",
       // 你想对他发送的模板消息的模板ID
-      useTemplateId: "Wue80GrtY1nAia4tam-FDxZF9WNx9pwcBc0LMpANnu8",
+      useTemplateId: "Wue80GrtY1nAi5a4tam4FDxZF59WNx9pwcBc06LMpANnu8",
       // 所在省份
       province: "广东",
       // 所在城市
@@ -41,24 +41,24 @@ export const config = {
     }, 
     {
       name: "老婆1", 
-      id: "ohxOO6VskYv0Kuf-ywIZVRMpuXhk",
-      useTemplateId: "Wue80GrtY1nAia4tam-FDxZF9WNx9pwcBc0LMpANnu8",
-      province: "广东",
-      city: "河源",
-      openUrl: "https://baidu.com"
+      id: "",
+      useTemplateId: "",
+      province: "",
+      city: "",
+      openUrl: "https://wangxinleo.cn"
     }, 
     {
       name: "老婆2",
-      id: "ohxOO6VskYv0Kuf-ywIZVRMpuXhk",
-      useTemplateId: "Wue80GrtY1nAia4tam-FDxZF9WNx9pwcBc0LMpANnu8",
-      province: "广东",
-      city: "广州",
-      openUrl: "https://weibo.com"
+      id: "",
+      useTemplateId: "",
+      province: "",
+      city: "",
+      openUrl: "https://wangxinleo.cn"
     }, 
     {
       name: "老婆3", 
-      id: "ohxOO6VskYv0Kuf-ywIZVRMpuXhk", 
-      useTemplateId: "Wue80GrtY1nAia4tam-FDxZF9WNx9pwcBc0LMpANnu8",
+      id: "",
+      useTemplateId: "",
       province: "",
       city: "",
       openUrl: "https://wangxinleo.cn"
@@ -70,7 +70,7 @@ export const config = {
    */
 
   // 回调消息模板id, 用来看自己有没有发送成功的那个模板
-  CALLBACK_TEMPLATE_ID: "zjVglIuCXo34CsraXWEio1i3P7sZJ7IQEES93lDsgc4yOU",
+  CALLBACK_TEMPLATE_ID: "zjV1glIuCXo4Csr23aXWEio1iP74sZJ7IQEES95lDsg6c4yOU",
 
   // 接收成功回调消息的微信号，（一般来说只填自己的微信号, name填不填无所谓）
   CALLBACK_USERS: [
@@ -78,7 +78,7 @@ export const config = {
       // 一般都填自己
       name: "自己",
       // 自己的微信id，扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: "ohxOO36VskY3v0Kuf-ywIZVR3MpuXhk",
+      id: "ohx12OO6VskYv03Kuf43ywIZVRM4puXhk",
     }, 
   ],
     
@@ -88,9 +88,9 @@ export const config = {
 
   /** 天气相关 */
 
-  // 所在省份
+  // 默认所在省份, USERS 中没填的话, 会默认拿这里的省份
   PROVINCE: "广东",
-  // 所在城市
+  // 默认所在城市, USERS 中没填的话, 会默认拿这里的城市
   CITY: "惠州",
 
   /** 重要节日相关 */
