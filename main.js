@@ -1,15 +1,17 @@
 import dayjs from 'dayjs'
 import { selfDayjs, timeZone } from './src/utils/set-def-dayjs.js'
 import {
-  getAccessToken,
-  getWeather,
-  getCIBA,
-  getOneTalk,
-  getEarthyLoveWords,
-  getBirthdayMessage,
-  sendMessageReply,
-  getDateDiffList,
-  getSlotList
+    getAccessToken,
+    getWeather,
+    getCIBA,
+    getOneTalk,
+    getEarthyLoveWords,
+    getPoisonChickenSoup,
+    getMomentCopyrighting,
+    getBirthdayMessage,
+    sendMessageReply,
+    getDateDiffList,
+    getSlotList
 } from './src/services/index.js'
 import { config } from './config/index.js'
 import { toLowerLine, getColor } from './src/utils/index.js'
@@ -23,6 +25,10 @@ const getAggregatedData = async () => {
   const { hitokoto: oneTalk, from: talkFrom } = await getOneTalk(config.LITERARY_PREFERENCE)
   // 获取土味情话
   const earthyLoveWords = await getEarthyLoveWords()
+  // 获取朋友圈文案
+  const momentCopyrighting = await getMomentCopyrighting()
+  // 获取毒鸡汤
+  const poisonChickenSoup = await getPoisonChickenSoup()
   // 统计日列表计算日期差
   const dateDiffParams = getDateDiffList().map(item => {
     return { name: item.keyword, value: item.diffDay, color: getColor() }
@@ -69,6 +75,8 @@ const getAggregatedData = async () => {
       { name: toLowerLine('oneTalk'), value: oneTalk, color: getColor() },
       { name: toLowerLine('talkFrom'), value: talkFrom, color: getColor() },
       { name: toLowerLine('earthyLoveWords'), value: earthyLoveWords, color: getColor() },
+      { name: toLowerLine('momentCopyrighting'), value: momentCopyrighting, color: getColor() },
+      { name: toLowerLine('poisonChickenSoup'), value: poisonChickenSoup, color: getColor() },
     ].concat(dateDiffParams.concat(slotParams))
 
     user['wxTemplateParams'] = wxTemplateParams

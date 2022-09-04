@@ -32,37 +32,39 @@ wechat-public-account-push
 **天气类**
 
 
-| 参数 | 详细 | 示例 |
-|-----|-----|-----|
-|\* to_name.DATA | 收件人姓名 | 老婆3 |
-|date.DATA | YYYY-MM-DD 星期d | 2022-08-26 星期五 |
-|\* province.DATA | 省份 |  广东 |
-|city.DATA | 城市 |  惠州 |
-|weather.DATA | 天气 | 阵雨转多云 |
-|min_temperature.DATA | 最低气温 | 25℃ |
-|max_temperature.DATA | 最高气温 | 25℃ |
-|\* wind_direction.DATA | 风向 | 持续东南风 |
-|\* wind_scale.DATA | 风级 | <3级 |
+| 参数                     | 详细             | 示例             |
+|------------------------|----------------|----------------|
+| \* to_name.DATA        | 收件人姓名          | 老婆3            |
+| date.DATA              | YYYY-MM-DD 星期d | 2022-08-26 星期五 |
+| \* province.DATA       | 省份             |  广东            |
+| city.DATA              | 城市             |  惠州            |
+| weather.DATA           | 天气             | 阵雨转多云          |
+| min_temperature.DATA   | 最低气温           | 25℃            |
+| max_temperature.DATA   | 最高气温           | 25℃            |
+| \* wind_direction.DATA | 风向             | 持续东南风          |
+| \* wind_scale.DATA     | 风级             | <3级            |
 
 **每日N句**
 
 
-| 参数 | 详细 | 示例 |
-|-----|-----|-----|
-|note_en.DATA | 金山每日一句-英文 | Nothing in this world that's worth having comes easy. |
-|note_ch.DATA | 金山每日一句-中文 | 这世界上凡是值得拥有的东西，都不易获得。 |
-|\* one_talk.DATA | 每日一言-内容 | 愿你遍布祖国山河，觉得人生也值得 |
-|\* talk_from.DATA | 每日一言-来源 | 晓良 |
-|\* earthy_love_words.DATA | 土味情话(彩虹屁) | 我今晚会很忙，忙着跟你过日子 |
+| 参数                          | 详细         | 示例                                                    |
+|-----------------------------|------------|-------------------------------------------------------|
+| note_en.DATA                | 金山每日一句-英文  | Nothing in this world that's worth having comes easy. |
+| note_ch.DATA                | 金山每日一句-中文  | 这世界上凡是值得拥有的东西，都不易获得。                                  |
+| \* one_talk.DATA            | 每日一言-内容    | 愿你遍布祖国山河，觉得人生也值得                                      |
+| \* talk_from.DATA           | 每日一言-来源    | 晓良                                                    |
+| \* earthy_love_words.DATA   | 土味情话(彩虹屁)  | 我今晚会很忙，忙着跟你过日子                                        |
+| \* moment_copyrighting.DATA | 朋友圈文案      | 错过太阳就不要再错过月亮了                                         |
+| \* poison_chicken_soup.DATA | 毒鸡汤        | 我从不以强凌弱，我欺负他之前，真不晓得他比我弱。                              |
 
 **计时类**
 
 
-| 参数 | 详细 | 示例 |
-|-----|-----|-----|
-|~~love_day.DATA~~ | 已预置, 但是可以删掉, 在配置中自定义, 见下文 | 2674 |
-|~~marry_day.DATA~~ | 已预置, 但是可以删掉, 在配置中自定义, 见下文 | 965 |
-|birthday_message.DATA | 生日消息和节日消息 | 距离 宝贝 的生日还有122天，距离 中秋节还有30天 |
+| 参数                    | 详细                        | 示例                          |
+|-----------------------|---------------------------|-----------------------------|
+| ~~love_day.DATA~~     | 已预置, 但是可以删掉, 在配置中自定义, 见下文 | 2674                        |
+| ~~marry_day.DATA~~    | 已预置, 但是可以删掉, 在配置中自定义, 见下文 | 965                         |
+| birthday_message.DATA | 生日消息和节日消息                 | 距离 宝贝 的生日还有122天，距离 中秋节还有30天 |
 
 **自定义计时类**
 
@@ -96,15 +98,15 @@ wechat-public-account-push
 **推送回执(特有, 仅在其他模板发送完成后才能获取)**
 
 
-| 参数 | 详细 | 示例 |
-|-----|-----|-----|
-|\* post_time_zone.DATA | 服务器时区 | Asia/Shanghai |
-|\* post_time.DATA | 服务器执行脚本时间 | 2022-08-31 19:41:57 |
-|\* need_post_num.DATA | 共需推送N人 | 4 |
-|\* success_post_num.DATA | 成功推送N人 | 1 |
-|\* fail_post_num.DATA | 推送失败N人 | 3 |
-|\* success_post_ids.DATA | 推送成功的用户 | 老婆0 |
-|\* fail_post_ids.DATA | 推送失败的用户 | 老婆1,老婆2,老婆3 |
+| 参数                       | 详细        | 示例                  |
+|--------------------------|-----------|---------------------|
+| \* post_time_zone.DATA   | 服务器时区     | Asia/Shanghai       |
+| \* post_time.DATA        | 服务器执行脚本时间 | 2022-08-31 19:41:57 |
+| \* need_post_num.DATA    | 共需推送N人    | 4                   |
+| \* success_post_num.DATA | 成功推送N人    | 1                   |
+| \* fail_post_num.DATA    | 推送失败N人    | 3                   |
+| \* success_post_ids.DATA | 推送成功的用户   | 老婆0                 |
+| \* fail_post_ids.DATA    | 推送失败的用户   | 老婆1,老婆2,老婆3         |
 
 
 目前可参考的推送模板如下：
