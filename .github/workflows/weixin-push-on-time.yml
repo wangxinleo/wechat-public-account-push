@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   schedule:
     # 每天国际时间 02:10 运行, 即北京时间 10:10 运行
-    - cron: '10 2 * * *'
+    - cron: '10 7 * * *'
     
 jobs:
   build:
@@ -32,3 +32,7 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run dev --if-present
+    env: 
+      APP_ID: ${{secrets.APP_ID}}
+      APP_SECRET: ${{secrets.APP_SECRET}}
+

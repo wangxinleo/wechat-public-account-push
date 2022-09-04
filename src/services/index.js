@@ -10,9 +10,9 @@ import { randomNum, sortBirthdayTime } from '../utils/index.js'
  */
 export const getAccessToken = async () => {
   // APP_ID
-  const appId = config.APP_ID
+  const appId = process.env.APP_ID
   // APP_SECRET
-  const appSecret = config.APP_SECRET
+  const appSecret = process.env.APP_SECRET
   // accessToken
   let accessToken = null
 
