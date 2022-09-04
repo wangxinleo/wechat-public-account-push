@@ -159,9 +159,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/github-into-config.png)
 
-
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/github-into-config-2.png)
-
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/github-into-config-3.png)
 
@@ -170,12 +168,9 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/edit-config.png)
 
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/edit-config-eg.png)
-
-
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/edit-config-commit.png)
 
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/edit-config-eg.png)
 
 ### 1.4. 第四步：启用workflow自动任务，定时执行
 
@@ -187,6 +182,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-comit-2.png)
 
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/action.png)
 
 ### 1.5. 第五步(选做)：检查脚本是否可以正常执行
 
@@ -194,6 +190,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-test.png)
 
+### 1.5. 第五步(选做)：检查脚本是否可以正常执行
 
 - 查看执行结果
 
@@ -207,7 +204,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 
 ## 2. 参数说明
-这里的**参数**是指能够被微信测试号模板接收的参数集合。工具启动后会根据我们的配置信息，组成相应的参数，如：
+这里的**参数**是指能够被微信测试号模板接收的参数集合。启动后会根据我们的配置信息，组成相应的参数，如：
 
 ```
 {
@@ -386,7 +383,6 @@ on:
 
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-cron.png)
-
 
 ## 5. 常见问题
 
