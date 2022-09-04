@@ -14,7 +14,7 @@ export const config = {
    * [
    *  {
    *    // 想要发送的人的名字
-   *    name: "亲爱的陈先生",
+   *    name: "元元",
    *    // 扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
    *    id: "opgNz6J0TOn_yO2dJ4spGBxC5r08",
    *    // 你想对他发送的模板消息的模板ID
@@ -27,7 +27,7 @@ export const config = {
   USERS: [
     {
       // 想要发送的人的名字
-      name: "亲爱的陈先生",
+      name: "元元",
       // 扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
       id: "opgNz6J0TOn_yO2dJ4spGBxC5r08",
       // 你想对他发送的模板消息的模板ID
@@ -92,9 +92,9 @@ export const config = {
    * 节日时，name填写相应展示的节日，你可以填“被搭讪纪念日”
    */
   FESTIVALS: [
-    {"type": "生日", "name": "亲爱的陈先生", "year": "2004", "date": "02-23"},
+    {"type": "生日", "name": "元元", "year": "2004", "date": "02-23"},
     {"type": "节日", "name": "纪念日", "year": "2022", "date": "08-04"},
-    {"type": "生日", "name": "亲爱的揭女生", "year": "2002", "date": "06-20"},
+//     {"type": "生日", "name": "亲爱的揭女生", "year": "2002", "date": "06-20"},
 //     {"type": "节日", "name": "被搭讪纪念日", "year": "2020", "date": "02-15"},
   ],
 
