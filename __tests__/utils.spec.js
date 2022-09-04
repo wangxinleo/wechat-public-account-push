@@ -2,7 +2,7 @@ import { toLowerLine, getColor, randomNum, sortBirthdayTime } from '../src/utils
 import MockDate from 'mockdate'
 
 describe('utils', () => {
-    test.concurrent.each([
+    test.each([
         ['date', 'date'],
         ['minTemperature', 'min_temperature'],
         ['earthyLoveWords', 'earthy_love_words'],
@@ -11,11 +11,11 @@ describe('utils', () => {
         expect(toLowerLine(src)).toEqual(expected)
     })
 
-    test.concurrent('getColor', () => {
+    test('getColor', () => {
         expect(getColor()).toMatch(/#[\dA-Fa-f]{6}/)
     })
 
-    test.concurrent.each([
+    test.each([
         [1, 5],
         [10, 20],
         [50, 80]
@@ -25,7 +25,7 @@ describe('utils', () => {
         expect(random).toBeLessThanOrEqual(max)
     })
 
-    test.concurrent('sortBirthdayTime', () => {
+    test('sortBirthdayTime', () => {
         MockDate.set('2022-02-09')
         expect(sortBirthdayTime([
             {
