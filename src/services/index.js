@@ -259,7 +259,6 @@ export const sendMessage = async (templateId, user, accessToken, params) => {
   const url = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${ accessToken }`
 
   const wxTemplateData = {}
-  console.log('params', params)
   if (Object.prototype.toString.call(params) === '[object Array]') {
     params.map(item => {
       wxTemplateData[item.name] = {
@@ -278,8 +277,6 @@ export const sendMessage = async (templateId, user, accessToken, params) => {
     "topcolor": "#FF0000",
     "data": wxTemplateData
   }
-
-  console.log('将要发送以下内容: ', data)
 
   // 发送消息
   const res = await axios.post(url, data, {
