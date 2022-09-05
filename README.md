@@ -265,15 +265,19 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 **每日N句**
 
-| 参数                          | 详细         | 示例                                                    |
-|-----------------------------|------------|-------------------------------------------------------|
-| note_en.DATA                | 金山每日一句-英文  | Nothing in this world that's worth having comes easy. |
-| note_ch.DATA                | 金山每日一句-中文  | 这世界上凡是值得拥有的东西，都不易获得。                                  |
-| \* one_talk.DATA            | 每日一言-内容    | 愿你遍布祖国山河，觉得人生也值得                                      |
-| \* talk_from.DATA           | 每日一言-来源    | 晓良                                                    |
-| \* earthy_love_words.DATA   | 土味情话(彩虹屁)  | 我今晚会很忙，忙着跟你过日子                                        |
-| \* moment_copyrighting.DATA | 朋友圈文案      | 错过太阳就不要再错过月亮了                                         |
-| \* poison_chicken_soup.DATA | 毒鸡汤        | 我从不以强凌弱，我欺负他之前，真不晓得他比我弱。                              |
+| 参数                          | 详细        | 示例                                                    |
+|-----------------------------|-----------|-------------------------------------------------------|
+| note_en.DATA                | 金山每日一句-英文 | Nothing in this world that's worth having comes easy. |
+| note_ch.DATA                | 金山每日一句-中文 | 这世界上凡是值得拥有的东西，都不易获得。                                  |
+| \* one_talk.DATA            | 每日一言-内容   | 愿你遍布祖国山河，觉得人生也值得                                      |
+| \* talk_from.DATA           | 每日一言-来源   | 晓良                                                    |
+| \* earthy_love_words.DATA   | 土味情话(彩虹屁) | 我今晚会很忙，忙着跟你过日子                                        |
+| \* moment_copyrighting.DATA | 朋友圈文案     | 错过太阳就不要再错过月亮了                                         |
+| \* poison_chicken_soup.DATA | 毒鸡汤       | 我从不以强凌弱，我欺负他之前，真不晓得他比我弱。                              |
+| \* poetry_content.DATA      | 古诗古文-内容   | 举头望明月，低头思故乡。                                          |
+| \* poetry_title.DATA        | 古诗古文-标题   | 静夜思                                                   |
+| \* poetry_author.DATA       | 古诗古文-作者   | 李白                                                    |
+| \* poetry_dynasty.DATA      | 古诗古文-朝代   | 唐代                                                    |
 
 **计时类**
 

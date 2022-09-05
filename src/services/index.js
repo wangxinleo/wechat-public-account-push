@@ -173,7 +173,37 @@ export const getMomentCopyrighting = async () => {
 export const getPoisonChickenSoup = async () => {
   return await getWordsFromApiShadiao('du')
 }
-
+/**
+ * 古诗古文
+ * @returns {Promise<null|{dynasty: string, author: string, title: string, content: string}>} 古诗内容 标题 作者 朝代
+ */
+export const getPoetry = async () => {
+  const url = 'https://v2.jinrishici.com/sentence'
+  try {
+    const res = await axios.get(url, {
+      headers:{
+        'X-User-Token': 'FW8KNlfULPtZ9Ci6aNy8aTfPJPwI+/Ln'
+      },
+      responseType: 'json'
+    })
+    const { status, data, warning } = res.data || {}
+    if (status !== 'success') {
+      console.error('古诗古文：发生错误', warning || '')
+      return null
+    }
+    const { content = '', origin } = data || {}
+    const { title = '', author = '', dynasty = '' } = origin || {}
+    return {
+      content,
+      title,
+      author,
+      dynasty
+    }
+  } catch (e) {
+    console.error('古诗古文：发生错误', e)
+    return null
+  }
+}
 /**
  * 获取重要节日信息
  * @returns
