@@ -164,15 +164,22 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/github-into-config-3.png)
 
 
-- 按需填入相应配置后保存
+- 按提示填入相应配置后保存
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/edit-config.png)
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/edit-config-commit.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/edit-config-eg.png)
+### 1.4. 第四步：在私人仓库中写入自己公众号的信息，启用workflow自动任务，定时执行
 
-### 1.4. 第四步：启用workflow自动任务，定时执行
+- 写入个人信息
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/personal-infor-1.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/personal-infor-2.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/personal-infor-3.png)
+
 
 - 启用action脚本
 

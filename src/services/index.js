@@ -10,9 +10,9 @@ import { randomNum, sortBirthdayTime } from '../utils/index.js'
  */
 export const getAccessToken = async () => {
   // APP_ID
-  const appId = config.APP_ID
+  const appId = process.env.APP_ID
   // APP_SECRET
-  const appSecret = config.APP_SECRET
+  const appSecret = process.env.APP_SECRET
   // accessToken
   let accessToken = null
 
@@ -22,6 +22,9 @@ export const getAccessToken = async () => {
     const res = await axios.get(postUrl)
     if (res.status === 200 && res.data && res.data.access_token) {
       accessToken = res.data.access_token
+      console.log('---')
+      console.error('获取 accessToken: 成功', res.data)
+      console.log('---')
     } else {
       console.error('获取 accessToken: 请求失败', res.data.errmsg)
     }
