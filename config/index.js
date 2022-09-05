@@ -79,9 +79,9 @@ export const config = {
   /** 天气相关 */
 
   // 所在省份
-  PROVINCE: "江苏",
+  PROVINCE: "江西",
   // 所在城市
-  CITY: "南京",
+  CITY: "九江",
 
   /** 重要节日相关 */
 
