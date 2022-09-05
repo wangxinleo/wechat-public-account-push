@@ -10,11 +10,14 @@ import { randomNum, sortBirthdayTime } from '../utils/index.js'
  */
 export const getAccessToken = async () => {
   // APP_ID
-  const appId = process.env.APP_ID
+  const appId = config.APP_ID || process.env.APP_ID
   // APP_SECRET
-  const appSecret = process.env.APP_SECRET
+  const appSecret = config.APP_SECRET || process.env.APP_SECRET
   // accessToken
   let accessToken = null
+
+  console.log('已获取appId', appId)
+  console.log('已获取appSecret', appSecret)
 
   const postUrl = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${ appId }&secret=${ appSecret }`
 
@@ -291,13 +294,13 @@ export const sendMessage = async (templateId, user, accessToken, params) => {
 
 
   if (res.data && res.data.errcode === 0) {
-    console.log('推送消息成功')
+    console.log(`${user.name}: 推送消息成功`)
     return {
       name: user.name,
       success: true
     }
   }
-  console.error('推送失败！', res.data)
+  console.error(`${user.name}: 推送消息失败`, res.data)
   return {
     name: user.name,
     success: false
