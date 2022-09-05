@@ -4,10 +4,10 @@ export const config = {
    */
 
   // 公众号APP_ID
-  APP_ID: "wx13314e1804a6529e",
+  APP_ID: "wxfdf975b2dd36f593",
 
   // 公众号APP_SECRET
-  APP_SECRET: "10f3f209b0c8a8f8c38f6cd2f05829ed",
+  APP_SECRET: "d054883bffbc1145c0c8b008203c4ae4",
 
   /**
    * 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如
@@ -27,11 +27,11 @@ export const config = {
   USERS: [
     {
       // 想要发送的人的名字
-      name: "元元",
+      name: "宝宝",
       // 扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: "opgNz6J0TOn_yO2dJ4spGBxC5r08",
+      id: "osiQq6y6_qE4tyWTdvSG_ECvbl2k",
       // 你想对他发送的模板消息的模板ID
-      useTemplateId: "YLNf7qbXt4ZiAWaV48KEWTrWMyM_BarvsnbyzZplT84",
+      useTemplateId: "	eDISegl2lsuhbk0LsjXA9QhawAAkOVa6sBefD9Nf-3I",
       // 他点击详情后跳转的页面,你可以设置成微博的热榜，也可以设置成其他，网址一定要填对；不填对也没关系，随便你，会打不开而已。
       openUrl: "https://wangxinleo.cn"
     }, 
@@ -68,7 +68,7 @@ export const config = {
       // 一般都填自己
       name: "自己",
       // 自己的微信id，扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: "opgNz6J_nw2jiA7VGGbR3B0XQQDQ",
+      id: "osiQq69BxqK1jAXU3HxhJHaFNT-U",
     }, 
   ],
     
@@ -79,9 +79,9 @@ export const config = {
   /** 天气相关 */
 
   // 所在省份
-  PROVINCE: "广东",
+  PROVINCE: "江苏",
   // 所在城市
-  CITY: "湛江",
+  CITY: "南京",
 
   /** 重要节日相关 */
 
@@ -92,9 +92,9 @@ export const config = {
    * 节日时，name填写相应展示的节日，你可以填“被搭讪纪念日”
    */
   FESTIVALS: [
-    {"type": "生日", "name": "元元", "year": "2004", "date": "02-23"},
-    {"type": "节日", "name": "纪念日", "year": "2022", "date": "08-04"},
-//     {"type": "生日", "name": "亲爱的揭女生", "year": "2002", "date": "06-20"},
+    {"type": "生日", "name": "王先生", "year": "2001", "date": "04-28"},
+    {"type": "节日", "name": "纪念日", "year": "2018", "date": "06-02"},
+    {"type": "生日", "name": "宝宝", "year": "2001", "date": "05-12"},
 //     {"type": "节日", "name": "被搭讪纪念日", "year": "2020", "date": "02-15"},
   ],
 
@@ -113,7 +113,7 @@ export const config = {
     * */
   CUSTOMIZED_DATE_LIST: [
     // 在一起的日子
-    {"keyword": "love_day", date: "2022-08-04"},
+    {"keyword": "love_day", date: "2018-06-02"},
     // 结婚纪念日
 //     {"keyword": "marry_day", date: "2020-02-15"},
     // 退伍日, 不用可以删掉
