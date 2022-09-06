@@ -21,15 +21,19 @@ wechat-public-account-push
 
 **wechat-public-account-push 是一个用于微信公众号/微信测试号给用户执行微信推送的脚本，改编自目前小红书/知乎突然火起来的【给女朋友的七夕浪漫，微信自动推送消息】，用Nodejs实现而成。**
 
+[>>> 点这里获取更新公告✨](https://github.com/wangxinleo/wechat-public-account-push/discussions/categories/announcements)
+
 详细功能如下：
 
 - **支持多个收件人设置成不同的测试号模板，专属定制更贴心**
 - **推送每日天气**
 - **文艺青年专属每日一句**
+- **古诗古文** 感谢 @ZzqiZQute
 - **彩虹屁** 感谢 @ZzqiZQute
 - **朋友圈文案** 感谢 @ZzqiZQute
 - **毒鸡汤** 感谢 @ZzqiZQute
 - **根据配置就近推送前N个值得纪念的日子**
+- **自定义出参，模板定制更个性**
 - **推送回执**
 - **不需要拥有服务器，白嫖actions执行，每天定时发送**
 - **理论上支持所有远端的日志推送（目前仅支持测试号，没时间做）**
@@ -265,15 +269,19 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 **每日N句**
 
-| 参数                          | 详细         | 示例                                                    |
-|-----------------------------|------------|-------------------------------------------------------|
-| note_en.DATA                | 金山每日一句-英文  | Nothing in this world that's worth having comes easy. |
-| note_ch.DATA                | 金山每日一句-中文  | 这世界上凡是值得拥有的东西，都不易获得。                                  |
-| \* one_talk.DATA            | 每日一言-内容    | 愿你遍布祖国山河，觉得人生也值得                                      |
-| \* talk_from.DATA           | 每日一言-来源    | 晓良                                                    |
-| \* earthy_love_words.DATA   | 土味情话(彩虹屁)  | 我今晚会很忙，忙着跟你过日子                                        |
-| \* moment_copyrighting.DATA | 朋友圈文案      | 错过太阳就不要再错过月亮了                                         |
-| \* poison_chicken_soup.DATA | 毒鸡汤        | 我从不以强凌弱，我欺负他之前，真不晓得他比我弱。                              |
+| 参数                          | 详细        | 示例                                                    |
+|-----------------------------|-----------|-------------------------------------------------------|
+| note_en.DATA                | 金山每日一句-英文 | Nothing in this world that's worth having comes easy. |
+| note_ch.DATA                | 金山每日一句-中文 | 这世界上凡是值得拥有的东西，都不易获得。                                  |
+| \* one_talk.DATA            | 每日一言-内容   | 愿你遍布祖国山河，觉得人生也值得                                      |
+| \* talk_from.DATA           | 每日一言-来源   | 晓良                                                    |
+| \* earthy_love_words.DATA   | 土味情话(彩虹屁) | 我今晚会很忙，忙着跟你过日子                                        |
+| \* moment_copyrighting.DATA | 朋友圈文案     | 错过太阳就不要再错过月亮了                                         |
+| \* poison_chicken_soup.DATA | 毒鸡汤       | 我从不以强凌弱，我欺负他之前，真不晓得他比我弱。                              |
+| \* poetry_content.DATA      | 古诗古文-内容   | 举头望明月，低头思故乡。                                          |
+| \* poetry_title.DATA        | 古诗古文-标题   | 静夜思                                                   |
+| \* poetry_author.DATA       | 古诗古文-作者   | 李白                                                    |
+| \* poetry_dynasty.DATA      | 古诗古文-朝代   | 唐代                                                    |
 
 **计时类**
 

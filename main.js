@@ -1,17 +1,18 @@
 import dayjs from 'dayjs'
 import { selfDayjs, timeZone } from './src/utils/set-def-dayjs.js'
 import {
-    getAccessToken,
-    getWeather,
-    getCIBA,
-    getOneTalk,
-    getEarthyLoveWords,
-    getPoisonChickenSoup,
-    getMomentCopyrighting,
-    getBirthdayMessage,
-    sendMessageReply,
-    getDateDiffList,
-    getSlotList
+  getAccessToken,
+  getWeather,
+  getCIBA,
+  getOneTalk,
+  getEarthyLoveWords,
+  getPoisonChickenSoup,
+  getMomentCopyrighting,
+  getBirthdayMessage,
+  sendMessageReply,
+  getDateDiffList,
+  getSlotList,
+  getPoetry
 } from './src/services/index.js'
 import { config } from './config/index.js'
 import { toLowerLine, getColor } from './src/utils/index.js'
@@ -29,6 +30,8 @@ const getAggregatedData = async () => {
   const momentCopyrighting = await getMomentCopyrighting()
   // 获取毒鸡汤
   const poisonChickenSoup = await getPoisonChickenSoup()
+  // 获取古诗古文
+  const poetry = await getPoetry()
   // 统计日列表计算日期差
   const dateDiffParams = getDateDiffList().map(item => {
     return { name: item.keyword, value: item.diffDay, color: getColor() }
@@ -77,6 +80,10 @@ const getAggregatedData = async () => {
       { name: toLowerLine('earthyLoveWords'), value: earthyLoveWords, color: getColor() },
       { name: toLowerLine('momentCopyrighting'), value: momentCopyrighting, color: getColor() },
       { name: toLowerLine('poisonChickenSoup'), value: poisonChickenSoup, color: getColor() },
+      { name: toLowerLine('poetryContent'), value: poetry.content, color: getColor() },
+      { name: toLowerLine('poetryAuthor'), value: poetry.author, color: getColor() },
+      { name: toLowerLine('poetryDynasty'), value: poetry.dynasty, color: getColor() },
+      { name: toLowerLine('poetryTitle'), value: poetry.title, color: getColor() },
     ].concat(dateDiffParams.concat(slotParams))
 
     user['wxTemplateParams'] = wxTemplateParams
