@@ -18,7 +18,8 @@ import {
     getSlotList,
     getBirthdayMessage,
     sendMessage,
-    sendMessageReply
+    sendMessageReply,
+    getPoetry
 } from '../src/services'
 import MockDate from 'mockdate'
 
@@ -396,6 +397,58 @@ describe('services', () => {
             needPostNum: 2,
             successPostIds: 'me,you',
             successPostNum: 2
+        })
+    })
+    test('getPoetry', async () => {
+        axios.get = async () => {
+            throw new Error
+        }
+        expect(await getPoetry()).toEqual(null)
+        axios.get = async () => {
+            return {
+                data: {
+                    status: 'failed'
+                }
+            }
+        }
+        expect(await getPoetry()).toEqual(null)
+        axios.get = async () => {
+            return {}
+        }
+        expect(await getPoetry()).toEqual(null)
+        axios.get = async () => {
+            return {
+                data: {
+                    status: 'success'
+                }
+            }
+        }
+        expect(await getPoetry()).toEqual({
+            author: '',
+            content: '',
+            dynasty: '',
+            title: ''
+        })
+        axios.get = async () => {
+            return {
+                data: {
+                    status: 'success',
+                    data: {
+                        content: '床前明月光',
+                        origin: {
+                            author: '李白',
+                            dynasty: '唐',
+                            title: '静夜思'
+                        }
+                    }
+                }
+            }
+        }
+        expect(await getPoetry()).toEqual({
+            content: '床前明月光',
+            author: '李白',
+            dynasty: '唐',
+            title: '静夜思'
         })
     })
 })
