@@ -193,7 +193,7 @@ describe('services', () => {
     })
     test('getBirthdayMessage', () => {
         config.FESTIVALS = [
-            { type: '生日', name: '老婆', year: '1996', date: '09-02' },
+            { type: '*生日', name: '老婆', year: '1999', date: '09-19' },
             { type: '节日', name: '结婚纪念日', year: '2020', date: '09-03' },
             { type: '生日', name: '李四', year: '1996', date: '09-31' },
             { type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
@@ -203,24 +203,24 @@ describe('services', () => {
         expect(getBirthdayMessage()).toEqual(`
 今天是 结婚纪念日 哦，要开心！ 
 距离 李四 的26岁生日还有28天 
+距离 老婆 的23岁生日还有41天 
 距离 被搭讪纪念日 还有363天 
-距离 老婆 的27岁生日还有364天 
 `.trimStart())
         MockDate.reset()
         MockDate.set('2022-09-31')
         expect(getBirthdayMessage()).toEqual(`
 今天是 李四 的26岁生日哦，祝李四生日快乐！ 
+距离 老婆 的23岁生日还有13天 
 距离 被搭讪纪念日 还有335天 
-距离 老婆 的27岁生日还有336天 
 距离 结婚纪念日 还有337天 
 `.trimStart())
         MockDate.reset()
-        MockDate.set('1996-09-02')
+        MockDate.set('1999-10-27')
         expect(getBirthdayMessage()).toEqual(`
 今天是 老婆 的生日哦，祝老婆生日快乐！ 
-距离 结婚纪念日 还有1天 
-距离 李四 的生日还有29天 
-距离 被搭讪纪念日 还有364天 
+距离 被搭讪纪念日 还有310天 
+距离 结婚纪念日 还有312天 
+距离 李四 的4岁生日还有340天 
 `.trimStart())
         MockDate.reset()
         config.FESTIVALS_LIMIT = -1
@@ -235,6 +235,21 @@ describe('services', () => {
             { type: '测试日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
         ]
         expect(getBirthdayMessage()).toEqual('')
+        config.FESTIVALS = null
+        expect(getBirthdayMessage()).toEqual('')
+        MockDate.set('1999-10-28')
+        config.FESTIVALS = [
+            { type: '*生日', name: '老婆', year: '1999', date: '09-19' },
+            { type: '节日', name: '结婚纪念日', year: '2020', date: '09-03' },
+            { type: '生日', name: '李四', year: '1996', date: '09-31' },
+            { type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
+        ]
+        expect(getBirthdayMessage()).toEqual(`
+距离 被搭讪纪念日 还有309天 
+距离 结婚纪念日 还有311天 
+距离 李四 的4岁生日还有339天 
+距离 老婆 的生日还有365天 
+`.trimStart())
     })
     test('getDateDiffList', () => {
         config.CUSTOMIZED_DATE_LIST = [
@@ -251,11 +266,15 @@ describe('services', () => {
         MockDate.set('2022-09-03')
         expect(getDateDiffList()).toEqual([{
             date: '2015-05-01',
-            diffDay: 2682,
+            diffDay: 2683,
             keyword: 'love_day'
-        }, { date: '2020-01-04', diffDay: 973, keyword: 'marry_day' }, {
+        }, {
+            date: '2020-01-04',
+            diffDay: 974,
+            keyword: 'marry_day'
+        }, {
             date: '2022-08-31',
-            diffDay: 3,
+            diffDay: 4,
             keyword: 'ex_day'
         }])
         MockDate.reset()
