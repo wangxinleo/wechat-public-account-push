@@ -261,7 +261,7 @@ export const getDateDiffList = () => {
   const dateList = config.CUSTOMIZED_DATE_LIST
 
   dateList.forEach(item => {
-    item['diffDay'] = Math.floor(dayjs().diff(dayjs(item.date), 'day', true))
+    item['diffDay'] = Math.ceil(dayjs().diff(dayjs(item.date), 'day', true))
   })
 
   return dateList

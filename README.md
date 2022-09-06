@@ -21,15 +21,19 @@ wechat-public-account-push
 
 **wechat-public-account-push 是一个用于微信公众号/微信测试号给用户执行微信推送的脚本，改编自目前小红书/知乎突然火起来的【给女朋友的七夕浪漫，微信自动推送消息】，用Nodejs实现而成。**
 
+[>>> 点这里获取更新公告✨](https://github.com/wangxinleo/wechat-public-account-push/discussions/categories/announcements)
+
 详细功能如下：
 
 - **支持多个收件人设置成不同的测试号模板，专属定制更贴心**
 - **推送每日天气**
 - **文艺青年专属每日一句**
+- **古诗古文** 感谢 @ZzqiZQute
 - **彩虹屁** 感谢 @ZzqiZQute
 - **朋友圈文案** 感谢 @ZzqiZQute
 - **毒鸡汤** 感谢 @ZzqiZQute
 - **根据配置就近推送前N个值得纪念的日子**
+- **自定义出参，模板定制更个性**
 - **推送回执**
 - **不需要拥有服务器，白嫖actions执行，每天定时发送**
 - **理论上支持所有远端的日志推送（目前仅支持测试号，没时间做）**
