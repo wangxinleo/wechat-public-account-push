@@ -263,7 +263,7 @@ describe('services', () => {
             // {"keyword": "sakana_day", date: "2022-01-06"},
             // ...
         ]
-        MockDate.set('2022-09-03')
+        MockDate.set('2022-09-03 08:00:00')
         expect(getDateDiffList()).toEqual([{
             date: '2015-05-01',
             diffDay: 2683,
