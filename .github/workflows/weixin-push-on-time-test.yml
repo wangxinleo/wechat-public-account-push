@@ -23,7 +23,7 @@ jobs:
     # 添加定时任务指定运行分支 默认为master
     - uses: actions/checkout@v3
       with:
-          ref: 'master'
+          ref: 'feature/develop'
           
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
