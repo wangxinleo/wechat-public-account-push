@@ -106,7 +106,27 @@ const getCallbackTemplateParams = (messageReply) => {
   ]
 }
 
-const main = async () => {
+const mainForTest = async () => {
+    // 测试UTC时间在actions里的区别
+    console.log('dayjs', dayjs())
+    console.log('selfDayjs', selfDayjs())
+    console.log('selfDayjs 离节日', Math.ceil(selfDayjs(selfDayjs().format('YYYY') + '-09-08').diff(selfDayjs(), 'day', true)))
+    console.log('selfDayjs 周岁', selfDayjs().diff('2021-01-01', 'year'))
+    console.log('selfDayjs 恋爱N天', Math.ceil(selfDayjs().diff(selfDayjs('2022-09-06'), 'day', true)))
+    console.log('dayjs 离节日', Math.ceil(dayjs(dayjs().format('YYYY') + '-09-08').diff(dayjs(), 'day', true)))
+    console.log('dayjs 周岁', dayjs().diff('2021-01-01', 'year'))
+    console.log('dayjs 恋爱N天', Math.ceil(dayjs().diff(dayjs('2022-09-06'), 'day', true)))
+
+
+    // 处理好的用户数据
+    const aggregatedData = await getAggregatedData()
+    aggregatedData.forEach(item => {
+      console.log(item.wxTemplateParams)
+    })
+
+}
+
+const mainForProd = async () => {
   // 获取accessToken
   const accessToken = await getAccessToken()
 
@@ -134,6 +154,14 @@ const main = async () => {
   // 发送回执
   if (config.CALLBACK_TEMPLATE_ID) {
     await sendMessageReply(config.CALLBACK_USERS, accessToken, config.CALLBACK_TEMPLATE_ID, callbackTemplateParams)
+  }
+}
+
+const main = () => {
+  if (process.env.APP_MODE === 'test'){
+    mainForTest()
+  } else {
+    mainForProd()
   }
 }
 

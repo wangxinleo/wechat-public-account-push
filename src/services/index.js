@@ -1,8 +1,8 @@
 import { config } from '../../config/index.js'
 import { CITY_INFO, TYPE_LIST } from '../store/index.js'
 import axios from 'axios'
-import dayjs from 'dayjs'
 import { randomNum, sortBirthdayTime } from '../utils/index.js'
+import { selfDayjs } from '../utils/set-def-dayjs.js'
 
 /**
  * 获取 accessToken
@@ -50,7 +50,7 @@ export const getWeather = async (province, city) => {
   }
   const address = CITY_INFO[province][city]['AREAID']
 
-  const url = `http://d1.weather.com.cn/dingzhi/${ address }.html?_=${ dayjs().valueOf() }`
+  const url = `http://d1.weather.com.cn/dingzhi/${ address }.html?_=${ selfDayjs().valueOf() }`
 
   const res = await axios.get(url, {
     headers: {
@@ -223,7 +223,7 @@ export const getBirthdayMessage = () => {
       // 生日相关
       if (item.type === '生日') {
         // 获取周岁
-        const age = dayjs().diff(item.year + '-' + item.date, 'year')
+        const age = selfDayjs().diff(item.year + '-' + item.date, 'year')
 
         if (item.diffDay === 0) {
           message = `今天是 ${ item.name } 的${ age ? age + '岁' : '' }生日哦，祝${ item.name }生日快乐！`
@@ -261,7 +261,7 @@ export const getDateDiffList = () => {
   const dateList = config.CUSTOMIZED_DATE_LIST
 
   dateList.forEach(item => {
-    item['diffDay'] = Math.ceil(dayjs().diff(dayjs(item.date), 'day', true))
+    item['diffDay'] = Math.ceil(selfDayjs().diff(selfDayjs(item.date), 'day', true))
   })
 
   return dateList
