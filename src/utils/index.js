@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import { selfDayjs } from './set-def-dayjs.js';
 
 /**
  * 驼峰转下划线
@@ -42,11 +42,11 @@ export const randomNum = (min, max) => {
  */
 export const sortBirthdayTime = (list) => {
   list.forEach(item => {
-    const diffDay = Math.ceil(dayjs(dayjs().format('YYYY') + '-' + (item.useLunar ? item.solarDateInThisYear : item.date)).diff(dayjs(), 'day', true))
+    const diffDay = Math.ceil(selfDayjs(selfDayjs().format('YYYY') + '-' + (item.useLunar ? item.solarDateInThisYear : item.date)).diff(selfDayjs(), 'day', true))
     if (diffDay >= 0) {
       item['diffDay'] = diffDay
     } else {
-      item['diffDay'] = Math.ceil(dayjs(dayjs().add(1, 'year').format('YYYY') + '-' + (item.useLunar ? item.solarDateInThisYear : item.date)).diff(dayjs(), 'day', true))
+      item['diffDay'] = Math.ceil(selfDayjs(selfDayjs().add(1, 'year').format('YYYY') + '-' + (item.useLunar ? item.solarDateInThisYear : item.date)).diff(selfDayjs(), 'day', true))
     }
   })
   return list.sort((a, b) =>
