@@ -7,7 +7,7 @@ dayjs.extend(utc)
 
 export const selfDayjs = (time) => {
   if (dayjs.tz.guess() === 'UTC' && time) {
-    return dayjs(time).subtract('8', 'H')
+    return dayjs(time).subtract('8', 'hour')
   }
   return dayjs(time).tz('Asia/Shanghai')
 
