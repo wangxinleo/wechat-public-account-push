@@ -109,7 +109,7 @@ const getCallbackTemplateParams = (messageReply) => {
 const mainForTest = async () => {
     // 测试UTC时间在actions里的区别
     console.log('dayjs', dayjs())
-    console.log('selfDayjs', selfDayjs())
+    console.log('selfDayjs', selfDayjs('2022-09-08'))
     console.log('selfDayjs 离节日', Math.ceil(selfDayjs(selfDayjs().format('YYYY') + '-09-08').diff(selfDayjs(), 'day', true)))
     console.log('selfDayjs 周岁', selfDayjs().diff('2021-01-01', 'year'))
     console.log('selfDayjs 恋爱N天', Math.ceil(selfDayjs().diff(selfDayjs('2022-09-06'), 'day', true)))
