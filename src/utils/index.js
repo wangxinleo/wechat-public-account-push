@@ -55,10 +55,15 @@ export const sortBirthdayTime = (list) => {
   )
 }
 
-const year = selfDayjs().year()
-const constellationCn = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
-const constellationEn = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces']
+/**
+ * 根据月日获取星座信息
+ * @param {string} date 
+ * @returns
+ */
 export const getConstellation = (date) => {
+  const year = selfDayjs().year()
+  const constellationCn = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
+  const constellationEn = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces']
   const [month, day] = date.split('-').map(Number)
   const solar = Solar.fromYmd(year, month, day)
   const cn = solar.getXingZuo();

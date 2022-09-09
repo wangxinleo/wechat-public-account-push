@@ -148,6 +148,19 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 {{note_ch.DATA}}
 ```
 
+模板标题: `推送完成提醒`
+
+模板内容:
+
+```
+服务器信息：{{post_time_zone.DATA}} {{post_time.DATA}}
+
+共推送 {{need_post_num.DATA}}  人
+成功: {{success_post_num.DATA}} | 失败: {{fail_post_num.DATA}}
+成功用户: {{success_post_ids.DATA}}
+失败用户: {{fail_post_ids.DATA}}
+```
+
 
 记下模板代码
 
@@ -283,10 +296,16 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 | \* poetry_title.DATA                    | 古诗古文-标题   | 静夜思                                                   |
 | \* poetry_author.DATA                   | 古诗古文-作者   | 李白                                                    |
 | \* poetry_dynasty.DATA                  | 古诗古文-朝代   | 唐代                                                    |
-| \* **$constellation**.DATA <sup>1</sup> | 星座        | 天蝎                                                    |
-| \* **$fortune**.DATA <sup>2</sup>       | 星座运势      | 部分天蝎会在今年出现心情低落、沮丧的情况，建议大家平时多多放松自己，不要过于紧张。             |
-1. 需要编辑配置文件的`CONSTELLATION_FORTUNE`字段；需要将`$constellation`替换为：`{名称}_星座`，例：需要`老婆0`的星座名称，则模板为 `老婆0_星座.DATA`
-2. 需要编辑配置文件的`CONSTELLATION_FORTUNE`字段；需要将`$fortune`替换为：`{名称}_{今日/明日/本周/本月/今年}_{综合运势/爱情运势/事业学业/财富运势/健康运势}`，例：需要`老婆0` `今日` 的 `财富运势`，则模板为 `老婆0_今日_财富运势.DATA`
+
+**星座运势**
+
+| 参数                    | 详细                        | 示例                          |
+|-----------------------|---------------------------|-----------------------------|
+| comprehensive_horoscope.DATA    | 综合运势 | 太多了，不示例了                        |
+| love_horoscope.DATA    | 爱情运势 |  太多了，不示例了                       |
+| career_horoscope.DATA | 事业学业             |  太多了，不示例了  |
+| healthy_horoscope.DATA | 健康运势            |  太多了，不示例了  |
+
 
 **计时类**
 
@@ -310,6 +329,8 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 ```
 
 这个 `ex_day.DATA` 在上面的出参表并没有定义啊，怎么设置它呢? 
+
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=y0plwm9zhOI35EwlOdRh372g4KWbqMSt&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="wechat-public-account-push 交流群" title="wechat-public-account-push 交流群"></a>
 
 现在在配置文件中就可以进行设置了！
 
@@ -356,7 +377,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 ```
 
 
-**推送提醒**
+**推送完成提醒**
 
 ```
 服务器信息：{{post_time_zone.DATA}} {{post_time.DATA}}
@@ -381,6 +402,7 @@ wechat-public-account-push/.github/workflows/weixin-push-on-time.yml
 
 目前脚本默认执行时间为 **每天的 北京时间上午 10:10**
 
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=y0plwm9zhOI35EwlOdRh372g4KWbqMSt&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="wechat-public-account-push 交流群" title="wechat-public-account-push 交流群"></a>
 
 如果想要变更脚本定时任务执行时间,可以更改以下代码段
 
@@ -507,11 +529,11 @@ on:
 
 不管文档写得多详细，还是会有人不会呐！还是建个群答疑吧! 
 
-不会从9月1号之后群里永远都只有我一个人吧！多尴尬呀哈哈哈哈~
+群我隐藏在文档里了哼哼，不仔细看文档可找不到加群的地方哦！
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/wechat-public-account-push.png)
+<!-- ![图片无法查看请移步顶部访问 国内备用仓库地址](img/wechat-public-account-push.png)
 
-<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=y0plwm9zhOI35EwlOdRh372g4KWbqMSt&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="wechat-public-account-push 交流群" title="wechat-public-account-push 交流群"></a>
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=y0plwm9zhOI35EwlOdRh372g4KWbqMSt&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="wechat-public-account-push 交流群" title="wechat-public-account-push 交流群"></a> -->
 
 ## 10. 其他
 
