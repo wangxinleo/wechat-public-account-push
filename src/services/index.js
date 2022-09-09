@@ -6,7 +6,7 @@ import { JSDOM } from 'jsdom'
 
 import { config } from '../../config/index.js'
 import { CITY_INFO, DEFAULT_OUTPUT, TYPE_LIST } from '../store/index.js'
-import { 
+import {
   getConstellation,
   randomNum,
   sortBirthdayTime,
@@ -311,7 +311,7 @@ export const getBirthdayMessage = (festivals) => {
  * @returns
  */
 export const getDateDiffList = (customizedDateList) => {
-  if (Object.prototype.toString.call(customizedDateList) !== '[object Array]' 
+  if (Object.prototype.toString.call(customizedDateList) !== '[object Array]'
   && Object.prototype.toString.call(config.CUSTOMIZED_DATE_LIST) !== '[object Array]') {
     return []
   }
@@ -329,7 +329,7 @@ export const getDateDiffList = (customizedDateList) => {
 
 /**
  * 自定义插槽信息
- * @returns 
+ * @returns
  */
 export const getSlotList = () => {
   if (Object.prototype.toString.call(config.SLOT_LIST) !== '[object Array]') {
@@ -426,15 +426,15 @@ export const sendMessageReply = async (users, accessToken, templateId = null, pa
   let failPostNum = 0
   const successPostIds = []
   const failPostIds = []
-  users.forEach(async user => {
+  for (const user of users) {
     allPromise.push(sendMessage(
       templateId || user.useTemplateId,
       user,
       accessToken,
       params || user.wxTemplateParams
     ))
-  })
-  const resList = await Promise.all(allPromise).catch(err => err)
+  }
+  const resList = await Promise.all(allPromise);
   resList.forEach(item => {
     if (item.success) {
       successPostNum++
@@ -458,7 +458,7 @@ export const sendMessageReply = async (users, accessToken, templateId = null, pa
  * 星座运势请求
  * @param {string} date
  * @param {string} dateType
- * @returns 
+ * @returns
  */
 export async function getConstellationFortune(date, dateType) {
   const res = []
@@ -530,23 +530,24 @@ export async function getConstellationFortune(date, dateType) {
   } catch (e) {
     console.error('星座运势：发生错误', e)
     return res
-  } 
+  }
 }
 
 /**
  * 获取处理好的用户数据
- * @returns 
+ * @returns
  */
+// istanbul ignore next
 export const getAggregatedData = async () => {
 
   const weekList = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
   // 获取金山词霸每日一句
-  const { 
+  const {
     content: noteEn = DEFAULT_OUTPUT.noteEn,
     note: noteCh = DEFAULT_OUTPUT.noteCh
   } = await getCIBA()
   // 获取每日一言
-  const { 
+  const {
     hitokoto: oneTalk = DEFAULT_OUTPUT.oneTalk,
     from: talkFrom = DEFAULT_OUTPUT.talkFrom
   } = await getOneTalk(config.LITERARY_PREFERENCE)
@@ -636,9 +637,10 @@ export const getAggregatedData = async () => {
 
 /**
  * 获取处理好的回执消息
- * @param {*} messageReply 
- * @returns 
+ * @param {*} messageReply
+ * @returns
  */
+// istanbul ignore next
 export const getCallbackTemplateParams = (messageReply) => {
   const postTimeZone = timeZone()
   const postTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
