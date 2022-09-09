@@ -5,9 +5,6 @@ name: weixin-push-on-time-test
 
 on:
   workflow_dispatch:
-  schedule:
-    # 每天国际时间 02:10 运行, 即北京时间 10:10 运行
-    - cron: '2 22 * * *'
     
 jobs:
   build:
@@ -23,7 +20,7 @@ jobs:
     # 添加定时任务指定运行分支 默认为master
     - uses: actions/checkout@v3
       with:
-          ref: 'master'
+          ref: 'feature/develop'
           
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3

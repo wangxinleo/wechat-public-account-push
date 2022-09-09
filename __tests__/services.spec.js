@@ -1,9 +1,10 @@
 import { jest } from '@jest/globals'
 
-jest.mock('axios')
-jest.mock('../config/index.js')
 import axios from 'axios'
 import { config } from '../config/index.js'
+
+jest.mock('axios')
+jest.mock('../config/index.js')
 
 import {
     getWeather,
@@ -19,7 +20,8 @@ import {
     getBirthdayMessage,
     sendMessage,
     sendMessageReply,
-    getPoetry
+    getPoetry,
+    getConstellationFortune
 } from '../src/services'
 import MockDate from 'mockdate'
 
@@ -193,7 +195,7 @@ describe('services', () => {
     })
     test('getBirthdayMessage', () => {
         config.FESTIVALS = [
-            { type: '生日', name: '老婆', year: '1996', date: '09-02' },
+            { type: '*生日', name: '老婆', year: '1999', date: '09-19' },
             { type: '节日', name: '结婚纪念日', year: '2020', date: '09-03' },
             { type: '生日', name: '李四', year: '1996', date: '09-31' },
             { type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
@@ -203,24 +205,24 @@ describe('services', () => {
         expect(getBirthdayMessage()).toEqual(`
 今天是 结婚纪念日 哦，要开心！ 
 距离 李四 的26岁生日还有28天 
+距离 老婆 的23岁生日还有41天 
 距离 被搭讪纪念日 还有363天 
-距离 老婆 的27岁生日还有364天 
 `.trimStart())
         MockDate.reset()
         MockDate.set('2022-09-31')
         expect(getBirthdayMessage()).toEqual(`
 今天是 李四 的26岁生日哦，祝李四生日快乐！ 
+距离 老婆 的23岁生日还有13天 
 距离 被搭讪纪念日 还有335天 
-距离 老婆 的27岁生日还有336天 
 距离 结婚纪念日 还有337天 
 `.trimStart())
         MockDate.reset()
-        MockDate.set('1996-09-02')
+        MockDate.set('1999-10-27')
         expect(getBirthdayMessage()).toEqual(`
 今天是 老婆 的生日哦，祝老婆生日快乐！ 
-距离 结婚纪念日 还有1天 
-距离 李四 的生日还有29天 
-距离 被搭讪纪念日 还有364天 
+距离 被搭讪纪念日 还有310天 
+距离 结婚纪念日 还有312天 
+距离 李四 的4岁生日还有340天 
 `.trimStart())
         MockDate.reset()
         config.FESTIVALS_LIMIT = -1
@@ -235,6 +237,21 @@ describe('services', () => {
             { type: '测试日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
         ]
         expect(getBirthdayMessage()).toEqual('')
+        config.FESTIVALS = null
+        expect(getBirthdayMessage()).toEqual('')
+        MockDate.set('1999-10-28')
+        config.FESTIVALS = [
+            { type: '*生日', name: '老婆', year: '1999', date: '09-19' },
+            { type: '节日', name: '结婚纪念日', year: '2020', date: '09-03' },
+            { type: '生日', name: '李四', year: '1996', date: '09-31' },
+            { type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
+        ]
+        expect(getBirthdayMessage()).toEqual(`
+距离 被搭讪纪念日 还有309天 
+距离 结婚纪念日 还有311天 
+距离 李四 的4岁生日还有339天 
+距离 老婆 的生日还有365天 
+`.trimStart())
     })
     test('getDateDiffList', () => {
         config.CUSTOMIZED_DATE_LIST = [
@@ -248,14 +265,18 @@ describe('services', () => {
             // {"keyword": "sakana_day", date: "2022-01-06"},
             // ...
         ]
-        MockDate.set('2022-09-03')
+        MockDate.set('2022-09-03 08:00:00')
         expect(getDateDiffList()).toEqual([{
             date: '2015-05-01',
-            diffDay: 2682,
+            diffDay: 2683,
             keyword: 'love_day'
-        }, { date: '2020-01-04', diffDay: 973, keyword: 'marry_day' }, {
+        }, {
+            date: '2020-01-04',
+            diffDay: 974,
+            keyword: 'marry_day'
+        }, {
             date: '2022-08-31',
-            diffDay: 3,
+            diffDay: 4,
             keyword: 'ex_day'
         }])
         MockDate.reset()
@@ -345,7 +366,7 @@ describe('services', () => {
         expect(await sendMessageReply([
             { id: '123', name: 'me' },
             { id: '456', name: 'you' }
-        ],'accessToken','templateId', [{
+        ], 'accessToken', 'templateId', [{
             name: 'name1',
             value: 'value1',
             color: 'color1'
@@ -366,7 +387,7 @@ describe('services', () => {
         expect(await sendMessageReply([
             { id: '123', name: 'me' },
             { id: '456', name: 'you' }
-        ],'accessToken')).toEqual({
+        ], 'accessToken')).toEqual({
             failPostIds: 'me,you',
             failPostNum: 2,
             needPostNum: 2,
@@ -383,7 +404,7 @@ describe('services', () => {
         expect(await sendMessageReply([
             { id: '123', name: 'me' },
             { id: '456', name: 'you' }
-        ],'accessToken','templateId', [{
+        ], 'accessToken', 'templateId', [{
             name: 'name1',
             value: 'value1',
             color: 'color1'
@@ -451,4 +472,64 @@ describe('services', () => {
             title: '静夜思'
         })
     })
+    // test('getConstellationFortune', async () => {
+    //     config.CONSTELLATION_FORTUNE = [{"date": "09-02", "name": "老婆0"}]
+    //     axios.get = async () => {
+    //         throw new Error
+    //     }
+    //     expect(getConstellationFortune()).rejects.toEqual(new Error)
+    //     axios.get = async () => {
+    //         return {
+    //             data: `
+    //             <html lang="en">
+    //             <body>
+    //             <div class="c_cont">
+    //             <p>
+    //             <strong class="p1">综合运势</strong>
+    //             <span>运势正当旺，心心念着的事情或能得到回响。注意力集中，坚持的事很有毅力，能够摒除外界干扰，一心一意向着目标前行。生活方面容易接收到身边的各种正能量，也影响着你乐观的思考方式，能善于发现身边的美好。<small>星T座T屋</small></span>
+    //             </p>
+    //             <p>
+    //             <strong class="p2">爱情运势</strong>
+    //             <span>单身的遇到一些契机，打开彼此的心扉。恋爱中的得到恋人行动上的重视，也会收到承诺的兑现。</span>
+    //             </p>
+    //             <p>
+    //             <strong class="p4">财富运势</strong>
+    //             <span>求财方面陆续进账，简直就是四方来财的节奏，容易得到贵人的帮助，收入可观。</span>
+    //             </p>
+    //             <p>
+    //             <strong class="p5">健康运势</strong>
+    //             <span>玩手机要适度，不能过度沉迷，会容易带来烦躁的情绪，而且还会影响视力。</span>
+    //             </p>
+    //             </div>
+    //             </body>
+    //             </html>
+    //                 `
+    //         }
+    //     }
+    //     expect(getConstellationFortune()).resolves.toEqual([{
+    //         name: 'comprehensive_horoscope',
+    //         value: '今日综合运势: 运势正当旺，心心念着的事情或能得到回响。注意力集中，坚持的事很有毅力，能够摒除外界干扰，一心一意向着目标前行。生活方面容易接收到身边的各种正能量，也影响着你乐观的思考方式，能善于发现身边的美好。',
+    //         color: '#4d5446'
+    //       },
+    //       {
+    //         name: 'love_horoscope',
+    //         value: '今日爱情运势: 单身的遇到一些契机，打开彼此的心扉。恋爱中的得到恋人行动上的重视，也会收到承诺的兑现。',
+    //         color: '#22f6b2'
+    //       },
+    //       {
+    //         name: 'career_horoscope',
+    //         value: '今日事业学业: 福星高照! 去争取自己想要的一切吧!',
+    //         color: '#c933e8'
+    //       },
+    //       {
+    //         name: 'wealth_horoscope',
+    //         value: '今日财富运势: 求财方面陆续进账，简直就是四方来财的节奏，容易得到贵人的帮助，收入可观。',
+    //         color: '#83cdc0'
+    //       },
+    //       {
+    //         name: 'healthy_horoscope',
+    //         value: '今日健康运势: 玩手机要适度，不能过度沉迷，会容易带来烦躁的情绪，而且还会影响视力。',
+    //         color: '#829301'
+    //     }])
+    // })
 })

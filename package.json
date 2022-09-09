@@ -23,7 +23,9 @@
   "homepage": "https://github.com/wangxinleo/wechat-public-account-push#readme",
   "dependencies": {
     "axios": "^0.27.2",
-    "dayjs": "^1.11.5"
+    "dayjs": "^1.11.5",
+    "jsdom": "^20.0.0",
+    "lunar-javascript": "^1.2.33"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
