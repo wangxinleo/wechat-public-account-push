@@ -270,19 +270,23 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 **每日N句**
 
-| 参数                          | 详细        | 示例                                                    |
-|-----------------------------|-----------|-------------------------------------------------------|
-| note_en.DATA                | 金山每日一句-英文 | Nothing in this world that's worth having comes easy. |
-| note_ch.DATA                | 金山每日一句-中文 | 这世界上凡是值得拥有的东西，都不易获得。                                  |
-| \* one_talk.DATA            | 每日一言-内容   | 愿你遍布祖国山河，觉得人生也值得                                      |
-| \* talk_from.DATA           | 每日一言-来源   | 晓良                                                    |
-| \* earthy_love_words.DATA   | 土味情话(彩虹屁) | 我今晚会很忙，忙着跟你过日子                                        |
-| \* moment_copyrighting.DATA | 朋友圈文案     | 错过太阳就不要再错过月亮了                                         |
-| \* poison_chicken_soup.DATA | 毒鸡汤       | 我从不以强凌弱，我欺负他之前，真不晓得他比我弱。                              |
-| \* poetry_content.DATA      | 古诗古文-内容   | 举头望明月，低头思故乡。                                          |
-| \* poetry_title.DATA        | 古诗古文-标题   | 静夜思                                                   |
-| \* poetry_author.DATA       | 古诗古文-作者   | 李白                                                    |
-| \* poetry_dynasty.DATA      | 古诗古文-朝代   | 唐代                                                    |
+| 参数                                      | 详细        | 示例                                                    |
+|-----------------------------------------|-----------|-------------------------------------------------------|
+| note_en.DATA                            | 金山每日一句-英文 | Nothing in this world that's worth having comes easy. |
+| note_ch.DATA                            | 金山每日一句-中文 | 这世界上凡是值得拥有的东西，都不易获得。                                  |
+| \* one_talk.DATA                        | 每日一言-内容   | 愿你遍布祖国山河，觉得人生也值得                                      |
+| \* talk_from.DATA                       | 每日一言-来源   | 晓良                                                    |
+| \* earthy_love_words.DATA               | 土味情话(彩虹屁) | 我今晚会很忙，忙着跟你过日子                                        |
+| \* moment_copyrighting.DATA             | 朋友圈文案     | 错过太阳就不要再错过月亮了                                         |
+| \* poison_chicken_soup.DATA             | 毒鸡汤       | 我从不以强凌弱，我欺负他之前，真不晓得他比我弱。                              |
+| \* poetry_content.DATA                  | 古诗古文-内容   | 举头望明月，低头思故乡。                                          |
+| \* poetry_title.DATA                    | 古诗古文-标题   | 静夜思                                                   |
+| \* poetry_author.DATA                   | 古诗古文-作者   | 李白                                                    |
+| \* poetry_dynasty.DATA                  | 古诗古文-朝代   | 唐代                                                    |
+| \* **$constellation**.DATA <sup>1</sup> | 星座        | 天蝎                                                    |
+| \* **$fortune**.DATA <sup>2</sup>       | 星座运势      | 部分天蝎会在今年出现心情低落、沮丧的情况，建议大家平时多多放松自己，不要过于紧张。             |
+1. 需要编辑配置文件的`CONSTELLATION_FORTUNE`字段；需要将`$constellation`替换为：`{名称}_星座`，例：需要`老婆0`的星座名称，则模板为 `老婆0_星座.DATA`
+2. 需要编辑配置文件的`CONSTELLATION_FORTUNE`字段；需要将`$fortune`替换为：`{名称}_{今日/明日/本周/本月/今年}_{综合运势/爱情运势/事业学业/财富运势/健康运势}`，例：需要`老婆0` `今日` 的 `财富运势`，则模板为 `老婆0_今日_财富运势.DATA`
 
 **计时类**
 

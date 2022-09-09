@@ -1,9 +1,10 @@
 import { config } from '../../config/index.js'
 import { CITY_INFO, TYPE_LIST } from '../store/index.js'
 import axios from 'axios'
-import { randomNum, sortBirthdayTime } from '../utils/index.js'
+import { getConstellation, randomNum, sortBirthdayTime } from '../utils/index.js'
 import { Lunar } from 'lunar-javascript'
 import { selfDayjs } from '../utils/set-def-dayjs.js'
+import { JSDOM } from 'jsdom'
 
 /**
  * 获取 accessToken
@@ -402,4 +403,63 @@ export const sendMessageReply = async (users, accessToken, templateId = null, pa
     successPostIds: successPostIds.length ? successPostIds.join(',') : '无',
     failPostIds: failPostIds.length ? failPostIds.join(',') : '无'
   }
+}
+
+export async function getFlattenConstellationFortune () {
+  const constellationFortune = await getConstellationFortune()
+  const result = [];
+  const helper = (key, value) => {
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        helper(key + '_' + item.key, item.value)
+      }
+    } else {
+      result.push({
+        key,
+        value
+      })
+    }
+  }
+  helper('', constellationFortune);
+  return result.map((it) => {
+    return {
+      key: it.key.substring(1),
+      value: it.value
+    }
+  });
+}
+
+export async function getConstellationFortune() {
+  const result = []
+  for (const item of config.CONSTELLATION_FORTUNE) {
+    const value = {
+      key: item.name,
+      value: []
+    };
+    result.push(value)
+    const { en: constellation } = getConstellation(item.date)
+    const periods = ['今日', '明日', '本周', '本月', '今年']
+    for (let i = 0; i < periods.length; i++) {
+      const url = `https://www.xzw.com/fortune/${ constellation }/${i}.html`
+      try {
+        const { data } = await axios.get(url)
+        const jsdom = new JSDOM(data);
+        const res = ['综合运势', '爱情运势', '事业学业', '财富运势', '健康运势'].map((it, index) => {
+          const value = jsdom.window.document.querySelector(`.c_cont p strong.p${ index + 1 }`).nextElementSibling.innerHTML.replace(/<small.*/, '');
+          return {
+            key: it,
+            value
+          }
+        })
+        value.value.push({
+          key: periods[i],
+          value: res
+        })
+      } catch (e) {
+        console.error('星座运势：发生错误', e)
+        throw e
+      }
+    }
+  }
+  return result
 }
