@@ -13,4 +13,5 @@ export const selfDayjs = (time) => {
 
 }
 
+/* istanbul ignore next */
 export const timeZone = () => dayjs.tz.guess()

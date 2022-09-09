@@ -12,10 +12,11 @@ import {
   sendMessageReply,
   getDateDiffList,
   getSlotList,
-  getPoetry
+  getPoetry,
+  getFlattenConstellationFortune
 } from './src/services/index.js'
 import { config } from './config/index.js'
-import { toLowerLine, getColor } from './src/utils/index.js'
+import { toLowerLine, getColor, getConstellation } from './src/utils/index.js'
 
 const getAggregatedData = async () => {
 
@@ -32,6 +33,8 @@ const getAggregatedData = async () => {
   const poisonChickenSoup = await getPoisonChickenSoup()
   // 获取古诗古文
   const poetry = await getPoetry()
+  // 获取星座运势
+  const constellationFortune = await getFlattenConstellationFortune()
   // 统计日列表计算日期差
   const dateDiffParams = getDateDiffList().map(item => {
     return { name: item.keyword, value: item.diffDay, color: getColor() }
@@ -84,7 +87,18 @@ const getAggregatedData = async () => {
       { name: toLowerLine('poetryAuthor'), value: poetry.author, color: getColor() },
       { name: toLowerLine('poetryDynasty'), value: poetry.dynasty, color: getColor() },
       { name: toLowerLine('poetryTitle'), value: poetry.title, color: getColor() },
-    ].concat(dateDiffParams.concat(slotParams))
+    ].concat((config.CONSTELLATION_FORTUNE || []).map((it) => {
+      const { cn: value } = getConstellation(it.date);
+      return {
+        name: `${it.name}_星座`,
+        value,
+        color: getColor()
+      }
+    })).concat(constellationFortune.map((it) => ({
+      name: it.key,
+      value: it.value,
+      color: getColor()
+    }))).concat(dateDiffParams.concat(slotParams))
 
     user['wxTemplateParams'] = wxTemplateParams
   }

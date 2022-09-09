@@ -1,19 +1,20 @@
-import { selfDayjs } from './set-def-dayjs.js';
+import { selfDayjs } from './set-def-dayjs.js'
+import { Solar } from 'lunar-javascript'
 
 /**
  * 驼峰转下划线
  * @param {*} str
  * @returns
  */
-export const toLowerLine =  (str) => {
+export const toLowerLine = (str) => {
   var temp = str.replace(/[A-Z]/g, function (match) {
-    return "_" + match.toLowerCase();
-    });
-    if(temp.slice(0,1) === '_'){ //如果首字母是大写，执行replace时会多一个_，这里需要去掉
-      temp = temp.slice(1);
-    }
-  return temp;
-};
+    return '_' + match.toLowerCase()
+  })
+  if (temp.slice(0, 1) === '_') { //如果首字母是大写，执行replace时会多一个_，这里需要去掉
+    temp = temp.slice(1)
+  }
+  return temp
+}
 
 
 /**
@@ -21,7 +22,7 @@ export const toLowerLine =  (str) => {
  * @returns
  */
 export const getColor = () => {
-  return `#${Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0")}`
+  return `#${ Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, '0') }`
 }
 
 
@@ -42,14 +43,27 @@ export const randomNum = (min, max) => {
  */
 export const sortBirthdayTime = (list) => {
   list.forEach(item => {
-    const diffDay = Math.ceil(selfDayjs(selfDayjs().format('YYYY') + '-' + item.date).diff(selfDayjs(), 'day', true))
+    const diffDay = Math.ceil(selfDayjs(selfDayjs().format('YYYY') + '-' + (item.useLunar ? item.solarDateInThisYear : item.date)).diff(selfDayjs(), 'day', true))
     if (diffDay >= 0) {
       item['diffDay'] = diffDay
     } else {
-      item['diffDay'] = Math.ceil(selfDayjs(selfDayjs().add(1, 'year').format('YYYY') + '-' + item.date).diff(selfDayjs(), 'day', true))
+      item['diffDay'] = Math.ceil(selfDayjs(selfDayjs().add(1, 'year').format('YYYY') + '-' + (item.useLunar ? item.solarDateInThisYear : item.date)).diff(selfDayjs(), 'day', true))
     }
   })
   return list.sort((a, b) =>
     a.diffDay > b.diffDay ? 1 : -1
-  );
-};
+  )
+}
+
+const year = selfDayjs().year()
+const constellationCn = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
+const constellationEn = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces']
+export const getConstellation = (date) => {
+  const [month, day] = date.split('-').map(Number)
+  const solar = Solar.fromYmd(year, month, day)
+  const cn = solar.getXingZuo();
+  return {
+    cn,
+    en: constellationEn[constellationCn.indexOf(cn)]
+  }
+}

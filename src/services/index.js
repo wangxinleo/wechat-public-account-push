@@ -1,8 +1,10 @@
 import { config } from '../../config/index.js'
 import { CITY_INFO, TYPE_LIST } from '../store/index.js'
 import axios from 'axios'
-import { randomNum, sortBirthdayTime } from '../utils/index.js'
+import { getConstellation, randomNum, sortBirthdayTime } from '../utils/index.js'
+import { Lunar } from 'lunar-javascript'
 import { selfDayjs } from '../utils/set-def-dayjs.js'
+import { JSDOM } from 'jsdom'
 
 /**
  * 获取 accessToken
@@ -181,7 +183,7 @@ export const getPoetry = async () => {
   const url = 'https://v2.jinrishici.com/sentence'
   try {
     const res = await axios.get(url, {
-      headers:{
+      headers: {
         'X-User-Token': 'FW8KNlfULPtZ9Ci6aNy8aTfPJPwI+/Ln'
       },
       responseType: 'json'
@@ -204,13 +206,36 @@ export const getPoetry = async () => {
     return null
   }
 }
+
 /**
  * 获取重要节日信息
  * @returns
  */
 export const getBirthdayMessage = () => {
   // 计算重要节日倒数
-  const birthdayList = sortBirthdayTime(config.FESTIVALS)
+  const birthdayList = sortBirthdayTime((config.FESTIVALS || []).map((it) => {
+    let { type, year, date } = it
+    const useLunar = /^\*/.test(type)
+    if (!useLunar) {
+      return it
+    }
+    type = type.replace(/^\*/, '')
+    const [month, day] = date.split('-').map(Number)
+    // 获取今年的生日信息
+    const lunarInThisYear = Lunar.fromYmd((new Date).getFullYear(), month, day)
+    const solarInThisYear = lunarInThisYear.getSolar()
+    const lunar = Lunar.fromYmd(Number(year), month, day)
+    const solar = lunar.getSolar()
+    return {
+      ...it,
+      useLunar,
+      type,
+      year,
+      date,
+      solarDate: `${ solar.getMonth() }-${ solar.getDay() }`,
+      solarDateInThisYear: `${ solarInThisYear.getMonth() }-${ solarInThisYear.getDay() }`
+    }
+  }))
   let resMessage = ''
 
   birthdayList.forEach((item, index) => {
@@ -223,7 +248,7 @@ export const getBirthdayMessage = () => {
       // 生日相关
       if (item.type === '生日') {
         // 获取周岁
-        const age = selfDayjs().diff(item.year + '-' + item.date, 'year')
+        const age = selfDayjs().diff(item.year + '-' + (item.useLunar ? item.solarDateInThisYear : item.date), 'year')
 
         if (item.diffDay === 0) {
           message = `今天是 ${ item.name } 的${ age ? age + '岁' : '' }生日哦，祝${ item.name }生日快乐！`
@@ -307,11 +332,11 @@ export const sendMessage = async (templateId, user, accessToken, params) => {
 
   // 组装数据
   const data = {
-    "touser": user.id,
-    "template_id": templateId,
-    "url": user.openUrl || "https://wangxinleo.cn",
-    "topcolor": "#FF0000",
-    "data": wxTemplateData
+    'touser': user.id,
+    'template_id': templateId,
+    'url': user.openUrl || 'https://wangxinleo.cn',
+    'topcolor': '#FF0000',
+    'data': wxTemplateData
   }
 
   // 发送消息
@@ -324,13 +349,13 @@ export const sendMessage = async (templateId, user, accessToken, params) => {
 
 
   if (res.data && res.data.errcode === 0) {
-    console.log(`${user.name}: 推送消息成功`)
+    console.log(`${ user.name }: 推送消息成功`)
     return {
       name: user.name,
       success: true
     }
   }
-  console.error(`${user.name}: 推送消息失败`, res.data)
+  console.error(`${ user.name }: 推送消息失败`, res.data)
   return {
     name: user.name,
     success: false
@@ -378,4 +403,63 @@ export const sendMessageReply = async (users, accessToken, templateId = null, pa
     successPostIds: successPostIds.length ? successPostIds.join(',') : '无',
     failPostIds: failPostIds.length ? failPostIds.join(',') : '无'
   }
+}
+
+export async function getFlattenConstellationFortune () {
+  const constellationFortune = await getConstellationFortune()
+  const result = [];
+  const helper = (key, value) => {
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        helper(key + '_' + item.key, item.value)
+      }
+    } else {
+      result.push({
+        key,
+        value
+      })
+    }
+  }
+  helper('', constellationFortune);
+  return result.map((it) => {
+    return {
+      key: it.key.substring(1),
+      value: it.value
+    }
+  });
+}
+
+export async function getConstellationFortune() {
+  const result = []
+  for (const item of config.CONSTELLATION_FORTUNE) {
+    const value = {
+      key: item.name,
+      value: []
+    };
+    result.push(value)
+    const { en: constellation } = getConstellation(item.date)
+    const periods = ['今日', '明日', '本周', '本月', '今年']
+    for (let i = 0; i < periods.length; i++) {
+      const url = `https://www.xzw.com/fortune/${ constellation }/${i}.html`
+      try {
+        const { data } = await axios.get(url)
+        const jsdom = new JSDOM(data);
+        const res = ['综合运势', '爱情运势', '事业学业', '财富运势', '健康运势'].map((it, index) => {
+          const value = jsdom.window.document.querySelector(`.c_cont p strong.p${ index + 1 }`).nextElementSibling.innerHTML.replace(/<small.*/, '');
+          return {
+            key: it,
+            value
+          }
+        })
+        value.value.push({
+          key: periods[i],
+          value: res
+        })
+      } catch (e) {
+        console.error('星座运势：发生错误', e)
+        throw e
+      }
+    }
+  }
+  return result
 }
