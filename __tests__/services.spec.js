@@ -553,6 +553,7 @@ describe('services', () => {
         axios.get = async () => {
             throw new Error;
         }
+        config.isShowColor = true
         expect(getConstellationFortune('09-02', '今日')).resolves.toEqual([{
             color: '#000000',
             value: '今日综合运势: 福星高照! 去争取自己想要的一切吧!',
