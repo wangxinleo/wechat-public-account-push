@@ -219,9 +219,9 @@ describe('services', () => {
     })
     test('getBirthdayMessage', () => {
         config.FESTIVALS = [
-            { type: '*生日', name: '老婆', year: '1999', date: '09-19' },
+            { type: '*生日', name: '老婆', year: '1999', date: '09-19', isShowAge: true },
             { type: '节日', name: '结婚纪念日', year: '2020', date: '09-03' },
-            { type: '生日', name: '李四', year: '1996', date: '09-31' },
+            { type: '生日', name: '李四', year: '1996', date: '09-31', isShowAge: true },
             { type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
         ]
         config.FESTIVALS_LIMIT = 4
@@ -255,9 +255,9 @@ describe('services', () => {
         MockDate.reset()
         config.FESTIVALS_LIMIT = 4
         config.FESTIVALS = [
-            { type: '测试日', name: '老婆', year: '1996', date: '09-02' },
+            { type: '测试日', name: '老婆', year: '1996', date: '09-02', isShowAge: true },
             { type: '测试日', name: '结婚纪念日', year: '2020', date: '09-03' },
-            { type: '测试日', name: '李四', year: '1996', date: '09-31' },
+            { type: '测试日', name: '李四', year: '1996', date: '09-31', isShowAge: true },
             { type: '测试日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
         ]
         expect(getBirthdayMessage()).toEqual('')
@@ -265,9 +265,9 @@ describe('services', () => {
         expect(getBirthdayMessage()).toEqual('')
         MockDate.set('1999-10-28')
         config.FESTIVALS = [
-            { type: '*生日', name: '老婆', year: '1999', date: '09-19' },
+            { type: '*生日', name: '老婆', year: '1999', date: '09-19', isShowAge: true },
             { type: '节日', name: '结婚纪念日', year: '2020', date: '09-03' },
-            { type: '生日', name: '李四', year: '1996', date: '09-31' },
+            { type: '生日', name: '李四', year: '1996', date: '09-31', isShowAge: true },
             { type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
         ]
         expect(getBirthdayMessage()).toEqual(`
@@ -611,36 +611,5 @@ describe('services', () => {
             value: '今日爱情运势: 单身的遇到一些契机，打开彼此的心扉。恋爱中的得到恋人行动上的重视，也会收到承诺的兑现。',
             name: 'love_horoscope'
         }])
-        // config.CONSTELLATION_FORTUNE = [{"date": "09-02", "name": "老婆0"}]
-        // axios.get = async () => {
-        //     throw new Error
-        // }
-        // expect(getConstellationFortune()).rejects.toEqual(new Error)
-
-        // expect(getConstellationFortune()).resolves.toEqual([{
-        //     name: 'comprehensive_horoscope',
-        //     value: '今日综合运势: 运势正当旺，心心念着的事情或能得到回响。注意力集中，坚持的事很有毅力，能够摒除外界干扰，一心一意向着目标前行。生活方面容易接收到身边的各种正能量，也影响着你乐观的思考方式，能善于发现身边的美好。',
-        //     color: '#4d5446'
-        //   },
-        //   {
-        //     name: 'love_horoscope',
-        //     value: '今日爱情运势: 单身的遇到一些契机，打开彼此的心扉。恋爱中的得到恋人行动上的重视，也会收到承诺的兑现。',
-        //     color: '#22f6b2'
-        //   },
-        //   {
-        //     name: 'career_horoscope',
-        //     value: '今日事业学业: 福星高照! 去争取自己想要的一切吧!',
-        //     color: '#c933e8'
-        //   },
-        //   {
-        //     name: 'wealth_horoscope',
-        //     value: '今日财富运势: 求财方面陆续进账，简直就是四方来财的节奏，容易得到贵人的帮助，收入可观。',
-        //     color: '#83cdc0'
-        //   },
-        //   {
-        //     name: 'healthy_horoscope',
-        //     value: '今日健康运势: 玩手机要适度，不能过度沉迷，会容易带来烦躁的情绪，而且还会影响视力。',
-        //     color: '#829301'
-        // }])
     })
 })

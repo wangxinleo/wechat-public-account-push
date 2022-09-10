@@ -1,5 +1,6 @@
 import { selfDayjs } from './set-def-dayjs.js'
 import { Solar } from 'lunar-javascript'
+import { config } from '../../config/index.js'
 
 /**
  * 驼峰转下划线
@@ -22,6 +23,9 @@ export const toLowerLine = (str) => {
  * @returns
  */
 export const getColor = () => {
+  if (!config.isShowColor) {
+    return undefined
+  }
   return `#${ Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, '0') }`
 }
 
