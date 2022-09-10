@@ -173,7 +173,11 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 #### 1.3.1 方式一：使用Github-Action
 
-##### 1.3.1.1 fork仓库并修改相应配置
+$\color{#0000FF}{点击"详细信息"展开}$
+
+<details>
+
+**1.3.1.1 fork仓库并修改相应配置**
 
 - fork仓库
 
@@ -194,7 +198,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/edit-config-commit.png)
 
-##### 1.3.1.2 在私人仓库中写入自己公众号的信息，启用workflow自动任务，定时执行
+**1.3.1.2 在私人仓库中写入自己公众号的信息，启用workflow自动任务，定时执行**
 
 - 按下图添加两项保密信息`APP_ID` 和 `APP_SECRET`, 可以从测试号后台拿到这两项信息
 
@@ -217,7 +221,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/action.png)
 
-##### 1.3.1.3 (选做)：检查脚本是否可以正常执行
+**1.3.1.3 (选做)：检查脚本是否可以正常执行**
 
 - 手动启动脚本
 
@@ -233,6 +237,9 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-test-4.png)
 
+</details>
+
+---
 
 #### 1.3.2 方式二：下载程序包到本地或服务器运行
 如果是 Nodejs 开发者，直接 Clone 源码，然后 VS 打开解决方案，配置 Cookie 后即可直接本地进行运行和调试。
@@ -240,6 +247,8 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 对于不是开发者的朋友，可以通过以下命令到本地或任意服务器运行，步骤如下。
 
 - Linux 系统
+
+$\color{#0000FF}{点击"详细信息"展开}$
 
 <details>
 
@@ -315,7 +324,10 @@ node ~/wechat-public-account-push/main.js
 
 </details>
 
+
 - Windows 系统
+
+$\color{#0000FF}{点击"详细信息"展开}$
 
 <details>
 
