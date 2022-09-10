@@ -49,9 +49,9 @@ wechat-public-account-push
 - [1. 如何使用](#1-如何使用(以测试号为例))
     - [1.1. 第一步：注册一个微信公众测试号](#11-第一步：注册一个微信公众测试号)
     - [1.2. 第二步：进行模板配置](#12-第二步：进行模板配置)
-    - [1.3. 第三步：fork仓库，填入相应配置](#13-第三步：fork仓库，填入相应配置)
-    - [1.4. 第四步：启用workflow自动任务，定时执行](#14-第四步：启用workflow自动任务，定时执行)
-    - [1.5. 第五步(选做)：检查脚本是否可以正常执行](#15-第五步(选做)：检查脚本是否可以正常执行)
+    - [1.3. 第三步：完成配置文件，并运行 wechat-public-account-push](#13-第三步：完成配置文件，并运行wechat-public-account-push)
+        - [1.3.1. 方式一：使用Github Action](#131-方式一：使用Github-Action)
+        - [1.3.2. 方式二：下载程序包到本地或服务器运行](#132-方式二：下载程序包到本地或服务器运行)
 - [2. 参数说明](#2-参数说明)
 - [3. 模板样例](#3-模板样例)
 - [4. action脚本说明](#4-action脚本说明)
@@ -169,7 +169,11 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/wx-test-tmp.png)
 
 
-### 1.3. 第三步：fork仓库，填入相应配置
+### 1.3. 第三步：完成配置文件，并运行wechat-public-account-push
+
+#### 1.3.1 方式一：使用Github-Action
+
+##### 1.3.1.1 fork仓库并修改相应配置
 
 - fork仓库
 
@@ -190,7 +194,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/edit-config-commit.png)
 
-### 1.4. 第四步：在私人仓库中写入自己公众号的信息，启用workflow自动任务，定时执行
+##### 1.3.1.2 在私人仓库中写入自己公众号的信息，启用workflow自动任务，定时执行
 
 - 按下图添加两项保密信息`APP_ID` 和 `APP_SECRET`, 可以从测试号后台拿到这两项信息
 
@@ -213,13 +217,11 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/action.png)
 
-### 1.5. 第五步(选做)：检查脚本是否可以正常执行
+##### 1.3.1.3 (选做)：检查脚本是否可以正常执行
 
 - 手动启动脚本
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-test.png)
-
-### 1.5. 第五步(选做)：检查脚本是否可以正常执行
 
 - 查看执行结果
 
@@ -231,6 +233,145 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-test-4.png)
 
+
+#### 1.3.2 方式二：下载程序包到本地或服务器运行
+如果是 Nodejs 开发者，直接 Clone 源码，然后 VS 打开解决方案，配置 Cookie 后即可直接本地进行运行和调试。
+
+对于不是开发者的朋友，可以通过以下命令到本地或任意服务器运行，步骤如下。
+
+- Linux 系统
+
+<details>
+
+Ⅰ. **安装运行环境**
+
+- 如果本地已安装 `Nodejs` 和 `git` 环境,  请跳过这一步
+
+如果您使用的是以  Debian 或 Ubuntu 为基础的 服务器系统
+
+```shell
+
+# Using Debian and Ubuntu based distributions
+cd ~
+
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+
+sudo apt-get install -y nodejs
+
+sudo apt-get install git
+
+```
+
+如果您使用的是 centos 或 其他 服务器系统
+
+```shell
+
+# Using Enterprise Linux based distributions
+cd ~
+
+curl -fsSL https://rpm.nodesource.com/setup_16.x | sudo bash -
+
+yum install git
+
+```
+
+Ⅱ. **下载项目**
+
+```shell
+
+cd ~
+
+git clone https://github.com/wangxinleo/wechat-public-account-push.git
+
+# 二选一：中国内地执行这一步，速度更快
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+cnpm install
+
+# 二选一：国外服务器执行这一步
+npm install
+
+```
+
+Ⅲ. **填写配置**
+
+不会使用vim 命令的可以使用其他命令，或用图形化界面进行修改。
+
+这是你的服务器，只要能改掉文件里的配置就可以了。
+
+```shell
+
+vim ~/wechat-public-account-push/config/index.js
+
+```
+
+Ⅳ. **运行**
+
+```shell
+
+node ~/wechat-public-account-push/main.js
+
+```
+
+</details>
+
+- Windows 系统
+
+<details>
+
+Ⅰ. **安装运行环境**
+
+- 如果本地已安装 `Nodejs` 和 `git` 环境,  请跳过这一步
+
+[下载Nodejs16.x安装包](https://nodejs.org/dist/v16.17.0/node-v16.17.0-x64.msi)
+
+[下载git安装包](https://github.com/git-for-windows/git/releases/download/v2.37.3.windows.1/Git-2.37.3-64-bit.exe)
+
+安装说明：**无它，一路next**
+
+Ⅱ. **下载项目**
+
+在你的电脑里随便一个盘选择任意一个文件夹（最好自己创建，自己要知道在哪里），右键 --> git base
+
+执行以下命令
+
+```shell
+
+git clone https://github.com/wangxinleo/wechat-public-account-push.git
+
+# 二选一：中国内地执行这一步，速度更快
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+cnpm install
+
+# 二选一：国外服务器执行这一步
+npm install
+
+```
+
+Ⅲ. **填写配置**
+
+如果上一步执行成功了，你当前文件夹里面肯定会出现 `wechat-public-account-push` 文件夹
+
+到 `wechat-public-account-push/config/index.js` 中修改配置。 
+
+如果显示无法打开，选中该文件 --> 右键 --> 打开方式 --> 记事本
+
+按照提示修改配置
+
+Ⅳ. **运行**
+
+在 `wechat-public-account-push` 文件夹中，右键 --> git base
+
+执行以下命令
+
+```shell
+
+node ./main.js
+
+```
+
+</details>
 
 ## 2. 参数说明
 这里的**参数**是指能够被微信测试号模板接收的参数集合。启动后会根据我们的配置信息，组成相应的参数，如：
@@ -303,11 +444,11 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 | 参数                    | 详细                        | 示例                          |
 |-----------------------|---------------------------|-----------------------------|
-| comprehensive_horoscope.DATA    | 综合运势 | 整体运势陷入低迷中，警惕破罐子破的行为。建议享受美好的假期，不要因为一些琐事而影响心情，更不要掉入小人的陷阱中。生活方面情绪低落，容易因为在与别人的比较中不断打击自信心，导致幸福感指数急速下降。                        |
-| love_horoscope.DATA    | 爱情运势 |  单身的考虑得太多，反而会犹豫不决。恋爱中的回应恋人的热情，利于加深感情的互动。                       |
-| career_horoscope.DATA | 事业学业             |  可能会遇到小人的挑衅，建议保持理性的思考，以大局为主，稳住自己前进的步伐。  |
-| wealth_horoscope.DATA | 财富运势             |  偶尔会有零零散散的小财进账，但是到手就很快花出去了，基本上没存到多少钱。  |
-| healthy_horoscope.DATA | 健康运势            |  建议避开高峰期出门，容易因为堵车而破坏出门的心情，更要警惕不能有路怒行为。  |
+| comprehensive_horoscope.DATA    | 综合运势 | 太多了，不示例了，自己调用查看效果 |
+| love_horoscope.DATA    | 爱情运势 |  太多了，不示例了，自己调用查看效果   |
+| career_horoscope.DATA | 事业学业             |  太多了，不示例了，自己调用查看效果  |
+| wealth_horoscope.DATA | 财富运势             |  太多了，不示例了，自己调用查看效果  |
+| healthy_horoscope.DATA | 健康运势            |  太多了，不示例了，自己调用查看效果  |
 
 
 **计时类**
