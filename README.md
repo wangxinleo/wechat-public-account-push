@@ -28,9 +28,9 @@ wechat-public-account-push
 
 - **支持多个收件人设置成不同的测试号模板，专属定制更贴心**
 - **推送每日天气**
-- **文艺青年专属每日一句**
-- **支持农历生日提醒**
+- **支持农历生日提醒** 感谢 @ZzqiZQute
 - **每日/明日/每周/每年星座运势** 感谢 @ZzqiZQute
+- **文艺青年专属每日一句**
 - **古诗古文** 感谢 @ZzqiZQute
 - **彩虹屁** 感谢 @ZzqiZQute
 - **朋友圈文案** 感谢 @ZzqiZQute
@@ -303,10 +303,11 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 | 参数                    | 详细                        | 示例                          |
 |-----------------------|---------------------------|-----------------------------|
-| comprehensive_horoscope.DATA    | 综合运势 | 太多了，不示例了                        |
-| love_horoscope.DATA    | 爱情运势 |  太多了，不示例了                       |
-| career_horoscope.DATA | 事业学业             |  太多了，不示例了  |
-| healthy_horoscope.DATA | 健康运势            |  太多了，不示例了  |
+| comprehensive_horoscope.DATA    | 综合运势 | 整体运势陷入低迷中，警惕破罐子破的行为。建议享受美好的假期，不要因为一些琐事而影响心情，更不要掉入小人的陷阱中。生活方面情绪低落，容易因为在与别人的比较中不断打击自信心，导致幸福感指数急速下降。                        |
+| love_horoscope.DATA    | 爱情运势 |  单身的考虑得太多，反而会犹豫不决。恋爱中的回应恋人的热情，利于加深感情的互动。                       |
+| career_horoscope.DATA | 事业学业             |  可能会遇到小人的挑衅，建议保持理性的思考，以大局为主，稳住自己前进的步伐。  |
+| wealth_horoscope.DATA | 财富运势             |  偶尔会有零零散散的小财进账，但是到手就很快花出去了，基本上没存到多少钱。  |
+| healthy_horoscope.DATA | 健康运势            |  建议避开高峰期出门，容易因为堵车而破坏出门的心情，更要警惕不能有路怒行为。  |
 
 
 **计时类**
@@ -331,8 +332,6 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 ```
 
 这个 `ex_day.DATA` 在上面的出参表并没有定义啊，怎么设置它呢? 
-
-<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=y0plwm9zhOI35EwlOdRh372g4KWbqMSt&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="wechat-public-account-push 交流群" title="wechat-public-account-push 交流群"></a>
 
 现在在配置文件中就可以进行设置了！
 
@@ -403,8 +402,6 @@ wechat-public-account-push/.github/workflows/weixin-push-on-time.yml
 
 
 目前脚本默认执行时间为 **每天的 北京时间上午 10:10**
-
-<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=y0plwm9zhOI35EwlOdRh372g4KWbqMSt&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="wechat-public-account-push 交流群" title="wechat-public-account-push 交流群"></a>
 
 如果想要变更脚本定时任务执行时间,可以更改以下代码段
 
@@ -533,9 +530,11 @@ on:
 
 群我隐藏在文档里了哼哼，不仔细看文档可找不到加群的地方哦！
 
-<!-- ![图片无法查看请移步顶部访问 国内备用仓库地址](img/wechat-public-account-push.png)
+2022-09-10 算啦还是不隐藏了，你们来尽情问吧。
 
-<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=y0plwm9zhOI35EwlOdRh372g4KWbqMSt&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="wechat-public-account-push 交流群" title="wechat-public-account-push 交流群"></a> -->
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/wechat-public-account-push.png)
+
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=y0plwm9zhOI35EwlOdRh372g4KWbqMSt&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="wechat-public-account-push 交流群" title="wechat-public-account-push 交流群"></a>
 
 ## 10. 其他
 

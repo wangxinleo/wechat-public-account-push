@@ -1,10 +1,12 @@
 import { jest } from '@jest/globals'
 
 import axios from 'axios'
-import { config } from '../config/index.js'
+import { config } from '../config'
+import dayjs from 'dayjs'
 
 jest.mock('axios')
-jest.mock('../config/index.js')
+jest.mock('dayjs')
+jest.mock('../config')
 
 import {
     getWeather,
@@ -23,42 +25,50 @@ import {
     getPoetry,
     getConstellationFortune
 } from '../src/services'
+import { selfDayjs } from '../src/utils/set-def-dayjs.js'
 import MockDate from 'mockdate'
 
 describe('services', () => {
     test('getWeather', async () => {
-        expect(await getWeather('', '')).toBeNull()
+        expect(await getWeather('', '')).toEqual({})
         axios.get = async () => {
             return {
                 status: 200,
                 data: 'var cityDZ101010100 = {"weatherinfo":{"city":"101010100","cityname":"北京","fctime":"202209030800","temp":"27℃","tempn":"19℃","weather":"小雨","weathercode":"d7","weathercoden":"n7","wd":"南风","ws":"<3级"}};var alarmDZ101010100 = {"w":[]}'
             }
         }
-        expect(await getWeather('北京', '北京')).not.toBeNull()
+        expect(await getWeather('北京', '北京')).not.toEqual({})
         axios.get = async () => {
             return {
                 status: 199
             }
         }
-        expect(await getWeather('北京', '北京')).toBeNull()
+        expect(await getWeather('北京', '北京')).toEqual({})
         axios.get = async () => {
             return {
                 status: 200,
                 data: 'a=;'
             }
         }
-        expect(await getWeather('北京', '北京')).toBeNull()
+        expect(await getWeather('北京', '北京')).toEqual({})
         axios.get = async () => {
             return {
                 status: 200,
                 data: 'a=123;'
             }
         }
-        expect(await getWeather('北京', '北京')).toBeNull()
+        expect(await getWeather('北京', '北京')).toEqual({})
         axios.get = async () => {
             throw new Error
         }
-        expect(await getWeather('北京', '北京')).toBeNull()
+        expect(await getWeather('北京', '北京')).toEqual({})
+        axios.get = async () => {
+            return {
+                status: 200,
+                data: 'null'
+            }
+        }
+        expect(await getWeather('北京', '北京')).toEqual({})
     })
     test('getAccessToken', async () => {
         axios.get = async () => {
@@ -92,19 +102,35 @@ describe('services', () => {
                 }
             }
         }
+        config.APP_ID = '123'
+        expect(await getAccessToken()).toBeNull()
+        config.APP_SECRET = '123'
         expect(await getAccessToken()).toEqual('123456')
+        axios.get = async () => {
+            return {
+                status: 200,
+                data: {
+                    errmsg: 'xxx'
+                }
+            }
+        }
+        expect(await getAccessToken()).toBeNull()
+        axios.get = async () => {
+            throw new Error
+        }
+        expect(await getAccessToken()).toBeNull()
     })
     test('getCIBA', async function () {
         axios.get = async () => {
             throw new Error
         }
-        expect(await getCIBA()).toBeNull()
+        expect(await getCIBA()).toEqual({})
         axios.get = async () => {
             return {
                 status: 199
             }
         }
-        expect(await getCIBA()).toBeNull()
+        expect(await getCIBA()).toEqual({})
         axios.get = async () => {
             return {
                 status: 200
@@ -123,8 +149,8 @@ describe('services', () => {
         axios.get = async () => {
             throw new Error
         }
-        expect(await getOneTalk('动画')).toBeNull()
-        expect(await getOneTalk('xxx')).toBeNull()
+        expect(await getOneTalk('动画')).toEqual({})
+        expect(await getOneTalk('xxx')).toEqual({})
         axios.get = async () => {
             return {
                 status: 200,
@@ -146,12 +172,10 @@ describe('services', () => {
         }
         expect(await getWordsFromApiShadiao('pyq')).toEqual('')
         axios.get = async () => {
-            return {
-                data: {
-                    data: null
-                }
-            }
+            return null
         }
+        expect(await getWordsFromApiShadiao('pyq')).toEqual('')
+
         axios.get = async () => {
             return {
                 data: {
@@ -260,7 +284,7 @@ describe('services', () => {
             // 结婚纪念日
             { keyword: 'marry_day', date: '2020-01-04' },
             // 退伍日, 不用可以删掉
-            { keyword: 'ex_day', date: '2022-08-31' }
+            { keyword: 'ex_day', date: '2022-09-09' }
             // sakana日
             // {"keyword": "sakana_day", date: "2022-01-06"},
             // ...
@@ -275,13 +299,17 @@ describe('services', () => {
             diffDay: 974,
             keyword: 'marry_day'
         }, {
-            date: '2022-08-31',
-            diffDay: 4,
+            date: '2022-09-09',
+            diffDay: 6,
             keyword: 'ex_day'
         }])
         MockDate.reset()
+        config.CUSTOMIZED_DATE_LIST = null
+        expect(getDateDiffList(null)).toEqual([])
     })
     test('getSlotList', () => {
+        config.SLOT_LIST = null
+        expect(getSlotList()).toEqual([])
         config.SLOT_LIST = [
             // 这样配置的话，就会每次发送这句话
             { keyword: 'encourage_oneself', contents: '你主要的问题在于读书太少而想得太多' },
@@ -358,6 +386,44 @@ describe('services', () => {
             name: 'me',
             success: true
         })
+        axios.post = async () => {
+            return {
+                data: {
+                    errcode: 40003
+                }
+            }
+        }
+        expect(await sendMessage('templateId', { id: '123', name: 'me' }, 'accessToken', [{
+            name: 'name1',
+            value: 'value1',
+            color: 'color1'
+        }, {
+            name: 'name2',
+            value: 'value2',
+            color: 'color2'
+        }])).toEqual({
+            name: 'me',
+            success: false
+        })
+        axios.post = async () => {
+            return {
+                data: {
+                    errcode: 40036
+                }
+            }
+        }
+        expect(await sendMessage('templateId', { id: '123', name: 'me' }, 'accessToken', [{
+            name: 'name1',
+            value: 'value1',
+            color: 'color1'
+        }, {
+            name: 'name2',
+            value: 'value2',
+            color: 'color2'
+        }])).toEqual({
+            name: 'me',
+            success: false
+        })
     })
     test('sendMessageReply', async () => {
         axios.post = async () => {
@@ -424,7 +490,7 @@ describe('services', () => {
         axios.get = async () => {
             throw new Error
         }
-        expect(await getPoetry()).toEqual(null)
+        expect(await getPoetry()).toEqual({})
         axios.get = async () => {
             return {
                 data: {
@@ -432,11 +498,15 @@ describe('services', () => {
                 }
             }
         }
-        expect(await getPoetry()).toEqual(null)
+        expect(await getPoetry()).toEqual({})
         axios.get = async () => {
             return {}
         }
-        expect(await getPoetry()).toEqual(null)
+        expect(await getPoetry()).toEqual({})
+        axios.get = async () => {
+            return null
+        }
+        expect(await getPoetry()).toEqual({})
         axios.get = async () => {
             return {
                 data: {
@@ -472,64 +542,105 @@ describe('services', () => {
             title: '静夜思'
         })
     })
-    // test('getConstellationFortune', async () => {
-    //     config.CONSTELLATION_FORTUNE = [{"date": "09-02", "name": "老婆0"}]
-    //     axios.get = async () => {
-    //         throw new Error
-    //     }
-    //     expect(getConstellationFortune()).rejects.toEqual(new Error)
-    //     axios.get = async () => {
-    //         return {
-    //             data: `
-    //             <html lang="en">
-    //             <body>
-    //             <div class="c_cont">
-    //             <p>
-    //             <strong class="p1">综合运势</strong>
-    //             <span>运势正当旺，心心念着的事情或能得到回响。注意力集中，坚持的事很有毅力，能够摒除外界干扰，一心一意向着目标前行。生活方面容易接收到身边的各种正能量，也影响着你乐观的思考方式，能善于发现身边的美好。<small>星T座T屋</small></span>
-    //             </p>
-    //             <p>
-    //             <strong class="p2">爱情运势</strong>
-    //             <span>单身的遇到一些契机，打开彼此的心扉。恋爱中的得到恋人行动上的重视，也会收到承诺的兑现。</span>
-    //             </p>
-    //             <p>
-    //             <strong class="p4">财富运势</strong>
-    //             <span>求财方面陆续进账，简直就是四方来财的节奏，容易得到贵人的帮助，收入可观。</span>
-    //             </p>
-    //             <p>
-    //             <strong class="p5">健康运势</strong>
-    //             <span>玩手机要适度，不能过度沉迷，会容易带来烦躁的情绪，而且还会影响视力。</span>
-    //             </p>
-    //             </div>
-    //             </body>
-    //             </html>
-    //                 `
-    //         }
-    //     }
-    //     expect(getConstellationFortune()).resolves.toEqual([{
-    //         name: 'comprehensive_horoscope',
-    //         value: '今日综合运势: 运势正当旺，心心念着的事情或能得到回响。注意力集中，坚持的事很有毅力，能够摒除外界干扰，一心一意向着目标前行。生活方面容易接收到身边的各种正能量，也影响着你乐观的思考方式，能善于发现身边的美好。',
-    //         color: '#4d5446'
-    //       },
-    //       {
-    //         name: 'love_horoscope',
-    //         value: '今日爱情运势: 单身的遇到一些契机，打开彼此的心扉。恋爱中的得到恋人行动上的重视，也会收到承诺的兑现。',
-    //         color: '#22f6b2'
-    //       },
-    //       {
-    //         name: 'career_horoscope',
-    //         value: '今日事业学业: 福星高照! 去争取自己想要的一切吧!',
-    //         color: '#c933e8'
-    //       },
-    //       {
-    //         name: 'wealth_horoscope',
-    //         value: '今日财富运势: 求财方面陆续进账，简直就是四方来财的节奏，容易得到贵人的帮助，收入可观。',
-    //         color: '#83cdc0'
-    //       },
-    //       {
-    //         name: 'healthy_horoscope',
-    //         value: '今日健康运势: 玩手机要适度，不能过度沉迷，会容易带来烦躁的情绪，而且还会影响视力。',
-    //         color: '#829301'
-    //     }])
-    // })
+    test('selfDayjs', () => {
+        dayjs.tz.guess = () => 'UTC'
+        expect(selfDayjs('2022-09-09 12:00:00').hour()).toEqual(4)
+    })
+    test('getConstellationFortune', async () => {
+        expect(getConstellationFortune()).resolves.toEqual([])
+        expect(getConstellationFortune('09-02')).resolves.toEqual([])
+        expect(getConstellationFortune('09-02', '昨日')).resolves.toEqual([])
+        axios.get = async () => {
+            throw new Error;
+        }
+        expect(getConstellationFortune('09-02', '今日')).resolves.toEqual([{
+            color: '#000000',
+            value: '今日综合运势: 福星高照! 去争取自己想要的一切吧!',
+            name: 'comprehensive_horoscope'
+        }, {
+            color: '#000000',
+            value: '今日爱情运势: 福星高照! 去争取自己想要的一切吧!',
+            name: 'love_horoscope'
+        }, {
+            color: '#000000',
+            value: '今日事业学业: 福星高照! 去争取自己想要的一切吧!',
+            name: 'career_horoscope'
+        }, {
+            color: '#000000',
+            value: '今日财富运势: 福星高照! 去争取自己想要的一切吧!',
+            name: 'wealth_horoscope'
+        },{
+            color: '#000000',
+            value: '今日健康运势: 福星高照! 去争取自己想要的一切吧!',
+            name: 'healthy_horoscope'
+        }])
+        axios.get = async () => {
+            return {
+                data: `
+                <html lang="en">
+                <body>
+                <div class="c_cont">
+                <p>
+                <strong class="p1">综合运势</strong>
+                <span><small></small></span>
+                </p>
+                <p>
+                <strong class="p2">爱情运势</strong>
+                <span>单身的遇到一些契机，打开彼此的心扉。恋爱中的得到恋人行动上的重视，也会收到承诺的兑现。</span>
+                </p>
+                <p>
+                <strong class="p4">财富运势</strong>
+                <span>求财方面陆续进账，简直就是四方来财的节奏，容易得到贵人的帮助，收入可观。</span>
+                </p>
+                <p>
+                <strong class="p5">健康运势</strong>
+                <span>玩手机要适度，不能过度沉迷，会容易带来烦躁的情绪，而且还会影响视力。</span>
+                </p>
+                </div>
+                </body>
+                </html>
+                    `
+            }
+        }
+        expect(getConstellationFortune('09-02', '今日')).resolves.toEqual([{
+            color: '#000000',
+            value: '今日综合运势: 福星高照! 去争取自己想要的一切吧!',
+            name: 'comprehensive_horoscope'
+        }, {
+            color: '#000000',
+            value: '今日爱情运势: 单身的遇到一些契机，打开彼此的心扉。恋爱中的得到恋人行动上的重视，也会收到承诺的兑现。',
+            name: 'love_horoscope'
+        }])
+        // config.CONSTELLATION_FORTUNE = [{"date": "09-02", "name": "老婆0"}]
+        // axios.get = async () => {
+        //     throw new Error
+        // }
+        // expect(getConstellationFortune()).rejects.toEqual(new Error)
+
+        // expect(getConstellationFortune()).resolves.toEqual([{
+        //     name: 'comprehensive_horoscope',
+        //     value: '今日综合运势: 运势正当旺，心心念着的事情或能得到回响。注意力集中，坚持的事很有毅力，能够摒除外界干扰，一心一意向着目标前行。生活方面容易接收到身边的各种正能量，也影响着你乐观的思考方式，能善于发现身边的美好。',
+        //     color: '#4d5446'
+        //   },
+        //   {
+        //     name: 'love_horoscope',
+        //     value: '今日爱情运势: 单身的遇到一些契机，打开彼此的心扉。恋爱中的得到恋人行动上的重视，也会收到承诺的兑现。',
+        //     color: '#22f6b2'
+        //   },
+        //   {
+        //     name: 'career_horoscope',
+        //     value: '今日事业学业: 福星高照! 去争取自己想要的一切吧!',
+        //     color: '#c933e8'
+        //   },
+        //   {
+        //     name: 'wealth_horoscope',
+        //     value: '今日财富运势: 求财方面陆续进账，简直就是四方来财的节奏，容易得到贵人的帮助，收入可观。',
+        //     color: '#83cdc0'
+        //   },
+        //   {
+        //     name: 'healthy_horoscope',
+        //     value: '今日健康运势: 玩手机要适度，不能过度沉迷，会容易带来烦躁的情绪，而且还会影响视力。',
+        //     color: '#829301'
+        // }])
+    })
 })
