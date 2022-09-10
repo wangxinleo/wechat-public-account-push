@@ -173,7 +173,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 #### 1.3.1 方式一：使用Github-Action
 
-$\color{#0000FF}{点击"详细信息"展开}$
+$\color{#FF0000}{点击下方【详细信息】展开}$
 
 <details>
 
@@ -248,7 +248,7 @@ $\color{#0000FF}{点击"详细信息"展开}$
 
 - Linux 系统
 
-$\color{#0000FF}{点击"详细信息"展开}$
+$\color{#FF0000}{点击下方【详细信息】展开}$
 
 <details>
 
@@ -327,7 +327,7 @@ node ~/wechat-public-account-push/main.js
 
 - Windows 系统
 
-$\color{#0000FF}{点击"详细信息"展开}$
+$\color{#FF0000}{点击下方【详细信息】展开}$
 
 <details>
 
