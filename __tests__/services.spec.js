@@ -103,7 +103,12 @@ describe('services', () => {
             }
         }
         config.APP_ID = '123'
+        config.APP_SECRET = ''
         expect(await getAccessToken()).toBeNull()
+        config.APP_ID = ''
+        config.APP_SECRET = '123'
+        expect(await getAccessToken()).toBeNull()
+        config.APP_ID = '123'
         config.APP_SECRET = '123'
         expect(await getAccessToken()).toEqual('123456')
         axios.get = async () => {
