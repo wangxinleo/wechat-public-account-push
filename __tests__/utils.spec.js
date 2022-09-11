@@ -1,5 +1,8 @@
 import { toLowerLine, getColor, randomNum, sortBirthdayTime, getConstellation } from '../src/utils'
 import MockDate from 'mockdate'
+import { config } from '../config'
+import { jest } from '@jest/globals'
+jest.mock('../config')
 
 describe('utils', () => {
     test.each([
@@ -12,6 +15,9 @@ describe('utils', () => {
     })
 
     test('getColor', () => {
+        config.isShowColor = false
+        expect(getColor()).toBeUndefined()
+        config.isShowColor = true
         expect(getColor()).toMatch(/#[\dA-Fa-f]{6}/)
     })
 

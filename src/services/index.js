@@ -239,6 +239,11 @@ export const getPoetry = async () => {
  * @return
  */
 export const getBirthdayMessage = (festivals) => {
+  if (Object.prototype.toString.call(festivals) !== '[object Array]'
+  || festivals.length === 0) {
+    festivals = null
+  }
+
   // 计算重要节日倒数
   const birthdayList = sortBirthdayTime((festivals || config.FESTIVALS || []).map((it) => {
     let { type, year, date } = it
@@ -278,9 +283,9 @@ export const getBirthdayMessage = (festivals) => {
         const age = selfDayjs().diff(item.year + '-' + (item.useLunar ? item.solarDateInThisYear : item.date), 'year')
 
         if (item.diffDay === 0) {
-          message = `今天是 ${ item.name } 的${ age ? age + '岁' : '' }生日哦，祝${ item.name }生日快乐！`
+          message = `今天是 ${ item.name } 的${ age && item.isShowAge ? age + '岁' : '' }生日哦，祝${ item.name }生日快乐！`
         } else {
-          message = `距离 ${ item.name } 的${ age ? age + 1 + '岁' : '' }生日还有${ item.diffDay }天`
+          message = `距离 ${ item.name } 的${ age && item.isShowAge ? age + 1 + '岁' : '' }生日还有${ item.diffDay }天`
         }
       }
 
