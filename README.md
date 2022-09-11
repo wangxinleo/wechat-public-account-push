@@ -173,7 +173,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 #### 1.3.1 方式一：使用Github-Action
 
-$\color{#FF0000}{点击下方【详细信息】展开}$
+👇👇👇👇点击展开
 
 <details>
 
@@ -239,7 +239,7 @@ $\color{#FF0000}{点击下方【详细信息】展开}$
 
 </details>
 
----
+<br/>
 
 #### 1.3.2 方式二：下载程序包到本地或服务器运行
 如果是 Nodejs 开发者，直接 Clone 源码，然后 VS 打开解决方案，配置 Cookie 后即可直接本地进行运行和调试。
@@ -248,7 +248,7 @@ $\color{#FF0000}{点击下方【详细信息】展开}$
 
 - Linux 系统
 
-$\color{#FF0000}{点击下方【详细信息】展开}$
+👇👇👇👇点击展开
 
 <details>
 
@@ -324,10 +324,11 @@ node ~/wechat-public-account-push/main.js
 
 </details>
 
+<br/>
 
 - Windows 系统
 
-$\color{#FF0000}{点击下方【详细信息】展开}$
+👇👇👇👇点击展开
 
 <details>
 
@@ -384,6 +385,8 @@ node ./main.js
 ```
 
 </details>
+
+<br/>
 
 ## 2. 参数说明
 这里的**参数**是指能够被微信测试号模板接收的参数集合。启动后会根据我们的配置信息，组成相应的参数，如：
