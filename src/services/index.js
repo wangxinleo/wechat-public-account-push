@@ -249,8 +249,13 @@ export const getBirthdayMessage = (festivals) => {
     type = type.replace(/^\*/, '')
     const [month, day] = date.split('-').map(Number)
     // 获取今年的生日信息
-    const lunarInThisYear = Lunar.fromYmd((new Date).getFullYear(), month, day)
-    const solarInThisYear = lunarInThisYear.getSolar()
+    const thisYear = (new Date).getFullYear()
+    let lunarInThisYear = Lunar.fromYmd(thisYear, month, day)
+    let solarInThisYear = lunarInThisYear.getSolar()
+    if (solarInThisYear.getYear() > thisYear) {
+      lunarInThisYear = Lunar.fromYmd(thisYear - 1, month, day)
+      solarInThisYear = lunarInThisYear.getSolar()
+    }
     const lunar = Lunar.fromYmd(Number(year), month, day)
     const solar = lunar.getSolar()
     return {
