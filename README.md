@@ -24,6 +24,8 @@ wechat-public-account-push
 
 **如果这个项目很有意思，帮忙右上角点个 star✨ 支持我们 ❤❤**
 
+**如果有任何需要帮助可以联系wangxin.leo@outlook.com ❤❤**
+
 [>>> 点这里获取更新公告✨](https://github.com/wangxinleo/wechat-public-account-push/discussions/categories/announcements)
 
 详细功能如下：
@@ -698,7 +700,7 @@ on:
 
 时区查询: [https://www.zeitverschiebung.net/cn/all-time-zones.html](https://www.zeitverschiebung.net/cn/all-time-zones.html)
 
-## 11. 叨叨两句
+<!-- ## 11. 叨叨两句
 
 **这个仓库只能算是重复实现一下别人的想法, 主要是了解到了这个想法却一直找不到原作者的源码很是苦恼, 结果还遇到了要求加关注的情况**
 
@@ -708,4 +710,4 @@ on:
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/dis.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/dis-2.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/dis-2.png) -->
