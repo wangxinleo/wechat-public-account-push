@@ -22,6 +22,10 @@ wechat-public-account-push
 
 **wechat-public-account-push 是一个用于微信公众号/微信测试号给用户执行微信推送的脚本，改编自目前小红书/知乎突然火起来的【给女朋友的七夕浪漫，微信自动推送消息】，用Nodejs实现而成。**
 
+**如果这个项目很有意思，帮忙右上角点个 star✨ 支持我们 ❤❤**
+
+**如果有任何需要帮助可以联系wangxin.leo@outlook.com ❤❤**
+
 [>>> 点这里获取更新公告✨](https://github.com/wangxinleo/wechat-public-account-push/discussions/categories/announcements)
 
 详细功能如下：
@@ -173,7 +177,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 #### 1.3.1 方式一：使用Github-Action
 
-$\color{#FF0000}{点击下方【详细信息】展开}$
+👇👇👇👇点击展开
 
 <details>
 
@@ -239,7 +243,7 @@ $\color{#FF0000}{点击下方【详细信息】展开}$
 
 </details>
 
----
+<br/>
 
 #### 1.3.2 方式二：下载程序包到本地或服务器运行
 如果是 Nodejs 开发者，直接 Clone 源码，然后 VS 打开解决方案，配置 Cookie 后即可直接本地进行运行和调试。
@@ -248,7 +252,7 @@ $\color{#FF0000}{点击下方【详细信息】展开}$
 
 - Linux 系统
 
-$\color{#FF0000}{点击下方【详细信息】展开}$
+👇👇👇👇点击展开
 
 <details>
 
@@ -324,10 +328,11 @@ node ~/wechat-public-account-push/main.js
 
 </details>
 
+<br/>
 
 - Windows 系统
 
-$\color{#FF0000}{点击下方【详细信息】展开}$
+👇👇👇👇点击展开
 
 <details>
 
@@ -384,6 +389,8 @@ node ./main.js
 ```
 
 </details>
+
+<br/>
 
 ## 2. 参数说明
 这里的**参数**是指能够被微信测试号模板接收的参数集合。启动后会根据我们的配置信息，组成相应的参数，如：
@@ -693,7 +700,7 @@ on:
 
 时区查询: [https://www.zeitverschiebung.net/cn/all-time-zones.html](https://www.zeitverschiebung.net/cn/all-time-zones.html)
 
-## 11. 叨叨两句
+<!-- ## 11. 叨叨两句
 
 **这个仓库只能算是重复实现一下别人的想法, 主要是了解到了这个想法却一直找不到原作者的源码很是苦恼, 结果还遇到了要求加关注的情况**
 
@@ -703,4 +710,4 @@ on:
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/dis.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/dis-2.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/dis-2.png) -->

@@ -239,6 +239,11 @@ export const getPoetry = async () => {
  * @return
  */
 export const getBirthdayMessage = (festivals) => {
+  if (Object.prototype.toString.call(festivals) !== '[object Array]'
+  || festivals.length === 0) {
+    festivals = null
+  }
+
   // 计算重要节日倒数
   const birthdayList = sortBirthdayTime((festivals || config.FESTIVALS || []).map((it) => {
     let { type, year, date } = it
