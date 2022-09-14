@@ -6,6 +6,7 @@ import {
 } from './src/services/index.js'
 import { config } from './config/index.js'
 import { mainForTest } from './main-for-test.js'
+import schedule from 'node-schedule'
 
 const mainForProd = async () => {
   // 获取accessToken
@@ -67,4 +68,7 @@ const main = () => {
   }
 }
 
-main()
+console.log('success')
+schedule.scheduleJob('* * * * * *', () => {
+  main()
+});
