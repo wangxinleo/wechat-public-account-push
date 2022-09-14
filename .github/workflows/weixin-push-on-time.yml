@@ -33,6 +33,5 @@ jobs:
     - run: npm ci
     - run: npm run dev --if-present
     env: 
-      APP_ID: ${{secrets.APP_ID}}
-      APP_SECRET: ${{secrets.APP_SECRET}}
+      USER_INFO: ${{secrets.USER_INFO}}
 
