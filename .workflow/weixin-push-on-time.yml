@@ -1,0 +1,39 @@
+version: '1.0'
+name: weixin-push-on-time
+displayName: weixin-push-on-time
+triggers:
+  trigger: auto
+  push:
+    branches:
+      prefix:
+        - master
+  schedule:
+    # 以下时间指北京时间8点整
+    - cron: '* 0 8 * * ? *'
+stages:
+  - name: stage-d2bdc7e0
+    displayName: 微信推送
+    strategy: naturally
+    trigger: auto
+    executor: []
+    steps:
+      - step: build@nodejs
+        name: build_nodejs
+        displayName: Nodejs 构建
+        nodeVersion: 16.14.2
+        commands:
+          - '# 设置NPM源，提升安装速度'
+          - npm config set registry https://registry.npmmirror.com
+          - ''
+          - git checkout master
+          - ''
+          - npm ci
+          - ''
+          - '# 执行编译命令'
+          - npm run dev
+        caches:
+          - ~/.npm
+          - ~/.yarn
+        notify: []
+        strategy:
+          retry: '0'
