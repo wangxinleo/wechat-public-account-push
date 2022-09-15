@@ -72,6 +72,11 @@ export const getAccessToken = async () => {
  * @param {*} city 城市
  */
 export const getWeather = async (province, city) => {
+
+  if (config.SWITCH && !config.SWITCH.weather) {
+    return {}
+  }
+
   if (!CITY_INFO[province] || !CITY_INFO[province][city] || !CITY_INFO[province][city]['AREAID']) {
     console.error('配置文件中找不到相应的省份或城市')
     return {}
@@ -135,6 +140,11 @@ export const getCIBA = async () => {
  * @returns 
  */
 export const getHolidaytts = async () => {
+
+  if (config.SWITCH && !config.SWITCH.holidaytts) {
+    return null
+  }
+
   const url = 'https://wangxinleo.cn/api/wx-push/holiday/getHolidaytts'
   const res = await axios.get(url).catch(err => err)
 
@@ -151,6 +161,10 @@ export const getHolidaytts = async () => {
  * @returns
  */
 export const getOneTalk = async (type) => {
+
+  if (config.SWITCH && !config.SWITCH.oneTalk) {
+    return {}
+  }
 
   const filterQuery = TYPE_LIST.filter(item => item.name === type)
   const query = filterQuery.length ? filterQuery[0].type : TYPE_LIST[randomNum(0, 7)].type
@@ -198,6 +212,9 @@ export const getWordsFromApiShadiao = async (type) => {
  * @returns {Promise<String>} 土味情话(彩虹屁）内容
  */
 export const getEarthyLoveWords = async () => {
+  if (config.SWITCH && !config.SWITCH.earthyLoveWords) {
+    return ''
+  }
   return await getWordsFromApiShadiao('chp')
 }
 
@@ -206,6 +223,11 @@ export const getEarthyLoveWords = async () => {
  * @returns {Promise<String>} 朋友圈文案内容
  */
 export const getMomentCopyrighting = async () => {
+
+  if (config.SWITCH && !config.SWITCH.momentCopyrighting) {
+    return ''
+  }
+
   return await getWordsFromApiShadiao('pyq')
 }
 
@@ -214,6 +236,11 @@ export const getMomentCopyrighting = async () => {
  * @returns {Promise<String>} 毒鸡汤内容
  */
 export const getPoisonChickenSoup = async () => {
+
+  if (config.SWITCH && !config.SWITCH.poisonChickenSoup) {
+    return ''
+  }
+
   return await getWordsFromApiShadiao('du')
 }
 /**
@@ -221,6 +248,11 @@ export const getPoisonChickenSoup = async () => {
  * @returns {Promise<{}|{dynasty: string, author: string, title: string, content: string}>} 古诗内容 标题 作者 朝代
  */
 export const getPoetry = async () => {
+
+  if (config.SWITCH && !config.SWITCH.poetry) {
+    return {}
+  }
+
   const url = 'https://v2.jinrishici.com/sentence'
   try {
     const res = await axios.get(url, {
@@ -254,6 +286,11 @@ export const getPoetry = async () => {
  * @return
  */
 export const getBirthdayMessage = (festivals) => {
+
+  if (config.SWITCH && !config.SWITCH.birthdayMessage) {
+    return ''
+  }
+
   if (Object.prototype.toString.call(festivals) !== '[object Array]'
   || festivals.length === 0) {
     festivals = null
@@ -486,6 +523,11 @@ export const sendMessageReply = async (users, accessToken, templateId = null, pa
  * @returns
  */
 export async function getConstellationFortune(date, dateType) {
+
+  if (config.SWITCH && !config.SWITCH.horoscope) {
+    return []
+  }
+
   const res = []
   if (!date) {
     return res

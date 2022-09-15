@@ -146,6 +146,7 @@ describe('services', () => {
         expect(await getCIBA()).toEqual('test')
     })
     test('getOneTalk', async () => {
+        config.SWITCH.oneTalk = true
         axios.get = async () => {
             throw new Error
         }
@@ -160,6 +161,9 @@ describe('services', () => {
         expect(await getOneTalk('动画')).toEqual('test')
     })
     test('getWordsFromApiShadiao', async () => {
+        config.SWITCH.earthyLoveWords = true
+        config.SWITCH.momentCopyrighting = true
+        config.SWITCH.poisonChickenSoup = true
         expect(await getWordsFromApiShadiao('other')).toEqual('')
         axios.get = async () => {
             throw new Error
@@ -487,6 +491,7 @@ describe('services', () => {
         })
     })
     test('getPoetry', async () => {
+        config.SWITCH.poetry = true
         axios.get = async () => {
             throw new Error
         }
@@ -547,6 +552,7 @@ describe('services', () => {
         expect(selfDayjs('2022-09-09 12:00:00').hour()).toEqual(4)
     })
     test('getConstellationFortune', async () => {
+        config.SWITCH.horoscope = true
         expect(getConstellationFortune()).resolves.toEqual([])
         expect(getConstellationFortune('09-02')).resolves.toEqual([])
         expect(getConstellationFortune('09-02', '昨日')).resolves.toEqual([])

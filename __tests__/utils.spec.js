@@ -15,9 +15,9 @@ describe('utils', () => {
     })
 
     test('getColor', () => {
-        config.isShowColor = false
+        config.IS_SHOW_COLOR = false
         expect(getColor()).toBeUndefined()
-        config.isShowColor = true
+        config.IS_SHOW_COLOR = true
         expect(getColor()).toMatch(/#[\dA-Fa-f]{6}/)
     })
 
