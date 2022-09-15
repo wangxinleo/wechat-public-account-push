@@ -52,6 +52,7 @@ export const DEFAULT_OUTPUT = {
   minTemperature: '想你的温度℃',
   windDirection: '朝向你',
   windScale: '100级哦',
+  holidaytts: '嘿嘿，今天不告诉你~'
 }
 
 export const CITY_INFO = {
