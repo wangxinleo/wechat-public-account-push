@@ -131,6 +131,21 @@ export const getCIBA = async () => {
 }
 
 /**
+ * 获取下一休息日tts
+ * @returns 
+ */
+export const getHolidaytts = async () => {
+  const url = 'https://wangxinleo.cn/api/wx-push/holiday/getHolidaytts'
+  const res = await axios.get(url).catch(err => err)
+
+  if (res.status === 200 && res.data && res.data.code === 0) {
+    return res.data.tts
+  }
+  console.error('获取下一休息日tts: 发生错误', res)
+  return null
+}
+
+/**
  * 每日一言
  * @param {*} type
  * @returns
@@ -556,6 +571,8 @@ export const getAggregatedData = async () => {
     content: noteEn = DEFAULT_OUTPUT.noteEn,
     note: noteCh = DEFAULT_OUTPUT.noteCh
   } = await getCIBA()
+  // 获取下一休息日
+  const holidaytts = await getHolidaytts() || DEFAULT_OUTPUT.holidaytts
   // 获取每日一言
   const {
     hitokoto: oneTalk = DEFAULT_OUTPUT.oneTalk,
@@ -626,6 +643,7 @@ export const getAggregatedData = async () => {
       { name: toLowerLine('birthdayMessage'), value: birthdayMessage, color: getColor() },
       { name: toLowerLine('noteEn'), value: noteEn, color: getColor() },
       { name: toLowerLine('noteCh'), value: noteCh, color: getColor() },
+      { name: toLowerLine('holidaytts'), value: holidaytts, color: getColor() },
       { name: toLowerLine('oneTalk'), value: oneTalk, color: getColor() },
       { name: toLowerLine('talkFrom'), value: talkFrom, color: getColor() },
       { name: toLowerLine('earthyLoveWords'), value: earthyLoveWords, color: getColor() },
