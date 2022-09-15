@@ -23,13 +23,17 @@ import {
     sendMessage,
     sendMessageReply,
     getPoetry,
-    getConstellationFortune
+    getConstellationFortune,
+    getHolidaytts
 } from '../src/services'
 import { selfDayjs } from '../src/utils/set-def-dayjs.js'
 import MockDate from 'mockdate'
 
 describe('services', () => {
     test('getWeather', async () => {
+        config.SWITCH = {}
+        expect(await getWeather('', '')).toEqual({})
+        config.SWITCH = null
         expect(await getWeather('', '')).toEqual({})
         axios.get = async () => {
             return {
@@ -151,6 +155,9 @@ describe('services', () => {
         expect(await getCIBA()).toEqual('test')
     })
     test('getOneTalk', async () => {
+        config.SWITCH = {}
+        expect(await getOneTalk('动画')).toEqual({})
+        config.SWITCH.oneTalk = true
         axios.get = async () => {
             throw new Error
         }
@@ -165,6 +172,9 @@ describe('services', () => {
         expect(await getOneTalk('动画')).toEqual('test')
     })
     test('getWordsFromApiShadiao', async () => {
+        config.SWITCH.earthyLoveWords = true
+        config.SWITCH.momentCopyrighting = true
+        config.SWITCH.poisonChickenSoup = true
         expect(await getWordsFromApiShadiao('other')).toEqual('')
         axios.get = async () => {
             throw new Error
@@ -200,6 +210,9 @@ describe('services', () => {
                 }
             }
         }
+        config.SWITCH = {}
+        expect(await getEarthyLoveWords()).toEqual('')
+        config.SWITCH.earthyLoveWords = true
         expect(await getEarthyLoveWords()).toEqual('彩虹屁')
         axios.get = async () => {
             return {
@@ -210,6 +223,9 @@ describe('services', () => {
                 }
             }
         }
+        config.SWITCH = {}
+        expect(await getMomentCopyrighting()).toEqual('')
+        config.SWITCH.momentCopyrighting = true
         expect(await getMomentCopyrighting()).toEqual('朋友圈文案')
         axios.get = async () => {
             return {
@@ -220,9 +236,24 @@ describe('services', () => {
                 }
             }
         }
+        config.SWITCH = {}
+        expect(await getPoisonChickenSoup()).toEqual('')
+        config.SWITCH.poisonChickenSoup = true
         expect(await getPoisonChickenSoup()).toEqual('毒鸡汤')
     })
     test('getBirthdayMessage', () => {
+        config.SWITCH = {}
+        expect(getBirthdayMessage()).toEqual('')
+        config.SWITCH.birthdayMessage = true
+        config.FESTIVALS = null
+        MockDate.set('2022-09-03')
+        expect(getBirthdayMessage([])).toEqual('')
+        expect(getBirthdayMessage([{
+            type: '节日',
+            name: '结婚纪念日',
+            year: '2020',
+            date: '09-03'
+        }])).toEqual('今天是 结婚纪念日 哦，要开心！ \n')
         config.FESTIVALS = [
             { type: '*生日', name: '老婆', year: '1999', date: '09-19', isShowAge: true },
             { type: '节日', name: '结婚纪念日', year: '2020', date: '09-03' },
@@ -230,7 +261,6 @@ describe('services', () => {
             { type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
         ]
         config.FESTIVALS_LIMIT = 4
-        MockDate.set('2022-09-03')
         expect(getBirthdayMessage()).toEqual(`
 今天是 结婚纪念日 哦，要开心！ 
 距离 李四 的26岁生日还有28天 
@@ -492,6 +522,9 @@ describe('services', () => {
         })
     })
     test('getPoetry', async () => {
+        config.SWITCH = {}
+        expect(await getPoetry()).toEqual({})
+        config.SWITCH.poetry = true
         axios.get = async () => {
             throw new Error
         }
@@ -552,13 +585,16 @@ describe('services', () => {
         expect(selfDayjs('2022-09-09 12:00:00').hour()).toEqual(4)
     })
     test('getConstellationFortune', async () => {
+        config.SWITCH = {}
+        expect(getConstellationFortune()).resolves.toEqual([])
+        config.SWITCH.horoscope = true
         expect(getConstellationFortune()).resolves.toEqual([])
         expect(getConstellationFortune('09-02')).resolves.toEqual([])
         expect(getConstellationFortune('09-02', '昨日')).resolves.toEqual([])
         axios.get = async () => {
-            throw new Error;
+            throw new Error
         }
-        config.isShowColor = true
+        config.IS_SHOW_COLOR = true
         expect(getConstellationFortune('09-02', '今日')).resolves.toEqual([{
             color: '#000000',
             value: '今日综合运势: 福星高照! 去争取自己想要的一切吧!',
@@ -575,7 +611,7 @@ describe('services', () => {
             color: '#000000',
             value: '今日财富运势: 福星高照! 去争取自己想要的一切吧!',
             name: 'wealth_horoscope'
-        },{
+        }, {
             color: '#000000',
             value: '今日健康运势: 福星高照! 去争取自己想要的一切吧!',
             name: 'healthy_horoscope'
@@ -617,5 +653,34 @@ describe('services', () => {
             value: '今日爱情运势: 单身的遇到一些契机，打开彼此的心扉。恋爱中的得到恋人行动上的重视，也会收到承诺的兑现。',
             name: 'love_horoscope'
         }])
+    })
+    test('getHolidaytts', async () => {
+        config.SWITCH = {}
+        expect(await getHolidaytts()).toEqual(null)
+        config.SWITCH.holidaytts = true
+        axios.get = async () => {
+            throw new Error
+        }
+        expect(await getHolidaytts()).toEqual(null)
+        axios.get = async () => {
+            return {
+                status: 200,
+                data: {
+                    code: 0,
+                    tts: 'xxx'
+                }
+            }
+        }
+        expect(await getHolidaytts()).toEqual('xxx')
+        axios.get = async () => {
+            return {
+                status: 200,
+                data: {
+                    code: 1,
+                    tts: 'xxx'
+                }
+            }
+        }
+        expect(await getHolidaytts()).toEqual(null)
     })
 })

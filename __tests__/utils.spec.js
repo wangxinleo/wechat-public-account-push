@@ -14,10 +14,10 @@ describe('utils', () => {
     })
 
     test('getColor', () => {
-        config.isShowColor = true
-        expect(getColor()).toMatch(/#[\dA-Fa-f]{6}/)
-        config.isShowColor = false
+        config.IS_SHOW_COLOR = false
         expect(getColor()).toBeUndefined()
+        config.IS_SHOW_COLOR = true
+        expect(getColor()).toMatch(/#[\dA-Fa-f]{6}/)
     })
 
     test.each([
