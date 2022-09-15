@@ -68,7 +68,9 @@ const main = () => {
   }
 }
 
-console.log('success')
-schedule.scheduleJob('0 0 8 * * *', () => {
-  main()
-});
+// console.log('success')
+// schedule.scheduleJob('0 0 8 * * *', () => {
+//   main()
+// });
+
+main()
