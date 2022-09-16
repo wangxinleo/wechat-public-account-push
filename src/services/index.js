@@ -297,8 +297,7 @@ export const getBirthdayMessage = (festivals) => {
   }
 
   // 计算重要节日倒数
-  let birthdayList = sortBirthdayTime((festivals || config.FESTIVALS || []))
-  birthdayList = birthdayList.map((it) => {
+  const birthdayList = sortBirthdayTime((festivals || config.FESTIVALS || [])).map((it) => {
     if (!it.useLunar) {
       return it
     }
