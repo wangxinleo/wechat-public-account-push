@@ -3,11 +3,11 @@ import { jest } from '@jest/globals'
 import axios from 'axios'
 import { config } from '../config'
 import dayjs from 'dayjs'
-
+wx3a3dea74da2576fc
 jest.mock('axios')
 jest.mock('dayjs')
 jest.mock('../config')
-
+78e3341dfe890bbf66b121484e98225c
 import {
     getWeather,
     getAccessToken,
