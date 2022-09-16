@@ -174,223 +174,201 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 
 ### 1.3. 第三步：完成配置文件，并运行wechat-public-account-push
+#### window用户：
 
-#### 1.3.1 方式一：使用Github-Action
-
-👇👇👇👇点击展开
-
-<details>
-
-**1.3.1.1 fork仓库并修改相应配置**
-
-- fork仓库
-
-![github-fork](img/github-fork.png)
-
-- 修改相应配置
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/github-into-config.png)
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/github-into-config-2.png)
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/github-into-config-3.png)
-
-
-- 按提示填入相应配置后保存
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/edit-config.png)
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/edit-config-commit.png)
-
-**1.3.1.2 在私人仓库中写入自己公众号的信息，启用workflow自动任务，定时执行**
-
-- 按下图添加两项保密信息`APP_ID` 和 `APP_SECRET`, 可以从测试号后台拿到这两项信息
-
-**这步一定要认真填写，不然程序无法运行！**
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/personal-infor-1.png)
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/personal-infor-2.png)
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/personal-infor-3.png)
-
-
-- 启用action脚本
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/action.png)
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-comit.png)
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-comit-2.png)
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/action.png)
-
-**1.3.1.3 (选做)：检查脚本是否可以正常执行**
-
-- 手动启动脚本
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-test.png)
-
-- 查看执行结果
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-test-2.png)
-
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-test-3.png)
-
-
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-test-4.png)
-
-</details>
-
-<br/>
-
-#### 1.3.2 方式二：下载程序包到本地或服务器运行
-如果是 Nodejs 开发者，直接 Clone 源码，然后 VS 打开解决方案，配置 Cookie 后即可直接本地进行运行和调试。
-
-对于不是开发者的朋友，可以通过以下命令到本地或任意服务器运行，步骤如下。
-
-- Linux 系统
-
-👇👇👇👇点击展开
+**如果您想用 node 方法：**
 
 <details>
+<summary>展开查看</summary>
+<pre>
 
-Ⅰ. **安装运行环境**
 
-- 如果本地已安装 `Nodejs` 和 `git` 环境,  请跳过这一步
+在一个空白的英文目录下，比如说在D盘新建一个名字叫mycode的文件夹，在里面打开 CMD
 
-如果您使用的是以  Debian 或 Ubuntu 为基础的 服务器系统
-
-```shell
-
-# Using Debian and Ubuntu based distributions
-cd ~
-
-curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-
-sudo apt-get install -y nodejs
-
-sudo apt-get install git
+![](https://api2.mubu.com/v3/document_image/5c440858-f6a3-4b0c-8e7a-36be3526538c-3807603.jpg)
 
 ```
-
-如果您使用的是 centos 或 其他 服务器系统
-
-```shell
-
-# Using Enterprise Linux based distributions
-cd ~
-
-curl -fsSL https://rpm.nodesource.com/setup_16.x | sudo bash -
-
-yum install git
-
-```
-
-Ⅱ. **下载项目**
-
-```shell
-
-cd ~
-
 git clone https://github.com/wangxinleo/wechat-public-account-push.git
 
-# 二选一：中国内地执行这一步，速度更快
-npm install -g cnpm --registry=https://registry.npm.taobao.org
+cd wechat-public-account-push
 
-cnpm install
+git checkout realse/server
 
-# 二选一：国外服务器执行这一步
-npm install
+npm i
 
+npm install pm2 -g
 ```
 
-Ⅲ. **填写配置**
+然后打开文件 config/index.js 按照规则配置信息，然后保存，
 
-不会使用vim 命令的可以使用其他命令，或用图形化界面进行修改。
+再打开文件 main.js ，在代码的最下边修改时间
 
-这是你的服务器，只要能改掉文件里的配置就可以了。
-
-```shell
-
-vim ~/wechat-public-account-push/config/index.js
-
+```javascript
+// 此时间为每天的早上8点，*为匹配任意一个
+// 这里的时间是中国时间 秒 分 时 日 月 年
+schedule.scheduleJob('0 0 8 * * *', () => {
+  main()
+});
 ```
 
-Ⅳ. **运行**
+更详细的规则[点此](https://www.npmjs.com/package/node-schedule)
 
-```shell
-
-node ~/wechat-public-account-push/main.js
+然后再在刚才的CMD里面输入
 
 ```
+pm2 start main.js
+```
 
+然后就会按照你的定时每天自动发消息~
+</pre>
 </details>
 
-<br/>
 
-- Windows 系统
-
-👇👇👇👇点击展开
+**如果您想用 docker 方法：**
 
 <details>
+<summary>展开查看</summary>
+<pre>
 
-Ⅰ. **安装运行环境**
 
-- 如果本地已安装 `Nodejs` 和 `git` 环境,  请跳过这一步
+在一个空白的英文目录下，比如说在D盘新建一个名字叫mycode的文件夹，在里面打开 CMD
 
-[下载Nodejs16.x安装包](https://nodejs.org/dist/v16.17.0/node-v16.17.0-x64.msi)
+![](https://api2.mubu.com/v3/document_image/5c440858-f6a3-4b0c-8e7a-36be3526538c-3807603.jpg)
 
-[下载git安装包](https://github.com/git-for-windows/git/releases/download/v2.37.3.windows.1/Git-2.37.3-64-bit.exe)
-
-安装说明：**无它，一路next**
-
-Ⅱ. **下载项目**
-
-在你的电脑里随便一个盘选择任意一个文件夹（最好自己创建，自己要知道在哪里），右键 --> git base
-
-执行以下命令
-
-```shell
-
+```
 git clone https://github.com/wangxinleo/wechat-public-account-push.git
 
-# 二选一：中国内地执行这一步，速度更快
-npm install -g cnpm --registry=https://registry.npm.taobao.org
+cd wechat-public-account-push
 
-cnpm install
-
-# 二选一：国外服务器执行这一步
-npm install
-
+git checkout realse/server
 ```
 
-Ⅲ. **填写配置**
+然后打开文件 config/index.js 按照规则配置信息，然后保存，
 
-如果上一步执行成功了，你当前文件夹里面肯定会出现 `wechat-public-account-push` 文件夹
+再打开文件 main.js ，在代码的最下边修改时间
 
-到 `wechat-public-account-push/config/index.js` 中修改配置。 
-
-如果显示无法打开，选中该文件 --> 右键 --> 打开方式 --> 记事本
-
-按照提示修改配置
-
-Ⅳ. **运行**
-
-在 `wechat-public-account-push` 文件夹中，右键 --> git base
-
-执行以下命令
-
-```shell
-
-node ./main.js
-
+```javascript
+// 此时间为每天的早上8点，*为匹配任意一个
+// 这里的时间是中国时间 秒 分 时 日 月 年
+schedule.scheduleJob('0 0 8 * * *', () => {
+  main()
+});
 ```
 
+更详细的规则[点此](https://www.npmjs.com/package/node-schedule)
+
+然后再在刚才的CMD里面输入
+
+```
+docker build -t wpau:v1 .
+
+docker run --name wpau-hello wpau:v1
+```
+
+如果你不会docker 不建议你在window下使用docker去操作，请选用node
+
+然后就会按照你的定时每天自动发消息~
+</pre>
 </details>
 
-<br/>
+
+#### Linux centos Ubuntu 用户
+
+**如果您想用 node 方法：**
+
+<details>
+<summary>展开查看</summary>
+<pre>
+
+
+在一个空白目录下，运行以下代码
+
+```
+git clone https://github.com/wangxinleo/wechat-public-account-push.git
+
+cd wechat-public-account-push
+
+git checkout realse/server
+
+npm i
+
+npm install pm2 -g
+```
+
+然后打开文件 `vim config/index.js` 按照规则配置信息，然后保存，
+
+再打开文件 `vim main.js` ，在代码的最下边修改时间
+
+```javascript
+// 此时间为每天的早上8点，*为匹配任意一个
+// 这里的时间是中国时间 秒 分 时 日 月 年
+schedule.scheduleJob('0 0 8 * * *', () => {
+  main()
+});
+```
+
+更详细的规则[点此](https://www.npmjs.com/package/node-schedule)
+
+然后再在当前文件终端输入
+
+```
+pm2 start main.js
+```
+
+然后就会按照你的定时每天自动发消息~
+</pre>
+</details>
+
+
+**如果您想用 docker 方法：**
+
+<details>
+<summary>展开查看</summary>
+<pre>
+
+如果你没有安装过docker，请按照以下方法安装，安装过的请跳过：
+```
+curl -fsSL get.docker.com -o get-docker.sh
+sudo sh get-docker.sh --mirror Aliyun
+```
+
+在一个空白的目录下，执行以下命令
+
+```
+git clone https://github.com/wangxinleo/wechat-public-account-push.git
+
+cd wechat-public-account-push
+
+git checkout realse/server
+```
+
+然后打开文件 `vim config/index.js` 按照规则配置信息，然后保存，
+
+再打开文件 `vim main.js` ，在代码的最下边修改时间
+
+```javascript
+// 此时间为每天的早上8点，*为匹配任意一个
+// 这里的时间是中国时间 秒 分 时 日 月 年
+schedule.scheduleJob('0 0 8 * * *', () => {
+  main()
+});
+```
+
+更详细的规则[点此](https://www.npmjs.com/package/node-schedule)
+
+然后再在刚才的CMD里面输入
+
+```
+docker build -t wpau:v1 .
+
+docker run --name wpau-hello wpau:v1
+```
+
+如果成功出现一串id后，即代表运行成功~
+
+然后就会按照你的定时每天自动发消息~
+</pre>
+</details>
 
 ## 2. 参数说明
 这里的**参数**是指能够被微信测试号模板接收的参数集合。启动后会根据我们的配置信息，组成相应的参数，如：
