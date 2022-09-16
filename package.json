@@ -7,8 +7,8 @@
   "scripts": {
     "dev": "node main.js",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest",
-    "build:tc": "node scripts/build-tc",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint **/*.js --fix"
   },
   "repository": {
     "type": "git",
@@ -30,18 +30,10 @@
     "lunar-javascript": "^1.2.33"
   },
   "devDependencies": {
-    "@babel/cli": "^7.18.10",
-    "@babel/core": "^7.19.0",
-    "@babel/preset-env": "^7.19.0",
-    "@types/execa": "^2.0.0",
-    "@types/fs-extra": "^9.0.13",
-    "archiver": "^5.3.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.23.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "execa": "^5.1.1",
-    "fs-extra": "^10.1.0",
     "husky": "^8.0.1",
     "jest": "^29.0.1",
     "lint-staged": "^13.0.3",
@@ -51,6 +43,6 @@
     "transform": {}
   },
   "lint-staged": {
-    "*.js": "eslint"
+    "*.js": "eslint --fix"
   }
 }

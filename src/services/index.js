@@ -1,4 +1,3 @@
-
 import axios from 'axios'
 import dayjs from 'dayjs'
 import { Lunar } from 'lunar-javascript'
@@ -11,8 +10,8 @@ import {
   randomNum,
   sortBirthdayTime,
   getColor,
-  toLowerLine
- } from '../utils/index.js'
+  toLowerLine,
+} from '../utils/index.js'
 import { selfDayjs, timeZone } from '../utils/set-def-dayjs.js'
 
 axios.defaults.timeout = 10000
@@ -42,11 +41,10 @@ export const getAccessToken = async () => {
   console.log('已获取appId', appId)
   console.log('已获取appSecret', appSecret)
 
-
-  const postUrl = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${ appId }&secret=${ appSecret }`
+  const postUrl = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appId}&secret=${appSecret}`
 
   try {
-    const res = await axios.get(postUrl).catch(err => err)
+    const res = await axios.get(postUrl).catch((err) => err)
     if (res.status === 200 && res.data && res.data.access_token) {
       accessToken = res.data.access_token
       console.log('---')
@@ -72,20 +70,20 @@ export const getAccessToken = async () => {
  * @param {*} city 城市
  */
 export const getWeather = async (province, city) => {
-  if (!CITY_INFO[province] || !CITY_INFO[province][city] || !CITY_INFO[province][city]['AREAID']) {
+  if (!CITY_INFO[province] || !CITY_INFO[province][city] || !CITY_INFO[province][city].AREAID) {
     console.error('配置文件中找不到相应的省份或城市')
     return {}
   }
-  const address = CITY_INFO[province][city]['AREAID']
+  const address = CITY_INFO[province][city].AREAID
 
-  const url = `http://d1.weather.com.cn/dingzhi/${ address }.html?_=${ selfDayjs().valueOf() }`
+  const url = `http://d1.weather.com.cn/dingzhi/${address}.html?_=${selfDayjs().valueOf()}`
 
   const res = await axios.get(url, {
     headers: {
-      'Referer': `http://www.weather.com.cn/weather1d/${ address }.shtml`,
-      'User-Agent': `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36`
-    }
-  }).catch(err => err)
+      Referer: `http://www.weather.com.cn/weather1d/${address}.shtml`,
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+    },
+  }).catch((err) => err)
 
   try {
     if (res.status === 200 && res.data) {
@@ -119,9 +117,9 @@ export const getCIBA = async () => {
   const res = await axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
-    }
-  }).catch(err => err)
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+    },
+  }).catch((err) => err)
 
   if (res.status === 200 && res) {
     return res.data
@@ -136,12 +134,11 @@ export const getCIBA = async () => {
  * @returns
  */
 export const getOneTalk = async (type) => {
-
-  const filterQuery = TYPE_LIST.filter(item => item.name === type)
+  const filterQuery = TYPE_LIST.filter((item) => item.name === type)
   const query = filterQuery.length ? filterQuery[0].type : TYPE_LIST[randomNum(0, 7)].type
-  const url = `https://v1.hitokoto.cn/?c=${ query }`
+  const url = `https://v1.hitokoto.cn/?c=${query}`
 
-  const res = await axios.get(url).catch(err => err)
+  const res = await axios.get(url).catch((err) => err)
 
   if (res && res.status === 200) {
     return res.data
@@ -149,7 +146,6 @@ export const getOneTalk = async (type) => {
 
   console.error('每日一言: 发生错误', res)
   return {}
-
 }
 /**
  * 从沙雕APP开放接口中获取数据
@@ -160,20 +156,20 @@ export const getWordsFromApiShadiao = async (type) => {
   const typeNameMap = {
     chp: '土味情话(彩虹屁)',
     pyq: '朋友圈文案',
-    du: '毒鸡汤'
+    du: '毒鸡汤',
   }
   if (!['chp', 'pyq', 'du'].includes(type)) {
     console.error('type参数有误，应为chp, pyq, du的其中一个')
     return ''
   }
-  const url = `https://api.shadiao.pro/${ type }`
+  const url = `https://api.shadiao.pro/${type}`
   try {
     const res = await axios.get(url, {
-      responseType: 'json'
-    }).catch(err => err)
-    return res.data && res.data.data && res.data.data.text || ''
+      responseType: 'json',
+    }).catch((err) => err)
+    return (res.data && res.data.data && res.data.data.text) || ''
   } catch (e) {
-    console.error(`${ typeNameMap[type] }：发生错误`, e)
+    console.error(`${typeNameMap[type]}：发生错误`, e)
     return ''
   }
 }
@@ -182,25 +178,19 @@ export const getWordsFromApiShadiao = async (type) => {
  * 土味情话（彩虹屁）
  * @returns {Promise<String>} 土味情话(彩虹屁）内容
  */
-export const getEarthyLoveWords = async () => {
-  return await getWordsFromApiShadiao('chp')
-}
+export const getEarthyLoveWords = async () => getWordsFromApiShadiao('chp')
 
 /**
  * 朋友圈文案
  * @returns {Promise<String>} 朋友圈文案内容
  */
-export const getMomentCopyrighting = async () => {
-  return await getWordsFromApiShadiao('pyq')
-}
+export const getMomentCopyrighting = async () => getWordsFromApiShadiao('pyq')
 
 /**
  * 毒鸡汤
  * @returns {Promise<String>} 毒鸡汤内容
  */
-export const getPoisonChickenSoup = async () => {
-  return await getWordsFromApiShadiao('du')
-}
+export const getPoisonChickenSoup = async () => getWordsFromApiShadiao('du')
 /**
  * 古诗古文
  * @returns {Promise<{}|{dynasty: string, author: string, title: string, content: string}>} 古诗内容 标题 作者 朝代
@@ -210,10 +200,10 @@ export const getPoetry = async () => {
   try {
     const res = await axios.get(url, {
       headers: {
-        'X-User-Token': 'FW8KNlfULPtZ9Ci6aNy8aTfPJPwI+/Ln'
+        'X-User-Token': 'FW8KNlfULPtZ9Ci6aNy8aTfPJPwI+/Ln',
       },
-      responseType: 'json'
-    }).catch(err => err)
+      responseType: 'json',
+    }).catch((err) => err)
     const { status, data, warning } = res.data || {}
     if (status !== 'success') {
       console.error('古诗古文：发生错误', warning || '')
@@ -225,7 +215,7 @@ export const getPoetry = async () => {
       content,
       title,
       author,
-      dynasty
+      dynasty,
     }
   } catch (e) {
     console.error('古诗古文：发生错误', e)
@@ -246,7 +236,8 @@ export const getBirthdayMessage = (festivals) => {
 
   // 计算重要节日倒数
   const birthdayList = sortBirthdayTime((festivals || config.FESTIVALS || []).map((it) => {
-    let { type, year, date } = it
+    const { year, date } = it
+    let { type } = year
     const useLunar = /^\*/.test(type)
     if (!useLunar) {
       return it
@@ -254,7 +245,7 @@ export const getBirthdayMessage = (festivals) => {
     type = type.replace(/^\*/, '')
     const [month, day] = date.split('-').map(Number)
     // 获取今年的生日信息
-    const thisYear = (new Date).getFullYear()
+    const thisYear = (new Date()).getFullYear()
     let lunarInThisYear = Lunar.fromYmd(thisYear, month, day)
     let solarInThisYear = lunarInThisYear.getSolar()
     if (solarInThisYear.getYear() > thisYear) {
@@ -269,47 +260,45 @@ export const getBirthdayMessage = (festivals) => {
       type,
       year,
       date,
-      solarDate: `${ solar.getMonth() }-${ solar.getDay() }`,
-      solarDateInThisYear: `${ solarInThisYear.getMonth() }-${ solarInThisYear.getDay() }`
+      solarDate: `${solar.getMonth()}-${solar.getDay()}`,
+      solarDateInThisYear: `${solarInThisYear.getMonth()}-${solarInThisYear.getDay()}`,
     }
   }))
   let resMessage = ''
 
   birthdayList.forEach((item, index) => {
     if (
-      !config.FESTIVALS_LIMIT ||
-      (config.FESTIVALS_LIMIT && index < config.FESTIVALS_LIMIT)
+      !config.FESTIVALS_LIMIT
+      || (config.FESTIVALS_LIMIT && index < config.FESTIVALS_LIMIT)
     ) {
       let message = null
 
       // 生日相关
       if (item.type === '生日') {
         // 获取周岁
-        const age = selfDayjs().diff(item.year + '-' + (item.useLunar ? item.solarDateInThisYear : item.date), 'year')
+        const age = selfDayjs().diff(`${item.year}-${item.useLunar ? item.solarDateInThisYear : item.date}`, 'year')
 
         if (item.diffDay === 0) {
-          message = `今天是 ${ item.name } 的${ age && item.isShowAge ? age + '岁' : '' }生日哦，祝${ item.name }生日快乐！`
+          message = `今天是 ${item.name} 的${age && item.isShowAge ? `${age}岁` : ''}生日哦，祝${item.name}生日快乐！`
         } else {
-          message = `距离 ${ item.name } 的${ age && item.isShowAge ? age + 1 + '岁' : '' }生日还有${ item.diffDay }天`
+          message = `距离 ${item.name} 的${age && item.isShowAge ? `${age + 1}岁` : ''}生日还有${item.diffDay}天`
         }
       }
 
       // 节日相关
       if (item.type === '节日') {
         if (item.diffDay === 0) {
-          message = `今天是 ${ item.name } 哦，要开心！`
+          message = `今天是 ${item.name} 哦，要开心！`
         } else {
-          message = `距离 ${ item.name } 还有${ item.diffDay }天`
+          message = `距离 ${item.name} 还有${item.diffDay}天`
         }
       }
 
       // 存储数据
       if (message) {
-        resMessage += `${ message } \n`
+        resMessage += `${message} \n`
       }
-
     }
-
   })
 
   return resMessage
@@ -327,10 +316,10 @@ export const getDateDiffList = (customizedDateList) => {
   }
   const dateList = customizedDateList || config.CUSTOMIZED_DATE_LIST
 
-  dateList.forEach(item => {
-    item['diffDay'] = Math.ceil(selfDayjs().diff(selfDayjs(item.date), 'day', true))
-    if (item['diffDay'] <= 0) {
-      item['diffDay'] = Math.abs(Math.floor(selfDayjs().diff(selfDayjs(item.date), 'day', true)))
+  dateList.forEach((item) => {
+    item.diffDay = Math.ceil(selfDayjs().diff(selfDayjs(item.date), 'day', true))
+    if (item.diffDay <= 0) {
+      item.diffDay = Math.abs(Math.floor(selfDayjs().diff(selfDayjs(item.date), 'day', true)))
     }
   })
 
@@ -347,13 +336,13 @@ export const getSlotList = () => {
   }
   const slotList = config.SLOT_LIST
 
-  slotList.forEach(item => {
+  slotList.forEach((item) => {
     if (Object.prototype.toString.call(item.contents) === '[object Array]' && item.contents.length > 0) {
-      item['checkout'] = item.contents[Math.floor(Math.random() * item.contents.length + 1) - 1]
+      item.checkout = item.contents[Math.floor(Math.random() * item.contents.length + 1) - 1]
     } else if (Object.prototype.toString.call(item.contents) === '[object String]') {
-      item['checkout'] = item.contents
+      item.checkout = item.contents
     } else {
-      item['checkout'] = ''
+      item.checkout = ''
     }
   })
 
@@ -369,55 +358,53 @@ export const getSlotList = () => {
  * @returns
  */
 export const sendMessage = async (templateId, user, accessToken, params) => {
-  const url = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${ accessToken }`
+  const url = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${accessToken}`
 
   const wxTemplateData = {}
   if (Object.prototype.toString.call(params) === '[object Array]') {
-    params.map(item => {
+    params.forEach((item) => {
       wxTemplateData[item.name] = {
         value: item.value,
-        color: item.color
+        color: item.color,
       }
     })
   }
 
-
   // 组装数据
   const data = {
-    'touser': user.id,
-    'template_id': templateId,
-    'url': user.openUrl || 'https://wangxinleo.cn',
-    'topcolor': '#FF0000',
-    'data': wxTemplateData
+    touser: user.id,
+    template_id: templateId,
+    url: user.openUrl || 'https://wangxinleo.cn',
+    topcolor: '#FF0000',
+    data: wxTemplateData,
   }
 
   // 发送消息
   const res = await axios.post(url, data, {
     headers: {
       'Content-Type': 'application/json',
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
-    }
-  }).catch(err => err)
-
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+    },
+  }).catch((err) => err)
 
   if (res.data && res.data.errcode === 0) {
-    console.log(`${ user.name }: 推送消息成功`)
+    console.log(`${user.name}: 推送消息成功`)
     return {
       name: user.name,
-      success: true
+      success: true,
     }
   }
 
   if (res.data && res.data.errcode === 40003) {
-    console.error(`${ user.name }: 推送消息失败! id填写不正确！应该填用户扫码后生成的id！要么就是填错了！请检查配置文件！`)
+    console.error(`${user.name}: 推送消息失败! id填写不正确！应该填用户扫码后生成的id！要么就是填错了！请检查配置文件！`)
   } else if (res.data && res.data.errcode === 40036) {
-    console.error(`${ user.name }: 推送消息失败! 模板id填写不正确！应该填模板id！要么就是填错了！请检查配置文件！`)
+    console.error(`${user.name}: 推送消息失败! 模板id填写不正确！应该填模板id！要么就是填错了！请检查配置文件！`)
   } else {
-    console.error(`${ user.name }: 推送消息失败`, res.data)
+    console.error(`${user.name}: 推送消息失败`, res.data)
   }
   return {
     name: user.name,
-    success: false
+    success: false,
   }
 }
 
@@ -441,11 +428,11 @@ export const sendMessageReply = async (users, accessToken, templateId = null, pa
       templateId || user.useTemplateId,
       user,
       accessToken,
-      params || user.wxTemplateParams
+      params || user.wxTemplateParams,
     ))
   }
-  const resList = await Promise.all(allPromise);
-  resList.forEach(item => {
+  const resList = await Promise.all(allPromise)
+  resList.forEach((item) => {
     if (item.success) {
       successPostNum++
       successPostIds.push(item.name)
@@ -460,7 +447,7 @@ export const sendMessageReply = async (users, accessToken, templateId = null, pa
     successPostNum,
     failPostNum,
     successPostIds: successPostIds.length ? successPostIds.join(',') : '无',
-    failPostIds: failPostIds.length ? failPostIds.join(',') : '无'
+    failPostIds: failPostIds.length ? failPostIds.join(',') : '无',
   }
 }
 
@@ -479,19 +466,19 @@ export async function getConstellationFortune(date, dateType) {
   const periods = ['今日', '明日', '本周', '本月', '今年']
   const defaultType = [{
     name: '综合运势',
-    key: 'comprehensiveHoroscope'
+    key: 'comprehensiveHoroscope',
   }, {
     name: '爱情运势',
-    key: 'loveHoroscope'
+    key: 'loveHoroscope',
   }, {
     name: '事业学业',
-    key: 'careerHoroscope'
+    key: 'careerHoroscope',
   }, {
     name: '财富运势',
-    key: 'wealthHoroscope'
+    key: 'wealthHoroscope',
   }, {
     name: '健康运势',
-    key: 'healthyHoroscope'
+    key: 'healthyHoroscope',
   }]
 
   // 未填写时段，则取随机
@@ -499,7 +486,7 @@ export async function getConstellationFortune(date, dateType) {
     dateType = periods[Math.floor(Math.random() * periods.length + 1) - 1]
   }
 
-  const dateTypeIndex = periods.indexOf(dateType);
+  const dateTypeIndex = periods.indexOf(dateType)
   if (dateTypeIndex === -1) {
     console.error('星座日期类型horoscopeDateType错误, 请确认是否按要求填写!')
     return res
@@ -509,29 +496,29 @@ export async function getConstellationFortune(date, dateType) {
   const { en: constellation } = getConstellation(date)
   const url = `https://www.xzw.com/fortune/${constellation}/${dateTypeIndex}.html`
   try {
-    const { data } = await axios.get(url).catch(err => err)
+    const { data } = await axios.get(url).catch((err) => err)
     if (data) {
-      const jsdom = new JSDOM(data);
-      defaultType.map((item, index) => {
-        let value = jsdom.window.document.querySelector(`.c_cont p strong.p${ index + 1 }`).nextElementSibling.innerHTML.replace(/<small.*/, '');
+      const jsdom = new JSDOM(data)
+      defaultType.forEach((item, index) => {
+        let value = jsdom.window.document.querySelector(`.c_cont p strong.p${index + 1}`).nextElementSibling.innerHTML.replace(/<small.*/, '')
         if (!value) {
-          value = DEFAULT_OUTPUT.constellationFortune;
-          console.error(item.name + '获取失败');
+          value = DEFAULT_OUTPUT.constellationFortune
+          console.error(`${item.name}获取失败`)
         }
         res.push({
           name: toLowerLine(item.key),
           value: `${dateType}${item.name}: ${value}`,
-          color: getColor()
+          color: getColor(),
         })
       })
     } else {
       // 拿不到数据则拼假数据, 保证运行
-      defaultType.map((item) => {
-        const value = DEFAULT_OUTPUT.constellationFortune;
+      defaultType.forEach((item) => {
+        const value = DEFAULT_OUTPUT.constellationFortune
         res.push({
           name: toLowerLine(item.key),
           value: `${dateType}${item.name}: ${value}`,
-          color: getColor()
+          color: getColor(),
         })
       })
     }
@@ -549,17 +536,16 @@ export async function getConstellationFortune(date, dateType) {
  */
 // istanbul ignore next
 export const getAggregatedData = async () => {
-
-  const weekList = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+  const weekList = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
   // 获取金山词霸每日一句
   const {
     content: noteEn = DEFAULT_OUTPUT.noteEn,
-    note: noteCh = DEFAULT_OUTPUT.noteCh
+    note: noteCh = DEFAULT_OUTPUT.noteCh,
   } = await getCIBA()
   // 获取每日一言
   const {
     hitokoto: oneTalk = DEFAULT_OUTPUT.oneTalk,
-    from: talkFrom = DEFAULT_OUTPUT.talkFrom
+    from: talkFrom = DEFAULT_OUTPUT.talkFrom,
   } = await getOneTalk(config.LITERARY_PREFERENCE)
   // 获取土味情话
   const earthyLoveWords = await getEarthyLoveWords() || DEFAULT_OUTPUT.earthyLoveWords
@@ -575,10 +561,7 @@ export const getAggregatedData = async () => {
     content: poetryContent = DEFAULT_OUTPUT.poetryContent,
   } = await getPoetry()
   // 获取插槽中的数据
-  const slotParams = getSlotList().map(item => {
-    return { name: item.keyword, value: item.checkout, color: getColor() }
-  })
-
+  const slotParams = getSlotList().map((item) => ({ name: item.keyword, value: item.checkout, color: getColor() }))
 
   if (Object.prototype.toString.call(config.USERS) !== '[object Array]') {
     console.error('配置文件中找不到USERS数组')
@@ -586,7 +569,6 @@ export const getAggregatedData = async () => {
   }
   const users = config.USERS
   for (const user of users) {
-
     // 获取每日天气
     const {
       // 天气
@@ -598,13 +580,11 @@ export const getAggregatedData = async () => {
       // 风向
       wd: windDirection = DEFAULT_OUTPUT.windDirection,
       // 风力等级
-      ws: windScale = DEFAULT_OUTPUT.windScale
+      ws: windScale = DEFAULT_OUTPUT.windScale,
     } = await getWeather(user.province || config.PROVINCE, user.city || config.CITY)
 
     // 统计日列表计算日期差
-    const dateDiffParams = getDateDiffList(user.customizedDateList).map(item => {
-      return { name: item.keyword, value: item.diffDay, color: getColor() }
-    })
+    const dateDiffParams = getDateDiffList(user.customizedDateList).map((item) => ({ name: item.keyword, value: item.diffDay, color: getColor() }))
 
     // 获取生日/生日信息
     const birthdayMessage = getBirthdayMessage(user.festivals)
@@ -636,10 +616,9 @@ export const getAggregatedData = async () => {
       { name: toLowerLine('poetryDynasty'), value: poetryDynasty, color: getColor() },
       { name: toLowerLine('poetryTitle'), value: poetryTitle, color: getColor() },
     ].concat(constellationFortune)
-    .concat(dateDiffParams)
-    .concat(slotParams)
-
-    user['wxTemplateParams'] = wxTemplateParams
+      .concat(dateDiffParams)
+      .concat(slotParams)
+    user.wxTemplateParams = wxTemplateParams
   }
 
   return users
