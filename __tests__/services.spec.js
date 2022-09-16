@@ -223,23 +223,23 @@ describe('services', () => {
     })
     test('getBirthdayMessage', () => {
         config.FESTIVALS = [
-            { type: '*生日', name: '老婆', year: '1999', date: '09-19', isShowAge: true },
+            { type: '*生日', name: '老婆', year: '1999', date: '11-12', isShowAge: true },
             { type: '节日', name: '结婚纪念日', year: '2020', date: '09-03' },
-            { type: '生日', name: '李四', year: '1996', date: '09-31', isShowAge: true },
+            { type: '生日', name: '刘伟', year: '1999', date: '11-30', isShowAge: true },
             { type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
         ]
         config.FESTIVALS_LIMIT = 4
         MockDate.set('2022-09-03')
         expect(getBirthdayMessage()).toEqual(`
 今天是 结婚纪念日 哦，要开心！ 
-距离 李四 的26岁生日还有28天 
+距离 武畅 的26岁生日还有28天 
 距离 老婆 的23岁生日还有41天 
 距离 被搭讪纪念日 还有363天 
 `.trimStart())
         MockDate.reset()
         MockDate.set('2022-09-31')
         expect(getBirthdayMessage()).toEqual(`
-今天是 李四 的26岁生日哦，祝李四生日快乐！ 
+今天是 刘伟 的26岁生日哦，祝刘伟生日快乐！ 
 距离 老婆 的23岁生日还有13天 
 距离 被搭讪纪念日 还有335天 
 距离 结婚纪念日 还有337天 
@@ -250,7 +250,7 @@ describe('services', () => {
 今天是 老婆 的生日哦，祝老婆生日快乐！ 
 距离 被搭讪纪念日 还有310天 
 距离 结婚纪念日 还有312天 
-距离 李四 的4岁生日还有340天 
+距离 刘伟 的4岁生日还有340天 
 `.trimStart())
         MockDate.reset()
         config.FESTIVALS_LIMIT = -1
@@ -259,9 +259,9 @@ describe('services', () => {
         MockDate.reset()
         config.FESTIVALS_LIMIT = 4
         config.FESTIVALS = [
-            { type: '测试日', name: '老婆', year: '1996', date: '09-02', isShowAge: true },
+            { type: '测试日', name: '老婆', year: '1996', date: '11-12', isShowAge: true },
             { type: '测试日', name: '结婚纪念日', year: '2020', date: '09-03' },
-            { type: '测试日', name: '李四', year: '1996', date: '09-31', isShowAge: true },
+            { type: '测试日', name: '刘伟', year: '1999', date: '11-30', isShowAge: true },
             { type: '测试日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
         ]
         expect(getBirthdayMessage()).toEqual('')
@@ -269,15 +269,15 @@ describe('services', () => {
         expect(getBirthdayMessage()).toEqual('')
         MockDate.set('1999-10-28')
         config.FESTIVALS = [
-            { type: '*生日', name: '老婆', year: '1999', date: '09-19', isShowAge: true },
+            { type: '*生日', name: '老婆', year: '1999', date: '11-12', isShowAge: true },
             { type: '节日', name: '结婚纪念日', year: '2020', date: '09-03' },
-            { type: '生日', name: '李四', year: '1996', date: '09-31', isShowAge: true },
+            { type: '生日', name: '刘伟', year: '1996', date: '11-30', isShowAge: true },
             { type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01' }
         ]
         expect(getBirthdayMessage()).toEqual(`
 距离 被搭讪纪念日 还有309天 
 距离 结婚纪念日 还有311天 
-距离 李四 的4岁生日还有339天 
+距离 刘伟 的4岁生日还有339天 
 距离 老婆 的生日还有365天 
 `.trimStart())
     })
@@ -286,7 +286,7 @@ describe('services', () => {
             // 在一起的日子
             { keyword: 'love_day', date: '2015-05-01' },
             // 结婚纪念日
-            { keyword: 'marry_day', date: '2020-01-04' },
+            { keyword: 'marry_day', date: '2018-09-31' },
             // 退伍日, 不用可以删掉
             { keyword: 'ex_day', date: '2022-09-09' }
             // sakana日
