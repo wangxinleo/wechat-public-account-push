@@ -1,5 +1,5 @@
 import { selfDayjs } from './set-def-dayjs.js'
-import { Solar } from 'lunar-javascript'
+import { Lunar, Solar } from 'lunar-javascript'
 import { config } from '../../config/index.js'
 
 /**
@@ -47,21 +47,38 @@ export const randomNum = (min, max) => {
  */
 export const sortBirthdayTime = (list) => {
   list.forEach(item => {
-    const diffDay = Math.ceil(selfDayjs(selfDayjs().format('YYYY') + '-' + (item.useLunar ? item.solarDateInThisYear : item.date)).diff(selfDayjs(), 'day', true))
-    if (diffDay >= 0) {
-      item['diffDay'] = diffDay
+    let { type } = item
+    item.useLunar = /^\*/.test(type)
+    item.type = (type || '').replace(/^\*/, '')
+    if (item.useLunar) {
+      let yearOffset = -1
+      let diffDay
+      while (true) {
+        const [month, day] = item.date.split('-')
+        const lunar = Lunar.fromYmd(selfDayjs().year() + yearOffset, Number(month), Number(day));
+        const solar = lunar.getSolar();
+        diffDay = Math.ceil(selfDayjs(solar.getYear() + '-' + solar.getMonth() + '-' + solar.getDay()).diff(selfDayjs(), 'day', true))
+        if (diffDay >= 0) {
+          break
+        }
+        yearOffset++
+      }
+      item.diffDay = diffDay
     } else {
-      item['diffDay'] = Math.ceil(selfDayjs(selfDayjs().add(1, 'year').format('YYYY') + '-' + (item.useLunar ? item.solarDateInThisYear : item.date)).diff(selfDayjs(), 'day', true))
+      const diffDay = Math.ceil(selfDayjs(selfDayjs().format('YYYY') + '-' + item.date).diff(selfDayjs(), 'day', true))
+      if (diffDay >= 0) {
+        item['diffDay'] = diffDay
+      } else {
+        item['diffDay'] = Math.ceil(selfDayjs(selfDayjs().add(1, 'year').format('YYYY') + '-' + item.date).diff(selfDayjs(), 'day', true))
+      }
     }
   })
-  return list.sort((a, b) =>
-    a.diffDay > b.diffDay ? 1 : -1
-  )
+  return list.sort((a, b) => a.diffDay > b.diffDay ? 1 : -1)
 }
 
 /**
  * 根据月日获取星座信息
- * @param {string} date 
+ * @param {string} date
  * @returns
  */
 export const getConstellation = (date) => {
@@ -70,7 +87,7 @@ export const getConstellation = (date) => {
   const constellationEn = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces']
   const [month, day] = date.split('-').map(Number)
   const solar = Solar.fromYmd(year, month, day)
-  const cn = solar.getXingZuo();
+  const cn = solar.getXingZuo()
   return {
     cn,
     en: constellationEn[constellationCn.indexOf(cn)]
