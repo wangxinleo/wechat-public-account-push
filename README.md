@@ -54,12 +54,15 @@ wechat-public-account-push
     - [1.1. 第一步：注册一个微信公众测试号](#11-第一步注册一个微信公众测试号)
     - [1.2. 第二步：进行模板配置](#12-第二步进行模板配置)
     - [1.3. 第三步：完成配置文件，并运行 wechat-public-account-push](#13-第三步完成配置文件并运行wechat-public-account-push)
-        - [1.3.1. 方式一：使用Github Action](#131-方式一使用Github-Action)
-        - [1.3.2. 方式二：下载程序包到本地或服务器运行](#132-方式二下载程序包到本地或服务器运行)
+        - [1.3.1. 方式一：使用Github-Action(不准时，排队执行，胜在免费)](#131-方式一使用Github-Action不准时排队执行胜在免费)
+        - [1.3.2. 方式二：使用Gitee-go(定时任务收费，前200分钟免费，非常准时)](#132-方式二使用Gitee-go定时任务收费前200分钟免费非常准时)
+        - [1.3.3. 方式三：方式三：下载程序包到本地或服务器运行(需要有自己的服务器，使用系统的定时任务非常准时)](#132-方式三下载程序包到本地或服务器运行需要有自己的服务器使用系统的定时任务非常准时)
 - [2. 公众号模板参数说明](#2-公众号模板参数说明)
 - [3. config参数说明](#3-config参数说明)
 - [4. 模板样例](#4-模板样例)
-- [5. action脚本说明](#5-action脚本说明)
+- [5. GitHub/Gitee 如何更改自动执行时间](#5-githubgitee-如何更改自动执行时间)
+  - [5.1. github action如何更改自动执行时间](#51-github-action如何更改自动执行时间)
+  - [5.2. gitee go如何更改自动执行时间](#52-gitee-go如何更改自动执行时间)
 - [6. 常见问题](#6-常见问题)
 - [7. 版本发布及更新](#7-版本发布及更新)
 - [8. 成为开源贡献成员](#8-成为开源贡献成员)
@@ -175,7 +178,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ### 1.3. 第三步：完成配置文件，并运行wechat-public-account-push
 
-#### 1.3.1 方式一：使用Github-Action
+#### 1.3.1 方式一：使用Github-Action(不准时，排队执行，胜在免费)
 
 👇👇👇👇点击展开
 
@@ -241,11 +244,135 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-test-4.png)
 
+**1.3.1.4 (选做)：如何更改自动执行时间**
+
+[5.1. github action如何更改自动执行时间](#51-github-action如何更改自动执行时间)
+
 </details>
 
 <br/>
 
-#### 1.3.2 方式二：下载程序包到本地或服务器运行
+#### 1.3.2 方式二：使用Gitee-go(定时任务收费，前200分钟免费，非常准时)
+
+👇👇👇👇点击展开
+
+<details>
+
+[>>> gitee国内仓库地址 wechat-public-account-push <<<](https://gitee.com/wangxin_leo/wechat-public-account-push)
+
+**1.3.2.1 fork gitee仓库并修改相应配置**
+
+- fork仓库
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-fork.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-fork2.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-fork3.png)
+
+- 保护个人隐私安全，将仓库设为私有
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-self.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-self2.png)
+
+- 修改相应配置
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-config.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-config2.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-config3.png)
+
+
+- 按提示填入相应配置后保存
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-config4.png)
+
+**1.3.2.2 在私人仓库中写入自己公众号的信息，启用【流水线】自动任务，定时执行**
+
+- 启用【流水线】
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow2.png)
+
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow4.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow5.png)
+
+```yaml
+version: '1.0'
+name: weixin-push-on-time
+displayName: weixin-push-on-time
+triggers:
+  trigger: auto
+  schedule:
+    # 以下时间指北京时间8点整
+    - cron: '* 0 8 * * ? *'
+stages:
+  - name: stage-d2bdc7e0
+    displayName: 微信推送
+    strategy: naturally
+    trigger: auto
+    executor: []
+    steps:
+      - step: build@nodejs
+        name: build_nodejs
+        displayName: Nodejs 构建
+        nodeVersion: 16.14.2
+        commands:
+          - '# 设置NPM源，提升安装速度'
+          - npm config set registry https://registry.npmmirror.com
+          - ''
+          - git checkout master
+          - ''
+          - npm ci
+          - ''
+          - '# 执行编译命令'
+          - npm run dev
+        caches:
+          - ~/.npm
+          - ~/.yarn
+        notify: []
+        strategy:
+          retry: '0'
+```
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow6.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow9.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow7.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow8.png)
+
+
+
+**1.3.2.3 (选做)：检查脚本是否可以正常执行**
+
+- 手动启动脚本
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow12.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow15.png)
+
+- 查看执行结果
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow13.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow14.png)
+
+**1.3.2.4 (选做)：如何更改自动执行时间**
+
+[5.2. gitee go如何更改自动执行时间](#52-gitee-go如何更改自动执行时间)
+
+</details>
+
+<br/>
+
+#### 1.3.3 方式三：下载程序包到本地或服务器运行(需要有自己的服务器，使用系统的定时任务非常准时)
 如果是 Nodejs 开发者，直接 Clone 源码，然后 VS 打开解决方案，配置 Cookie 后即可直接本地进行运行和调试。
 
 对于不是开发者的朋友，可以通过以下命令到本地或任意服务器运行，步骤如下。
@@ -785,7 +912,10 @@ node ./main.js
 失败用户: {{fail_post_ids.DATA}}
 ```
 
-## 5. action脚本说明
+## 5. GitHub/Gitee 如何更改自动执行时间
+
+### 5.1 github action如何更改自动执行时间
+
 这里的脚本使用的是 github 的 workflow 定时任务, 具体脚本文件放置在:
 
 
@@ -824,6 +954,12 @@ on:
 
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-cron.png)
+
+### 5.2 gitee go如何更改自动执行时间
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow10.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow11.png)
 
 ## 6. 常见问题
 
