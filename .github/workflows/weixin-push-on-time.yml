@@ -31,7 +31,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run dev --if-present
+    - run: npm run prod --if-present
     env: 
       APP_ID: ${{secrets.APP_ID}}
       APP_SECRET: ${{secrets.APP_SECRET}}
