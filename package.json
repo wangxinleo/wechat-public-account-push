@@ -5,8 +5,11 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "dev": "node main.js",
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest"
+    "dev": "cross-env APP_MODE=prod node main.js",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "params-log": "cross-env APP_MODE=params-log node main.js",
+    "server": "cross-env APP_MODE=server node main.js",
+    "pm2start": "pm2 start start_pm2.js --name @wechat-push"
   },
   "repository": {
     "type": "git",
@@ -25,7 +28,8 @@
     "axios": "^0.27.2",
     "dayjs": "^1.11.5",
     "jsdom": "^20.0.0",
-    "lunar-javascript": "^1.2.33"
+    "lunar-javascript": "^1.2.33",
+    "node-schedule": "^2.1.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

@@ -56,7 +56,7 @@ wechat-public-account-push
     - [1.3. 第三步：完成配置文件，并运行 wechat-public-account-push](#13-第三步完成配置文件并运行wechat-public-account-push)
         - [1.3.1. 方式一：使用Github-Action(不准时，排队执行，胜在免费)](#131-方式一使用Github-Action不准时排队执行胜在免费)
         - [1.3.2. 方式二：使用Gitee-go(定时任务收费，前200分钟免费，非常准时)](#132-方式二使用Gitee-go定时任务收费前200分钟免费非常准时)
-        - [1.3.3. 方式三：方式三：下载程序包到本地或服务器运行(需要有自己的服务器，使用系统的定时任务非常准时)](#132-方式三下载程序包到本地或服务器运行需要有自己的服务器使用系统的定时任务非常准时)
+        - [1.3.3. 方式三：下载程序包到本地或服务器运行(需要有自己的服务器，使用系统的定时任务非常准时)](#132-方式三下载程序包到本地或服务器运行需要有自己的服务器使用系统的定时任务非常准时)
 - [2. 公众号模板参数说明](#2-公众号模板参数说明)
 - [3. config参数说明](#3-config参数说明)
 - [4. 模板样例](#4-模板样例)
@@ -419,21 +419,19 @@ yum install git
 
 ```shell
 
-cd ~
+cd ~ && git clone https://github.com/wangxinleo/wechat-public-account-push.git
 
-git clone https://github.com/wangxinleo/wechat-public-account-push.git
+cd ~/wechat-public-account-push
 
 # 二选一：中国内地执行这一步，速度更快
-npm install -g cnpm --registry=https://registry.npm.taobao.org
-
-cnpm install
+npm install -g cnpm --registry=https://registry.npm.taobao.org  && cnpm install && cnpm install pm2 -g
 
 # 二选一：国外服务器执行这一步
-npm install
+npm install && npm install pm2 -g
 
 ```
 
-Ⅲ. **填写配置**
+Ⅲ. **填写发送配置**
 
 不会使用vim 命令的可以使用其他命令，或用图形化界面进行修改。
 
@@ -445,12 +443,54 @@ vim ~/wechat-public-account-push/config/index.js
 
 ```
 
-Ⅳ. **运行**
+Ⅳ. **填写发送配置**
+不会使用vim 命令的可以使用其他命令，或用图形化界面进行修改。
+
+这是你的服务器，只要能改掉文件里的配置就可以了。
+
+> 此时间为每天的早上8点，*为匹配任意一个
+> 
+> 这里的时间是中国时间 秒 分 时 日 月 年
+> 
+> 0 0 8 * * *
+
+更详细的规则[点此](https://www.npmjs.com/package/node-schedule)
 
 ```shell
 
-node ~/wechat-public-account-push/main.js
+vim ~/wechat-public-account-push/config/server-config.js
 
+```
+
+
+Ⅴ. **运行**
+
+```shell
+
+cd ~/wechat-public-account-push && npm run pm2start
+
+```
+
+**运行完成效果图**
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/pm2-win6.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/pm2-win7.png)
+
+Ⅵ. **如何停止/重启/删除服务？如何查看运行日志/清空日志？**
+
+```shell
+# 停止
+pm2 stop @wechat-push 
+# 重启
+pm2 restart @wechat-push 
+# 删除服务
+pm2 delete @wechat-push 
+
+# 查看运行日志
+pm2 log @wechat-push
+# 清空日志
+pm2 flush
 ```
 
 </details>
@@ -475,7 +515,13 @@ node ~/wechat-public-account-push/main.js
 
 Ⅱ. **下载项目**
 
-在你的电脑里随便一个盘选择任意一个文件夹（最好自己创建，自己要知道在哪里），右键 --> git base
+在你的电脑里随便一个盘选择任意一个文件夹（最好自己创建，自己要知道在哪里）
+
+进入到文件夹后，右键当前文件夹的空白处 --> 【Git Base Here】
+
+(win11 则点开【显示更多选项】即可看到 【Git Base Here】)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/right-click.png)
 
 执行以下命令
 
@@ -483,37 +529,83 @@ node ~/wechat-public-account-push/main.js
 
 git clone https://github.com/wangxinleo/wechat-public-account-push.git
 
-# 二选一：中国内地执行这一步，速度更快
-npm install -g cnpm --registry=https://registry.npm.taobao.org
+cd ./wechat-public-account-push
 
-cnpm install
+# 二选一：中国内地执行这一步，速度更快
+npm install -g cnpm --registry=https://registry.npm.taobao.org && cnpm install && cnpm install pm2 -g
 
 # 二选一：国外服务器执行这一步
-npm install
+npm install && npm install pm2 -g
 
 ```
 
-Ⅲ. **填写配置**
+当黑窗口回到光标闪烁状态时即完成。
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/git-win.png)
+
+Ⅲ. **填写发送配置**
 
 如果上一步执行成功了，你当前文件夹里面肯定会出现 `wechat-public-account-push` 文件夹
 
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/pm2-win.png)
+
 到 `wechat-public-account-push/config/index.js` 中修改配置。 
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/pm2-win2.png)
 
 如果显示无法打开，选中该文件 --> 右键 --> 打开方式 --> 记事本
 
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/pm2-win3.png)
+
 按照提示修改配置
 
-Ⅳ. **运行**
+Ⅳ. **填写发送配置**
+到 `wechat-public-account-push/config/server-config.js` 中修改配置。
 
-在 `wechat-public-account-push` 文件夹中，右键 --> git base
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/pm2-win4.png)
+
+> 此时间为每天的早上8点，*为匹配任意一个
+>
+> 这里的时间是中国时间 秒 分 时 日 月 年
+>
+> 0 0 8 * * *
+
+Ⅴ. **运行**
+
+在 `wechat-public-account-push` 文件夹中，右键 --> 【Git Base Here】
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/pm2-win5.png)
 
 执行以下命令
 
 ```shell
 
-node ./main.js
+npm run pm2start
 
 ```
+
+**运行完成效果图**
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/pm2-win6.png)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/pm2-win7.png)
+
+Ⅵ. **如何停止/重启/删除服务？如何查看运行日志/清空日志？**
+
+```shell
+# 停止
+pm2 stop @wechat-push 
+# 重启
+pm2 restart @wechat-push 
+# 删除服务
+pm2 delete @wechat-push 
+
+# 查看运行日志
+pm2 log @wechat-push
+# 清空日志
+pm2 flush
+```
+
 
 </details>
 
