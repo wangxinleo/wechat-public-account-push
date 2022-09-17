@@ -60,9 +60,9 @@ wechat-public-account-push
 - [2. 公众号模板参数说明](#2-公众号模板参数说明)
 - [3. config参数说明](#3-config参数说明)
 - [4. 模板样例](#4-模板样例)
-- [5. GitHub/Gitee 如何更改自动执行时间](#5-GitHubGitee如何更改自动执行时间)
-  - [5.1. github action如何更改自动执行时间](#51-githubaction如何更改自动执行时间)
-  - [5.2. gitee go如何更改自动执行时间](#52-giteego如何更改自动执行时间)
+- [5. GitHub/Gitee 如何更改自动执行时间](#5-githubgitee-如何更改自动执行时间)
+  - [5.1. github action如何更改自动执行时间](#51-github-action如何更改自动执行时间)
+  - [5.2. gitee go如何更改自动执行时间](#52-gitee-go如何更改自动执行时间)
 - [6. 常见问题](#6-常见问题)
 - [7. 版本发布及更新](#7-版本发布及更新)
 - [8. 成为开源贡献成员](#8-成为开源贡献成员)
@@ -246,7 +246,7 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 **1.3.1.4 (选做)：如何更改自动执行时间**
 
-[5.1. github action如何更改自动执行时间](#51-githubaction如何更改自动执行时间)
+[5.1. github action如何更改自动执行时间](#51-github-action如何更改自动执行时间)
 
 </details>
 
@@ -366,7 +366,7 @@ stages:
 
 **1.3.2.4 (选做)：如何更改自动执行时间**
 
-[5.2. gitee go如何更改自动执行时间](#52-giteego如何更改自动执行时间)
+[5.2. gitee go如何更改自动执行时间](#52-gitee-go如何更改自动执行时间)
 
 </details>
 
