@@ -495,6 +495,26 @@ pm2 log @wechat-push
 pm2 flush
 ```
 
+Ⅶ. **本地服务器版如何更新？**
+
+1. **在github上先 `fork syncing`**
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/pr-1.png)
+
+2. **执行以下代码**
+
+```shell
+cd ~./wechat-public-account-push && git pull origin master
+```
+
+3. **查看配置是否被覆盖，被覆盖则重新填写好配置；**
+
+4. **重启服务**
+
+```shell
+pm2 restart @wechat-push 
+```
+
 </details>
 
 <br/>
@@ -606,6 +626,26 @@ pm2 delete @wechat-push
 pm2 log @wechat-push
 # 清空日志
 pm2 flush
+```
+
+Ⅶ. **本地服务器版如何更新？**
+
+1. **在github上先 `fork syncing`**
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/pr-1.png)
+
+2. **执行以下代码**
+
+```shell
+cd ~./wechat-public-account-push && git pull origin master
+```
+
+3. **查看配置是否被覆盖，被覆盖则重新填写好配置；**
+
+4. **重启服务**
+
+```shell
+pm2 restart @wechat-push 
 ```
 
 
