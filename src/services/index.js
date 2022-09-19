@@ -137,7 +137,7 @@ export const getCIBA = async () => {
 
 /**
  * 获取下一休息日tts
- * @returns 
+ * @returns
  */
 export const getHolidaytts = async () => {
 
@@ -297,34 +297,17 @@ export const getBirthdayMessage = (festivals) => {
   }
 
   // 计算重要节日倒数
-  const birthdayList = sortBirthdayTime((festivals || config.FESTIVALS || []).map((it) => {
-    let { type, year, date } = it
-    const useLunar = /^\*/.test(type)
-    if (!useLunar) {
+  const birthdayList = sortBirthdayTime((festivals || config.FESTIVALS || [])).map((it) => {
+    if (!it.useLunar) {
       return it
     }
-    type = type.replace(/^\*/, '')
-    const [month, day] = date.split('-').map(Number)
-    // 获取今年的生日信息
-    const thisYear = (new Date).getFullYear()
-    let lunarInThisYear = Lunar.fromYmd(thisYear, month, day)
-    let solarInThisYear = lunarInThisYear.getSolar()
-    if (solarInThisYear.getYear() > thisYear) {
-      lunarInThisYear = Lunar.fromYmd(thisYear - 1, month, day)
-      solarInThisYear = lunarInThisYear.getSolar()
-    }
-    const lunar = Lunar.fromYmd(Number(year), month, day)
-    const solar = lunar.getSolar()
+    const date = selfDayjs().add(it.diffDay, 'day')
     return {
       ...it,
-      useLunar,
-      type,
-      year,
-      date,
-      solarDate: `${ solar.getMonth() }-${ solar.getDay() }`,
-      solarDateInThisYear: `${ solarInThisYear.getMonth() }-${ solarInThisYear.getDay() }`
+      soarYear: date.format('YYYY'),
+      solarDate: date.format('MM-DD')
     }
-  }))
+  })
   let resMessage = ''
 
   birthdayList.forEach((item, index) => {
@@ -337,10 +320,15 @@ export const getBirthdayMessage = (festivals) => {
       // 生日相关
       if (item.type === '生日') {
         // 获取周岁
-        const age = selfDayjs().diff(item.year + '-' + (item.useLunar ? item.solarDateInThisYear : item.date), 'year')
+        let age;
+        if (!item.useLunar) {
+          age = selfDayjs().diff(item.year + '-' + item.date, 'year')
+        } else {
+          age = selfDayjs().year() - item.year - 1
+        }
 
         if (item.diffDay === 0) {
-          message = `今天是 ${ item.name } 的${ age && item.isShowAge ? age + '岁' : '' }生日哦，祝${ item.name }生日快乐！`
+          message = `今天是 ${ item.name } 的${ age && item.isShowAge ? (item.useLunar ? 1 : 0) + age + '岁' : '' }生日哦，祝${ item.name }生日快乐！`
         } else {
           message = `距离 ${ item.name } 的${ age && item.isShowAge ? age + 1 + '岁' : '' }生日还有${ item.diffDay }天`
         }
