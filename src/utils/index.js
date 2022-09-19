@@ -1,4 +1,4 @@
-import { Solar } from 'lunar-javascript'
+import { Lunar, Solar } from 'lunar-javascript'
 import { selfDayjs } from './set-def-dayjs.js'
 import { config } from '../../config/index.js'
 
@@ -20,7 +20,7 @@ export const toLowerLine = (str) => {
  * @returns
  */
 export const getColor = () => {
-  if (!config.isShowColor) {
+  if (!config.IS_SHOW_COLOR) {
     return undefined
   }
   return `#${Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, '0')}`
@@ -41,11 +41,27 @@ export const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1
  */
 export const sortBirthdayTime = (list) => {
   list.forEach((item) => {
-    const diffDay = Math.ceil(selfDayjs(`${selfDayjs().format('YYYY')}-${item.useLunar ? item.solarDateInThisYear : item.date}`).diff(selfDayjs(), 'day', true))
-    if (diffDay >= 0) {
+    const { type } = item
+    item.useLunar = /^\*/.test(type)
+    item.type = (type || '').replace(/^\*/, '')
+    if (item.useLunar) {
+      let yearOffset = -1
+      let diffDay = -1
+      do {
+        const [month, day] = item.date.split('-')
+        const lunar = Lunar.fromYmd(selfDayjs().year() + yearOffset, Number(month), Number(day))
+        const solar = lunar.getSolar()
+        diffDay = Math.ceil(selfDayjs(`${solar.getYear()}-${solar.getMonth()}-${solar.getDay()}`).diff(selfDayjs(), 'day', true))
+        yearOffset++
+      } while (diffDay < 0)
       item.diffDay = diffDay
     } else {
-      item.diffDay = Math.ceil(selfDayjs(`${selfDayjs().add(1, 'year').format('YYYY')}-${item.useLunar ? item.solarDateInThisYear : item.date}`).diff(selfDayjs(), 'day', true))
+      const diffDay = Math.ceil(selfDayjs(`${selfDayjs().format('YYYY')}-${item.date}`).diff(selfDayjs(), 'day', true))
+      if (diffDay >= 0) {
+        item.diffDay = diffDay
+      } else {
+        item.diffDay = Math.ceil(selfDayjs(`${selfDayjs().add(1, 'year').format('YYYY')}-${item.date}`).diff(selfDayjs(), 'day', true))
+      }
     }
   })
   return list.sort((a, b) => (a.diffDay > b.diffDay ? 1 : -1))

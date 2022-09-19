@@ -1,6 +1,5 @@
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { Lunar } from 'lunar-javascript'
 import { JSDOM } from 'jsdom'
 
 import { config } from '../../config/index.js'
@@ -70,6 +69,10 @@ export const getAccessToken = async () => {
  * @param {*} city 城市
  */
 export const getWeather = async (province, city) => {
+  if (config.SWITCH && !config.SWITCH.weather) {
+    return {}
+  }
+
   if (!CITY_INFO[province] || !CITY_INFO[province][city] || !CITY_INFO[province][city].AREAID) {
     console.error('配置文件中找不到相应的省份或城市')
     return {}
@@ -129,11 +132,34 @@ export const getCIBA = async () => {
 }
 
 /**
+ * 获取下一休息日tts
+ * @returns
+ */
+export const getHolidaytts = async () => {
+  if (config.SWITCH && !config.SWITCH.holidaytts) {
+    return null
+  }
+
+  const url = 'https://wangxinleo.cn/api/wx-push/holiday/getHolidaytts'
+  const res = await axios.get(url).catch((err) => err)
+
+  if (res.status === 200 && res.data && res.data.code === 0) {
+    return res.data.tts
+  }
+  console.error('获取下一休息日tts: 发生错误', res)
+  return null
+}
+
+/**
  * 每日一言
  * @param {*} type
  * @returns
  */
 export const getOneTalk = async (type) => {
+  if (config.SWITCH && !config.SWITCH.oneTalk) {
+    return {}
+  }
+
   const filterQuery = TYPE_LIST.filter((item) => item.name === type)
   const query = filterQuery.length ? filterQuery[0].type : TYPE_LIST[randomNum(0, 7)].type
   const url = `https://v1.hitokoto.cn/?c=${query}`
@@ -178,24 +204,45 @@ export const getWordsFromApiShadiao = async (type) => {
  * 土味情话（彩虹屁）
  * @returns {Promise<String>} 土味情话(彩虹屁）内容
  */
-export const getEarthyLoveWords = async () => getWordsFromApiShadiao('chp')
+export const getEarthyLoveWords = async () => {
+  if (config.SWITCH && !config.SWITCH.earthyLoveWords) {
+    return ''
+  }
+  return getWordsFromApiShadiao('chp')
+}
 
 /**
  * 朋友圈文案
  * @returns {Promise<String>} 朋友圈文案内容
  */
-export const getMomentCopyrighting = async () => getWordsFromApiShadiao('pyq')
+export const getMomentCopyrighting = async () => {
+  if (config.SWITCH && !config.SWITCH.momentCopyrighting) {
+    return ''
+  }
+
+  return getWordsFromApiShadiao('pyq')
+}
 
 /**
  * 毒鸡汤
  * @returns {Promise<String>} 毒鸡汤内容
  */
-export const getPoisonChickenSoup = async () => getWordsFromApiShadiao('du')
+export const getPoisonChickenSoup = async () => {
+  if (config.SWITCH && !config.SWITCH.poisonChickenSoup) {
+    return ''
+  }
+
+  return getWordsFromApiShadiao('du')
+}
 /**
  * 古诗古文
  * @returns {Promise<{}|{dynasty: string, author: string, title: string, content: string}>} 古诗内容 标题 作者 朝代
  */
 export const getPoetry = async () => {
+  if (config.SWITCH && !config.SWITCH.poetry) {
+    return {}
+  }
+
   const url = 'https://v2.jinrishici.com/sentence'
   try {
     const res = await axios.get(url, {
@@ -229,41 +276,27 @@ export const getPoetry = async () => {
  * @return
  */
 export const getBirthdayMessage = (festivals) => {
+  if (config.SWITCH && !config.SWITCH.birthdayMessage) {
+    return ''
+  }
+
   if (Object.prototype.toString.call(festivals) !== '[object Array]'
   || festivals.length === 0) {
     festivals = null
   }
 
   // 计算重要节日倒数
-  const birthdayList = sortBirthdayTime((festivals || config.FESTIVALS || []).map((it) => {
-    const { year, date } = it
-    let { type } = year
-    const useLunar = /^\*/.test(type)
-    if (!useLunar) {
+  const birthdayList = sortBirthdayTime((festivals || config.FESTIVALS || [])).map((it) => {
+    if (!it.useLunar) {
       return it
     }
-    type = type.replace(/^\*/, '')
-    const [month, day] = date.split('-').map(Number)
-    // 获取今年的生日信息
-    const thisYear = (new Date()).getFullYear()
-    let lunarInThisYear = Lunar.fromYmd(thisYear, month, day)
-    let solarInThisYear = lunarInThisYear.getSolar()
-    if (solarInThisYear.getYear() > thisYear) {
-      lunarInThisYear = Lunar.fromYmd(thisYear - 1, month, day)
-      solarInThisYear = lunarInThisYear.getSolar()
-    }
-    const lunar = Lunar.fromYmd(Number(year), month, day)
-    const solar = lunar.getSolar()
+    const date = selfDayjs().add(it.diffDay, 'day')
     return {
       ...it,
-      useLunar,
-      type,
-      year,
-      date,
-      solarDate: `${solar.getMonth()}-${solar.getDay()}`,
-      solarDateInThisYear: `${solarInThisYear.getMonth()}-${solarInThisYear.getDay()}`,
+      soarYear: date.format('YYYY'),
+      solarDate: date.format('MM-DD'),
     }
-  }))
+  })
   let resMessage = ''
 
   birthdayList.forEach((item, index) => {
@@ -276,10 +309,15 @@ export const getBirthdayMessage = (festivals) => {
       // 生日相关
       if (item.type === '生日') {
         // 获取周岁
-        const age = selfDayjs().diff(`${item.year}-${item.useLunar ? item.solarDateInThisYear : item.date}`, 'year')
+        let age
+        if (!item.useLunar) {
+          age = selfDayjs().diff(`${item.year}-${item.date}`, 'year')
+        } else {
+          age = selfDayjs().year() - item.year - 1
+        }
 
         if (item.diffDay === 0) {
-          message = `今天是 ${item.name} 的${age && item.isShowAge ? `${age}岁` : ''}生日哦，祝${item.name}生日快乐！`
+          message = `今天是 ${item.name} 的${age && item.isShowAge ? `${(item.useLunar ? 1 : 0) + age}岁` : ''}生日哦，祝${item.name}生日快乐！`
         } else {
           message = `距离 ${item.name} 的${age && item.isShowAge ? `${age + 1}岁` : ''}生日还有${item.diffDay}天`
         }
@@ -458,6 +496,10 @@ export const sendMessageReply = async (users, accessToken, templateId = null, pa
  * @returns
  */
 export async function getConstellationFortune(date, dateType) {
+  if (config.SWITCH && !config.SWITCH.horoscope) {
+    return []
+  }
+
   const res = []
   if (!date) {
     return res
@@ -542,6 +584,8 @@ export const getAggregatedData = async () => {
     content: noteEn = DEFAULT_OUTPUT.noteEn,
     note: noteCh = DEFAULT_OUTPUT.noteCh,
   } = await getCIBA()
+  // 获取下一休息日
+  const holidaytts = await getHolidaytts() || DEFAULT_OUTPUT.holidaytts
   // 获取每日一言
   const {
     hitokoto: oneTalk = DEFAULT_OUTPUT.oneTalk,
@@ -606,6 +650,7 @@ export const getAggregatedData = async () => {
       { name: toLowerLine('birthdayMessage'), value: birthdayMessage, color: getColor() },
       { name: toLowerLine('noteEn'), value: noteEn, color: getColor() },
       { name: toLowerLine('noteCh'), value: noteCh, color: getColor() },
+      { name: toLowerLine('holidaytts'), value: holidaytts, color: getColor() },
       { name: toLowerLine('oneTalk'), value: oneTalk, color: getColor() },
       { name: toLowerLine('talkFrom'), value: talkFrom, color: getColor() },
       { name: toLowerLine('earthyLoveWords'), value: earthyLoveWords, color: getColor() },
@@ -618,6 +663,7 @@ export const getAggregatedData = async () => {
     ].concat(constellationFortune)
       .concat(dateDiffParams)
       .concat(slotParams)
+
     user.wxTemplateParams = wxTemplateParams
   }
 
