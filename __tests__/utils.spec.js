@@ -1,9 +1,8 @@
 import { toLowerLine, getColor, randomNum, sortBirthdayTime, getConstellation } from '../src/utils'
-import MockDate from 'mockdate'
 import { config } from '../config'
+import MockDate from 'mockdate'
 import { jest } from '@jest/globals'
 jest.mock('../config')
-
 describe('utils', () => {
     test.each([
         ['date', 'date'],
