@@ -94,18 +94,6 @@ export const config = {
 	        {"keyword": "ex_day", date: "2022-09-10"},
 	      ]
 	    },
-    {
-      name: "老婆1",
-      id: "",
-      useTemplateId: "",
-      province: "",
-      city: "",
-      horoscopeDate: '',
-      horoscopeDateType: '',
-      openUrl: "https://wangxinleo.cn",
-      festivals: [],
-      customizedDateList: []
-    },
      {
       // 想要发送的人的名字
       name: "友友，早上好",
@@ -116,7 +104,7 @@ export const config = {
       // 所在省份
       province: "江西",
       // 所在城市
-      city: "井冈山",
+      city: "吉安",
       // 新历生日, 仅用作获取星座运势, 格式必须
       horoscopeDate: '03-29',
       // 获取什么时候的星座运势，可选：['今日', '明日', '本周', '本月', '今年'], 留空则随机
