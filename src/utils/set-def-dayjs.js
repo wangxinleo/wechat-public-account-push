@@ -10,7 +10,6 @@ export const selfDayjs = (time) => {
     return dayjs(time).subtract('8', 'hour')
   }
   return dayjs(time).tz('Asia/Shanghai')
-
 }
 
 /* istanbul ignore next */

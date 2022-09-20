@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "cross-env APP_MODE=prod node main.js",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "prepare": "husky install",
+    "lint": "eslint **/*.js --fix",
     "params-log": "cross-env APP_MODE=params-log node main.js",
     "server": "cross-env APP_MODE=server node main.js",
     "pm2start": "pm2 start start_pm2.js --name @wechat-push"
@@ -33,10 +35,18 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
+    "eslint": "^8.23.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "husky": "^8.0.1",
     "jest": "^29.0.1",
+    "lint-staged": "^13.0.3",
     "mockdate": "^3.0.5"
   },
   "jest": {
     "transform": {}
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix"
   }
 }
