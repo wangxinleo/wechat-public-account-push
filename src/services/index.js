@@ -2,7 +2,7 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 import { JSDOM } from 'jsdom'
 
-import { config } from '../../config/index.js'
+import { config } from '../../config/exp-config.js'
 import { CITY_INFO, DEFAULT_OUTPUT, TYPE_LIST } from '../store/index.js'
 import {
   getConstellation,
