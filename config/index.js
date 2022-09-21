@@ -4,13 +4,13 @@ export const config = {
      */
 
     // 公众号APP_ID
-    APP_ID: "wxac5b05d681a8759a",
+    APP_ID: "wx6ed86a5eef2e26ea",
 
     // 公众号APP_SECRET
-    APP_SECRET: "934d03ac17d8ca2d3fb3fd1652220b38",
+    APP_SECRET: "c05c88194e1b185b0c27e01229dbdf7a",
 
     // 模板消息id
-    TEMPLATE_ID: "y7NrWUv-gYn7gbo3-fhsN8en5r_WLuvHx7M-auqacUQ",
+    TEMPLATE_ID: "X5BWa-o3RvTwIpURid2hIUU24lMwc1zkOe83gsQL588",
 
     // 回调消息模板id, 用来看自己有没有发送成功的那个模板
     CALLBACK_TEMPLATE_ID: "xxxxxxxxxxxxx-y你懂的,填错狗头打烂VRMpu",
