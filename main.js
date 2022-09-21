@@ -6,7 +6,7 @@ import {
   getAggregatedData,
   getCallbackTemplateParams,
 } from './src/services/index.js'
-import { config } from './config/index.js'
+import { config } from './config/exp-config.js'
 import { cornTime } from './config/server-config.js'
 import mainForTest from './main-for-test.js'
 

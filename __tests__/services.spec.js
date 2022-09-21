@@ -3,7 +3,7 @@ import { jest } from '@jest/globals'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import MockDate from 'mockdate'
-import { config } from '../config'
+import { config } from '../config/exp-config.js'
 
 import {
   getWeather,

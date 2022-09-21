@@ -3,7 +3,7 @@ import { jest } from '@jest/globals'
 import {
   toLowerLine, getColor, randomNum, sortBirthdayTime, getConstellation,
 } from '../src/utils'
-import { config } from '../config'
+import { config } from '../config/exp-config.js'
 
 jest.mock('../config')
 describe('utils', () => {

@@ -1,6 +1,6 @@
 import { Lunar, Solar } from 'lunar-javascript'
 import { selfDayjs } from './set-def-dayjs.js'
-import { config } from '../../config/index.js'
+import { config } from '../../config/exp-config.js'
 
 /**
  * 驼峰转下划线
