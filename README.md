@@ -180,6 +180,10 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 ### 1.3. 第三步：完成配置文件，并运行wechat-public-account-push
 
+**！！！**
+如果你非开发，请[点此](https://github.com/shuangxunian/wechat-form)！！！
+**！！！**
+
 #### 1.3.1 方式一：使用Github-Action(不准时，排队执行，胜在免费)
 
 👇👇👇👇点击展开
