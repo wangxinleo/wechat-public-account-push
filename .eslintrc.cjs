@@ -21,6 +21,7 @@ module.exports = {
     'import/extensions': 0,
     'max-len': 0,
     'semi': [2, 'never'],
+    'comma-dangle': [2, 'only-multiline'],
     'no-param-reassign': 0,
     'no-restricted-syntax': 0,
     'no-plusplus': 0,
