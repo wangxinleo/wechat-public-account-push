@@ -2,7 +2,7 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 import { JSDOM } from 'jsdom'
 
-import { config } from '../../config/exp-config.js'
+import config from '../../config/exp-config.js'
 import { CITY_INFO, DEFAULT_OUTPUT, TYPE_LIST } from '../store/index.js'
 import {
   getConstellation,
@@ -281,7 +281,7 @@ export const getBirthdayMessage = (festivals) => {
   }
 
   if (Object.prototype.toString.call(festivals) !== '[object Array]'
-  || festivals.length === 0) {
+    || festivals.length === 0) {
     festivals = null
   }
 
@@ -349,7 +349,7 @@ export const getBirthdayMessage = (festivals) => {
  */
 export const getDateDiffList = (customizedDateList) => {
   if (Object.prototype.toString.call(customizedDateList) !== '[object Array]'
-  && Object.prototype.toString.call(config.CUSTOMIZED_DATE_LIST) !== '[object Array]') {
+    && Object.prototype.toString.call(config.CUSTOMIZED_DATE_LIST) !== '[object Array]') {
     return []
   }
   const dateList = customizedDateList || config.CUSTOMIZED_DATE_LIST
@@ -495,7 +495,7 @@ export const sendMessageReply = async (users, accessToken, templateId = null, pa
  * @param {string} dateType
  * @returns
  */
-export async function getConstellationFortune(date, dateType) {
+export const getConstellationFortune = async (date, dateType) => {
   if (config.SWITCH && !config.SWITCH.horoscope) {
     return []
   }
@@ -573,6 +573,32 @@ export async function getConstellationFortune(date, dateType) {
 }
 
 /**
+ * 获取课程表
+ * @param courseSchedule {Array<Array<String>>|{benchmark: {date: string, isOdd: boolean}, courses: {odd: Array<Array<string>>, even:Array<Array<string>>}}}
+ * @returns {string}
+ */
+export const getCoursesSchedule = (courseSchedule) => {
+  if (config.SWITCH && !config.SWITCH.coursesSchedule) {
+    return ''
+  }
+  if (!courseSchedule) {
+    return ''
+  }
+  const week = (selfDayjs().day() + 6) % 7
+  // 如果课程表是一个数组，认为只有单周的课表
+  if (Array.isArray(courseSchedule)) {
+    return (courseSchedule[week] || []).join('\n')
+  }
+  // 如果是一个数组，则根据基准日期判断单双周
+  const benchmarkDate = selfDayjs(courseSchedule.benchmark.date)
+  const diff = selfDayjs().diff(benchmarkDate.set('day', 0).set('hour', 0).set('minute', 0).set('second', 0)
+    .set('millisecond', 0), 'millisecond')
+  const isSameKind = Math.floor(diff / 7 / 86400000) % 2 === 0
+  const kind = ((isSameKind && courseSchedule.benchmark.isOdd) || (!isSameKind && !courseSchedule.benchmark.isOdd)) ? 'odd' : 'even'
+  return ((courseSchedule.courses && courseSchedule.courses[kind] && courseSchedule.courses[kind][week]) || []).join('\n')
+}
+
+/**
  * 获取处理好的用户数据
  * @returns
  */
@@ -628,7 +654,11 @@ export const getAggregatedData = async () => {
     } = await getWeather(user.province || config.PROVINCE, user.city || config.CITY)
 
     // 统计日列表计算日期差
-    const dateDiffParams = getDateDiffList(user.customizedDateList).map((item) => ({ name: item.keyword, value: item.diffDay, color: getColor() }))
+    const dateDiffParams = getDateDiffList(user.customizedDateList).map((item) => ({
+      name: item.keyword,
+      value: item.diffDay,
+      color: getColor(),
+    }))
 
     // 获取生日/生日信息
     const birthdayMessage = getBirthdayMessage(user.festivals)
@@ -636,10 +666,17 @@ export const getAggregatedData = async () => {
     // 获取星座运势
     const constellationFortune = await getConstellationFortune(user.horoscopeDate, user.horoscopeDateType)
 
+    // 获取课表信息
+    const coursesSchedule = getCoursesSchedule(user.coursesSchedule || config.coursesSchedule) || DEFAULT_OUTPUT.coursesSchedule
+
     // 集成所需信息
     const wxTemplateParams = [
       { name: toLowerLine('toName'), value: user.name, color: getColor() },
-      { name: toLowerLine('date'), value: `${selfDayjs().format('YYYY-MM-DD')} ${weekList[selfDayjs().format('d')]}`, color: getColor() },
+      {
+        name: toLowerLine('date'),
+        value: `${selfDayjs().format('YYYY-MM-DD')} ${weekList[selfDayjs().format('d')]}`,
+        color: getColor(),
+      },
       { name: toLowerLine('province'), value: user.province || config.PROVINCE, color: getColor() },
       { name: toLowerLine('city'), value: user.city || config.CITY, color: getColor() },
       { name: toLowerLine('weather'), value: weather, color: getColor() },
@@ -660,6 +697,7 @@ export const getAggregatedData = async () => {
       { name: toLowerLine('poetryAuthor'), value: poetryAuthor, color: getColor() },
       { name: toLowerLine('poetryDynasty'), value: poetryDynasty, color: getColor() },
       { name: toLowerLine('poetryTitle'), value: poetryTitle, color: getColor() },
+      { name: toLowerLine('coursesSchedule'), value: coursesSchedule, color: getColor() },
     ].concat(constellationFortune)
       .concat(dateDiffParams)
       .concat(slotParams)

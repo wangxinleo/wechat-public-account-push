@@ -3,7 +3,7 @@ import { jest } from '@jest/globals'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import MockDate from 'mockdate'
-import { config } from '../config/exp-config.js'
+import config from '../config/exp-config.js'
 
 import {
   getWeather,
@@ -22,6 +22,7 @@ import {
   getPoetry,
   getConstellationFortune,
   getHolidaytts,
+  getCoursesSchedule,
 } from '../src/services'
 import { selfDayjs } from '../src/utils/set-def-dayjs.js'
 
@@ -692,5 +693,130 @@ describe('services', () => {
       },
     })
     expect(await getHolidaytts()).toEqual(null)
+  })
+  test('getCoursesSchedule', () => {
+    MockDate.set('2022-09-24 08:00:00')
+    config.SWITCH.coursesSchedule = false
+    expect(getCoursesSchedule([])).toEqual('')
+    config.SWITCH.coursesSchedule = true
+    expect(getCoursesSchedule(null)).toEqual('')
+    expect(getCoursesSchedule([
+      [],
+      [],
+      [],
+      [],
+      [],
+      [
+        '08-00:09:35 高等数学',
+        '09:50-11:35 高等物理',
+      ],
+      [],
+    ])).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
+    expect(getCoursesSchedule([
+      [],
+      [],
+      [],
+      [],
+    ])).toEqual('')
+    expect(getCoursesSchedule({
+      benchmark: {
+        date: '2022-09-23',
+        isOdd: true,
+      },
+      courses: {
+        odd: [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [
+            '08-00:09:35 高等数学',
+            '09:50-11:35 高等物理',
+          ],
+          [],
+        ],
+        even: [],
+      },
+    })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
+    expect(getCoursesSchedule({
+      benchmark: {
+        date: '2022-09-23',
+        isOdd: false,
+      },
+      courses: {
+        even: [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [
+            '08-00:09:35 高等数学',
+            '09:50-11:35 高等物理',
+          ],
+          [],
+        ],
+        odd: [],
+      },
+    })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
+    expect(getCoursesSchedule({
+      benchmark: {
+        date: '2022-09-26',
+        isOdd: true,
+      },
+      courses: {
+        even: [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [
+            '08-00:09:35 高等数学',
+            '09:50-11:35 高等物理',
+          ],
+          [],
+        ],
+        odd: [],
+      },
+    })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
+    expect(getCoursesSchedule({
+      benchmark: {
+        date: '2022-09-18',
+        isOdd: true,
+      },
+      courses: {
+        even: [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [
+            '08-00:09:35 高等数学',
+            '09:50-11:35 高等物理',
+          ],
+          [],
+        ],
+        odd: [],
+      },
+    })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
+    expect(getCoursesSchedule({
+      benchmark: {
+        date: '2022-09-18',
+        isOdd: true,
+      },
+      courses: {
+        even: [
+          [],
+          [],
+          [],
+          [],
+        ],
+        odd: [],
+      },
+    })).toEqual('')
+    MockDate.reset()
   })
 })

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const USER_CONFIG = {
   /**
    * 公众号配置
@@ -47,7 +48,7 @@ const USER_CONFIG = {
     birthdayMessage: true,
 
     // 学生课表
-    studentCourses: false,
+    coursesSchedule: false,
   },
 
   /** 每日一言 */
@@ -103,8 +104,46 @@ const USER_CONFIG = {
         // 退伍日
         { keyword: 'ex_day', date: '2022-09-10' }
       ],
-      studentCourses: {
-
+      // 课程表相关配置
+      // 如果courseSchedule不存在或者为空（null）则认为没有课程
+      // 如果coursesSchedule是一个数组，则认为不区分单双周，直接填写星期几对应的课表数据即可
+      // 如果coursesSchedule是一个对象（如下面所示）
+      coursesSchedule: {
+        // 单双周的基准
+        benchmark: {
+          // 一个日期
+          date: '2022-09-23',
+          // 该日期是否为单周
+          isOdd: true
+        },
+        // 课表
+        courses: {
+          // 单周课表
+          // 从星期一到星期日（星期六和星期日地课表数组可不填写）
+          odd: [
+            // 例子，周一的课表
+            [
+              '08:00-09:35 高等数学',
+              '09:50-11:25 高等物理'
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          // 双周课表
+          even: [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ]
+        }
       },
     },
     {
@@ -118,7 +157,7 @@ const USER_CONFIG = {
       openUrl: 'https://wangxinleo.cn',
       festivals: [],
       customizedDateList: [],
-      studentCourses: {},
+      coursesSchedule: null
     },
     {
       name: '老婆2',
@@ -131,7 +170,7 @@ const USER_CONFIG = {
       openUrl: 'https://wangxinleo.cn',
       festivals: [],
       customizedDateList: [],
-      studentCourses: {},
+      coursesSchedule: null
     },
     {
       name: '老婆3',
@@ -144,7 +183,7 @@ const USER_CONFIG = {
       openUrl: 'https://wangxinleo.cn',
       festivals: [],
       customizedDateList: [],
-      studentCourses: {},
+      coursesSchedule: null
     }
     // 你可以不断按格式往下增加
     // ...
@@ -264,5 +303,7 @@ const USER_CONFIG = {
     // 你可以不断按格式往下增加
     // ...
   ],
+  // 默认的课表配置
+  STUDENT_COURSES: null
 }
 export default USER_CONFIG
