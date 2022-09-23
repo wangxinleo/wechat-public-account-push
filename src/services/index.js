@@ -589,7 +589,7 @@ export const getCourseSchedule = (courseSchedule) => {
   if (Array.isArray(courseSchedule)) {
     return (courseSchedule[week] || []).join('\n')
   }
-  // 如果是一个数组，则根据基准日期判断单双周
+  // 如果是一个对象，则根据基准日期判断单双周
   const benchmarkDate = selfDayjs(courseSchedule.benchmark.date)
   const diff = selfDayjs().diff(benchmarkDate.set('day', 0).set('hour', 0).set('minute', 0).set('second', 0)
     .set('millisecond', 0), 'millisecond')
