@@ -52,7 +52,7 @@ export const DEFAULT_OUTPUT = {
   windDirection: '朝向你',
   windScale: '100级哦',
   holidaytts: '嘿嘿，今天不告诉你~',
-  coursesSchedule: '今天没有课哟~',
+  courseSchedule: '今天没有课哟~',
 }
 
 export const CITY_INFO = {

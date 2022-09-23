@@ -22,7 +22,7 @@ import {
   getPoetry,
   getConstellationFortune,
   getHolidaytts,
-  getCoursesSchedule,
+  getCourseSchedule,
 } from '../src/services'
 import { selfDayjs } from '../src/utils/set-def-dayjs.js'
 
@@ -694,13 +694,13 @@ describe('services', () => {
     })
     expect(await getHolidaytts()).toEqual(null)
   })
-  test('getCoursesSchedule', () => {
+  test('getCourseSchedule', () => {
     MockDate.set('2022-09-24 08:00:00')
-    config.SWITCH.coursesSchedule = false
-    expect(getCoursesSchedule([])).toEqual('')
-    config.SWITCH.coursesSchedule = true
-    expect(getCoursesSchedule(null)).toEqual('')
-    expect(getCoursesSchedule([
+    config.SWITCH.courseSchedule = false
+    expect(getCourseSchedule([])).toEqual('')
+    config.SWITCH.courseSchedule = true
+    expect(getCourseSchedule(null)).toEqual('')
+    expect(getCourseSchedule([
       [],
       [],
       [],
@@ -712,13 +712,13 @@ describe('services', () => {
       ],
       [],
     ])).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
-    expect(getCoursesSchedule([
+    expect(getCourseSchedule([
       [],
       [],
       [],
       [],
     ])).toEqual('')
-    expect(getCoursesSchedule({
+    expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-23',
         isOdd: true,
@@ -739,7 +739,7 @@ describe('services', () => {
         even: [],
       },
     })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
-    expect(getCoursesSchedule({
+    expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-23',
         isOdd: false,
@@ -760,7 +760,7 @@ describe('services', () => {
         odd: [],
       },
     })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
-    expect(getCoursesSchedule({
+    expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-26',
         isOdd: true,
@@ -781,7 +781,7 @@ describe('services', () => {
         odd: [],
       },
     })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
-    expect(getCoursesSchedule({
+    expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-18',
         isOdd: true,
@@ -802,7 +802,7 @@ describe('services', () => {
         odd: [],
       },
     })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
-    expect(getCoursesSchedule({
+    expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-18',
         isOdd: true,

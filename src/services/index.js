@@ -577,8 +577,8 @@ export const getConstellationFortune = async (date, dateType) => {
  * @param courseSchedule {Array<Array<String>>|{benchmark: {date: string, isOdd: boolean}, courses: {odd: Array<Array<string>>, even:Array<Array<string>>}}}
  * @returns {string}
  */
-export const getCoursesSchedule = (courseSchedule) => {
-  if (config.SWITCH && !config.SWITCH.coursesSchedule) {
+export const getCourseSchedule = (courseSchedule) => {
+  if (config.SWITCH && !config.SWITCH.courseSchedule) {
     return ''
   }
   if (!courseSchedule) {
@@ -667,7 +667,7 @@ export const getAggregatedData = async () => {
     const constellationFortune = await getConstellationFortune(user.horoscopeDate, user.horoscopeDateType)
 
     // 获取课表信息
-    const coursesSchedule = getCoursesSchedule(user.coursesSchedule || config.coursesSchedule) || DEFAULT_OUTPUT.coursesSchedule
+    const courseSchedule = getCourseSchedule(user.courseSchedule || config.courseSchedule) || DEFAULT_OUTPUT.courseSchedule
 
     // 集成所需信息
     const wxTemplateParams = [
@@ -697,7 +697,7 @@ export const getAggregatedData = async () => {
       { name: toLowerLine('poetryAuthor'), value: poetryAuthor, color: getColor() },
       { name: toLowerLine('poetryDynasty'), value: poetryDynasty, color: getColor() },
       { name: toLowerLine('poetryTitle'), value: poetryTitle, color: getColor() },
-      { name: toLowerLine('coursesSchedule'), value: coursesSchedule, color: getColor() },
+      { name: toLowerLine('courseSchedule'), value: courseSchedule, color: getColor() },
     ].concat(constellationFortune)
       .concat(dateDiffParams)
       .concat(slotParams)

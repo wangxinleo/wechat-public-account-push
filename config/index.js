@@ -48,7 +48,7 @@ const USER_CONFIG = {
     birthdayMessage: true,
 
     // 学生课表
-    coursesSchedule: false,
+    courseSchedule: false,
   },
 
   /** 每日一言 */
@@ -106,9 +106,9 @@ const USER_CONFIG = {
       ],
       // 课程表相关配置
       // 如果courseSchedule不存在或者为空（null）则认为没有课程
-      // 如果coursesSchedule是一个数组，则认为不区分单双周，直接填写星期几对应的课表数据即可
-      // 如果coursesSchedule是一个对象（如下面所示）
-      coursesSchedule: {
+      // 如果courseSchedule是一个数组，则认为不区分单双周，直接填写星期几对应的课表数据即可
+      // 如果courseSchedule是一个对象（如下面所示）
+      courseSchedule: {
         // 单双周的基准
         benchmark: {
           // 一个日期
@@ -157,7 +157,7 @@ const USER_CONFIG = {
       openUrl: 'https://wangxinleo.cn',
       festivals: [],
       customizedDateList: [],
-      coursesSchedule: null
+      courseSchedule: null
     },
     {
       name: '老婆2',
@@ -170,7 +170,7 @@ const USER_CONFIG = {
       openUrl: 'https://wangxinleo.cn',
       festivals: [],
       customizedDateList: [],
-      coursesSchedule: null
+      courseSchedule: null
     },
     {
       name: '老婆3',
@@ -183,7 +183,7 @@ const USER_CONFIG = {
       openUrl: 'https://wangxinleo.cn',
       festivals: [],
       customizedDateList: [],
-      coursesSchedule: null
+      courseSchedule: null
     }
     // 你可以不断按格式往下增加
     // ...
@@ -304,6 +304,6 @@ const USER_CONFIG = {
     // ...
   ],
   // 默认的课表配置
-  STUDENT_COURSES: null
+  COURSE_SCHEDULE: null
 }
 export default USER_CONFIG

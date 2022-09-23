@@ -757,7 +757,7 @@ pm2 restart @wechat-push
 | ~~love_day.DATA~~     | 已预置, 但是可以删掉, 在配置中自定义, 见下文 | 2674                        |
 | ~~marry_day.DATA~~    | 已预置, 但是可以删掉, 在配置中自定义, 见下文 | 965                         |
 | birthday_message.DATA | 生日消息和节日消息                 | 距离 宝贝 的生日还有122天，距离 中秋节还有30天 |
-| courses_schedule.DATA | 每日的课表                     | 08:00-09:35 高等数学            |
+| course_schedule.DATA  | 每日的课表                     | 08:00-09:35 高等数学            |
 
 **自定义计时及自定义文本插槽**
 
