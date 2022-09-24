@@ -94,18 +94,7 @@ export const USER_CONFIG = {
         {"keyword": "ex_day", date: "2022-09-10"},
       ]
     },
-    {
-      name: "老婆",
-      id: "oVbAy58AWbJsw8xaNqn_mHbs7Oco",
-      useTemplateId: "	0-XUWOV17wAqLpBYz4dNAK5GXGQWucB7qnJucf5zrnA	",
-      province: "shanxi",
-      city: "taiyuan",
-      horoscopeDate: '',
-      horoscopeDateType: '',
-      openUrl: "https://wangxinleo.cn",
-      festivals: [],
-      customizedDateList: []
-    },
+   
     // 你可以不断按格式往下增加
     // ...
   ],
