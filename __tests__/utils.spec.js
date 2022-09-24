@@ -1,7 +1,7 @@
 import MockDate from 'mockdate'
 import { jest } from '@jest/globals'
 import {
-  toLowerLine, getColor, randomNum, sortBirthdayTime, getConstellation,
+  toLowerLine, getColor, randomNum, sortBirthdayTime, getConstellation, getWeatherCityInfo,
 } from '../src/utils'
 import config from '../config/exp-config.js'
 
@@ -61,5 +61,20 @@ describe('utils', () => {
   test('getConstellation', () => {
     expect(getConstellation('09-22')).toEqual({ cn: '处女', en: 'virgo' })
     expect(getConstellation('09-23')).toEqual({ cn: '天秤', en: 'libra' })
+  })
+  test('getWeatherCityInfo', () => {
+    expect(getWeatherCityInfo('北京', '顺义')).toEqual({
+      area_code: '010', city_code: '101010400', city_name: '顺义区', ctime: '2019-07-11 16:56:44', id: 510, pid: 1, post_code: '101300',
+    })
+    expect(getWeatherCityInfo('北京市', '顺义区')).toEqual({
+      area_code: '010', city_code: '101010400', city_name: '顺义区', ctime: '2019-07-11 16:56:44', id: 510, pid: 1, post_code: '101300',
+    })
+    expect(getWeatherCityInfo('河南', '周口')).toEqual({
+      area_code: '0394', city_code: '101181401', city_name: '周口', ctime: '2019-07-11 17:31:01', id: 162, pid: 10, post_code: '466000',
+    })
+    expect(getWeatherCityInfo('未知', '未知')).toBeNull()
+    expect(getWeatherCityInfo('北京', '未知')).toEqual({
+      area_code: '010', city_code: '101010100', city_name: '北京', ctime: '2019-07-11 17:30:06', id: 1, pid: 0, post_code: '100000',
+    })
   })
 })

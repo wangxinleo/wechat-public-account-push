@@ -1,6 +1,16 @@
 import { Lunar, Solar } from 'lunar-javascript'
 import { selfDayjs } from './set-def-dayjs.js'
 import config from '../../config/exp-config.js'
+/** @type {{
+ * id: number,
+ * pid: number,
+ * city_code: string,
+ * city_name: string,
+ * post_code: string,
+ * area_code: string,
+ * ctime: string
+ * }[]} */
+import weatherCity from '../store/weatherCity.json'
 
 /**
  * 驼峰转下划线
@@ -83,4 +93,25 @@ export const getConstellation = (date) => {
     cn,
     en: constellationEn[constellationCn.indexOf(cn)],
   }
+}
+
+/**
+ * 获取天气城市信息
+ * @param province {String}
+ * @param city {String}
+ */
+export const getWeatherCityInfo = (province, city) => {
+  const provName = province.replace(/[省市]$/, '')
+  const prov = weatherCity.find((it) => it.city_name === provName && it.pid === 0)
+  if (prov) {
+    const cName = city.replace(/[市区县]$/, '')
+    for (const name of '|市|区|县'.split('|')) {
+      const c = weatherCity.find((it) => it.pid === prov.id && it.city_name === `${cName}${name}`)
+      if (c) {
+        return c
+      }
+    }
+    return prov
+  }
+  return null
 }
