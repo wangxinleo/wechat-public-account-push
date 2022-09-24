@@ -111,7 +111,9 @@ export const getWeatherCityInfo = (province, city) => {
         return c
       }
     }
-    return prov
+    if (prov.city_code) {
+      return prov
+    }
   }
   return null
 }
