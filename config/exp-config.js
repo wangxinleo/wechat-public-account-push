@@ -1,10 +1,4 @@
-import { USER_CONFIG } from "./index.js";
+import USER_CONFIG from './index.js'
 
-let userConfig = {}
-if (process.env.USER_INFO) {
-  userConfig = JSON.parse(process.env.USER_INFO)
-} else {
-  userConfig = USER_CONFIG
-}
-
-export const config = userConfig
+const config = process.env.USER_INFO ? /* istanbul ignore next */ JSON.parse(process.env.USER_INFO) : USER_CONFIG
+export default config

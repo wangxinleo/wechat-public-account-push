@@ -8,7 +8,7 @@
     "dev": "cross-env APP_MODE=prod node main.js",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest",
     "prepare": "husky install",
-    "lint": "eslint **/*.js --fix",
+    "lint": "eslint --fix .",
     "params-log": "cross-env APP_MODE=params-log node main.js",
     "server": "cross-env APP_MODE=server node main.js",
     "pm2start": "pm2 start start_pm2.js --name @wechat-push"

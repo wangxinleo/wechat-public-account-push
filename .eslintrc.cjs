@@ -21,6 +21,13 @@ module.exports = {
     'import/extensions': 0,
     'max-len': 0,
     'semi': [2, 'never'],
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "always-multiline"
+    }],
     'no-param-reassign': 0,
     'no-restricted-syntax': 0,
     'no-plusplus': 0,
