@@ -1,5 +1,5 @@
 import { Lunar, Solar } from 'lunar-javascript'
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash/cloneDeep.js'
 import { selfDayjs } from './set-def-dayjs.js'
 import config from '../../config/exp-config.js'
 /** @type {{
