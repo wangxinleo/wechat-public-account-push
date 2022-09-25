@@ -29,7 +29,7 @@ export default defineConfig({
     async load(id) {
       if (/\/config\/exp-config\.js$/.test(id)) {
         return (await fs.readFile(id)).toString()
-          .replace('import USER_CONFIG from \'./index.cjs\'', 'var USER_CONFIG = require(\'../config/index.cjs\')')
+          .replace('import USER_CONFIG from \'./index.cjs\'', 'var USER_CONFIG = require(\'../config/index.cjs\').default')
       }
       return null
     },
