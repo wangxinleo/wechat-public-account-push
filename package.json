@@ -14,7 +14,7 @@
     "pm2start": "pm2 start start_pm2.js --name @wechat-push",
     "build": "rollup -c",
     "build-cloud": "npm run build && echo '{\"type\": \"commonjs\"}' > build/package.json",
-    "dev-cloud": "cross-env APP_MODE=prod node build/main.js"
+    "dev-cloud": "cross-env APP_MODE=prod node build"
   },
   "repository": {
     "type": "git",

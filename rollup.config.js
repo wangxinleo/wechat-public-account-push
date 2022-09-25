@@ -7,7 +7,7 @@ import * as fs from 'fs-extra'
 export default defineConfig({
   input: 'main.js',
   output: {
-    dir: 'build',
+    file: 'build/index.js',
     format: 'commonjs',
     exports: 'auto',
   },
