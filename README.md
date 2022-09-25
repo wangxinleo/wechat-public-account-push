@@ -694,7 +694,6 @@ pm2 restart @wechat-push
 划分的依据主要是根据功能需求和个人配置，通过获取到这些参数由测试号进行组装推送模板。
 
 目前可被推送模板获取的字段如下：
-> \* 为新增的可配置参数
 
 > ~~删除线~~ 为已废除的参数
 
@@ -702,9 +701,9 @@ pm2 restart @wechat-push
 
 | 参数                     | 详细             | 示例             |
 |------------------------|----------------|----------------|
-| \* to_name.DATA        | 收件人姓名          | 老婆3            |
+| to_name.DATA        | 收件人姓名          | 老婆3            |
 | date.DATA              | YYYY-MM-DD 星期d | 2022-08-26 星期五 |
-| \* province.DATA       | 省份             |  广东            |
+| province.DATA       | 省份             |  广东            |
 | city.DATA              | 城市             |  惠州            |
 
 
@@ -715,8 +714,16 @@ pm2 restart @wechat-push
 | weather.DATA           | 天气             | 阵雨转多云          |
 | min_temperature.DATA   | 最低气温           | 25℃            |
 | max_temperature.DATA   | 最高气温           | 25℃            |
-| \* wind_direction.DATA | 风向             | 持续东南风          |
-| \* wind_scale.DATA     | 风级             | <3级            |
+| wind_direction.DATA | 风向             | 持续东南风          |
+| wind_scale.DATA     | 风级             | <3级            |
+| shidu.DATA           | 湿度             | 50%          |
+| pm25.DATA   | PM2.5           | 36            |
+| pm10.DATA   | PM1.0           | 54            |
+| sunrise.DATA           | 日出时间             | 06:20         |
+| sunset.DATA   | 日落时间           | 06:20            |
+| aqi.DATA   | 空气质量指数          | 40            |
+| ganmao.DATA     | 预防感冒提醒             | 儿童、老年人及心脏、呼吸系统疾病患者人群应减少长时间或高强度户外锻炼            |
+| notice.DATA   | 天气温馨语          | 雨虽小，注意保暖别感冒            |
 
 **节假日**
 | 参数                     | 详细             | 示例             |
@@ -729,15 +736,15 @@ pm2 restart @wechat-push
 |-----------------------------------------|-----------|-------------------------------------------------------|
 | note_en.DATA                            | 金山每日一句-英文 | Nothing in this world that's worth having comes easy. |
 | note_ch.DATA                            | 金山每日一句-中文 | 这世界上凡是值得拥有的东西，都不易获得。                                  |
-| \* one_talk.DATA                        | 每日一言-内容   | 愿你遍布祖国山河，觉得人生也值得                                      |
-| \* talk_from.DATA                       | 每日一言-来源   | 晓良                                                    |
-| \* earthy_love_words.DATA               | 土味情话(彩虹屁) | 我今晚会很忙，忙着跟你过日子                                        |
-| \* moment_copyrighting.DATA             | 朋友圈文案     | 错过太阳就不要再错过月亮了                                         |
-| \* poison_chicken_soup.DATA             | 毒鸡汤       | 我从不以强凌弱，我欺负他之前，真不晓得他比我弱。                              |
-| \* poetry_content.DATA                  | 古诗古文-内容   | 举头望明月，低头思故乡。                                          |
-| \* poetry_title.DATA                    | 古诗古文-标题   | 静夜思                                                   |
-| \* poetry_author.DATA                   | 古诗古文-作者   | 李白                                                    |
-| \* poetry_dynasty.DATA                  | 古诗古文-朝代   | 唐代                                                    |
+| one_talk.DATA                        | 每日一言-内容   | 愿你遍布祖国山河，觉得人生也值得                                      |
+| talk_from.DATA                       | 每日一言-来源   | 晓良                                                    |
+| earthy_love_words.DATA               | 土味情话(彩虹屁) | 我今晚会很忙，忙着跟你过日子                                        |
+| moment_copyrighting.DATA             | 朋友圈文案     | 错过太阳就不要再错过月亮了                                         |
+| poison_chicken_soup.DATA             | 毒鸡汤       | 我从不以强凌弱，我欺负他之前，真不晓得他比我弱。                              |
+| poetry_content.DATA                  | 古诗古文-内容   | 举头望明月，低头思故乡。                                          |
+| poetry_title.DATA                    | 古诗古文-标题   | 静夜思                                                   |
+| poetry_author.DATA                   | 古诗古文-作者   | 李白                                                    |
+| poetry_dynasty.DATA                  | 古诗古文-朝代   | 唐代                                                    |
 
 **星座运势**
 
@@ -788,13 +795,13 @@ pm2 restart @wechat-push
 
 | 参数                       | 详细        | 示例                  |
 |--------------------------|-----------|---------------------|
-| \* post_time_zone.DATA   | 服务器时区     | Asia/Shanghai       |
-| \* post_time.DATA        | 服务器执行脚本时间 | 2022-08-31 19:41:57 |
-| \* need_post_num.DATA    | 共需推送N人    | 4                   |
-| \* success_post_num.DATA | 成功推送N人    | 1                   |
-| \* fail_post_num.DATA    | 推送失败N人    | 3                   |
-| \* success_post_ids.DATA | 推送成功的用户   | 老婆0                 |
-| \* fail_post_ids.DATA    | 推送失败的用户   | 老婆1,老婆2,老婆3         |
+| post_time_zone.DATA   | 服务器时区     | Asia/Shanghai       |
+| post_time.DATA        | 服务器执行脚本时间 | 2022-08-31 19:41:57 |
+| need_post_num.DATA    | 共需推送N人    | 4                   |
+| success_post_num.DATA | 成功推送N人    | 1                   |
+| fail_post_num.DATA    | 推送失败N人    | 3                   |
+| success_post_ids.DATA | 推送成功的用户   | 老婆0                 |
+| fail_post_ids.DATA    | 推送失败的用户   | 老婆1,老婆2,老婆3         |
 
 
 ## 3. config参数说明

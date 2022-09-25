@@ -286,11 +286,34 @@ describe('services', () => {
       },
     })
     expect(await getWeather('天津', '天津')).toEqual({
+      // 湿度
+      shidu: '29%',
+      // PM2.5
+      pm25: 27.0,
+      // PM1.0
+      pm10: 61.0,
+      // 空气质量
+      quality: '良',
+      // 预防感冒提醒
+      ganmao: '极少数敏感人群应减少户外活动',
+      // 日出时间
+      sunrise: '06:01',
+      // 日落时间
+      sunset: '18:05',
+      // 空气质量指数
+      aqi: 47,
+      // 天气情况
       weather: '多云',
-      temp: '26℃',
-      tempn: '15℃',
-      wd: '西南风',
-      ws: '3级',
+      // 最高温度
+      maxTemperature: '26℃',
+      // 最低温度
+      minTemperature: '15℃',
+      // 风向
+      windDirection: '西南风',
+      // 风力等级
+      windScale: '3级',
+      // 温馨提示
+      notice: '阴晴之间，谨防紫外线侵扰',
     })
     axios.get = async () => ({
       status: 200,
