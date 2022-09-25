@@ -81,20 +81,48 @@ export const getWeather = async (province, city) => {
   }
   const url = `http://t.weather.itboy.net/api/weather/city/${cityInfo.city_code}`
 
-  const res = await axios.get(url).catch((err) => err)
+  const res = await axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).catch((err) => err)
 
   if (res.status === 200 && res.data && res.data.status === 200) {
-    const info = res.data.data && res.data.data.forecast && res.data.data.forecast[0]
+    const commonInfo = res.data.data
+    const info = commonInfo && commonInfo.forecast && commonInfo.forecast[0]
     if (!info) {
       console.error('天气情况: 找不到天气信息, 获取失败')
       return {}
     }
     return {
+      // 湿度
+      shidu: commonInfo.shidu,
+      // PM2.5
+      pm25: commonInfo.pm25,
+      // PM1.0
+      pm10: commonInfo.pm10,
+      // 空气质量
+      quality: commonInfo.quality,
+      // 预防感冒提醒
+      ganmao: commonInfo.ganmao,
+      // 日出时间
+      sunrise: info.sunrise,
+      // 日落时间
+      sunset: info.sunset,
+      // 空气质量指数
+      aqi: info.aqi,
+      // 天气情况
       weather: info.type,
-      temp: info.high.replace(/^高温\s*/, ''),
-      tempn: info.low.replace(/^低温\s*/, ''),
-      wd: info.fx,
-      ws: info.fl,
+      // 最高温度
+      maxTemperature: info.high.replace(/^高温\s*/, ''),
+      // 最低温度
+      minTemperature: info.low.replace(/^低温\s*/, ''),
+      // 风向
+      windDirection: info.fx,
+      // 风力等级
+      windScale: info.fl,
+      // 温馨提示
+      notice: info.notice,
     }
   }
   console.error('天气情况获取失败', res)
@@ -630,18 +658,12 @@ export const getAggregatedData = async () => {
   const users = config.USERS
   for (const user of users) {
     // 获取每日天气
-    const {
-      // 天气
-      weather = DEFAULT_OUTPUT.weather,
-      // 最高温度
-      temp: maxTemperature = DEFAULT_OUTPUT.maxTemperature,
-      // 最低温度
-      tempn: minTemperature = DEFAULT_OUTPUT.minTemperature,
-      // 风向
-      wd: windDirection = DEFAULT_OUTPUT.windDirection,
-      // 风力等级
-      ws: windScale = DEFAULT_OUTPUT.windScale,
-    } = await getWeather(user.province || config.PROVINCE, user.city || config.CITY)
+    const weatherInfo = await getWeather(user.province || config.PROVINCE, user.city || config.CITY)
+    const weatherMessage = Object.keys(weatherInfo).map((item) => ({
+      name: toLowerLine(item),
+      value: weatherInfo[item] || '获取失败',
+      color: getColor(),
+    }))
 
     // 统计日列表计算日期差
     const dateDiffParams = getDateDiffList(user.customizedDateList).map((item) => ({
@@ -669,11 +691,6 @@ export const getAggregatedData = async () => {
       },
       { name: toLowerLine('province'), value: user.province || config.PROVINCE, color: getColor() },
       { name: toLowerLine('city'), value: user.city || config.CITY, color: getColor() },
-      { name: toLowerLine('weather'), value: weather, color: getColor() },
-      { name: toLowerLine('minTemperature'), value: minTemperature, color: getColor() },
-      { name: toLowerLine('maxTemperature'), value: maxTemperature, color: getColor() },
-      { name: toLowerLine('windDirection'), value: windDirection, color: getColor() },
-      { name: toLowerLine('windScale'), value: windScale, color: getColor() },
       { name: toLowerLine('birthdayMessage'), value: birthdayMessage, color: getColor() },
       { name: toLowerLine('noteEn'), value: noteEn, color: getColor() },
       { name: toLowerLine('noteCh'), value: noteCh, color: getColor() },
@@ -688,7 +705,8 @@ export const getAggregatedData = async () => {
       { name: toLowerLine('poetryDynasty'), value: poetryDynasty, color: getColor() },
       { name: toLowerLine('poetryTitle'), value: poetryTitle, color: getColor() },
       { name: toLowerLine('courseSchedule'), value: courseSchedule, color: getColor() },
-    ].concat(constellationFortune)
+    ].concat(weatherMessage)
+      .concat(constellationFortune)
       .concat(dateDiffParams)
       .concat(slotParams)
 
