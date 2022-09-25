@@ -1,4 +1,5 @@
 import { Lunar, Solar } from 'lunar-javascript'
+import cloneDeep from 'lodash/cloneDeep'
 import { selfDayjs } from './set-def-dayjs.js'
 import config from '../../config/exp-config.js'
 /** @type {{
@@ -50,6 +51,7 @@ export const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1
  * @returns
  */
 export const sortBirthdayTime = (list) => {
+  list = cloneDeep(list)
   list.forEach((item) => {
     const { type } = item
     item.useLunar = /^\*/.test(type)
