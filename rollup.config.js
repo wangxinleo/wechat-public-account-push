@@ -1,5 +1,6 @@
 import babel from '@rollup/plugin-babel'
 import json from '@rollup/plugin-json'
+import { terser } from 'rollup-plugin-terser'
 import { defineConfig } from 'rollup'
 import * as fs from 'fs-extra'
 
@@ -24,9 +25,7 @@ export default defineConfig({
     'dayjs/plugin/timezone.js',
     'dayjs/plugin/utc.js',
   ],
-  plugins: [babel({
-    babelHelpers: 'runtime',
-  }), json(), {
+  plugins: [{
     async load(id) {
       if (/\/config\/exp-config\.js$/.test(id)) {
         return (await fs.readFile(id)).toString()
@@ -34,5 +33,7 @@ export default defineConfig({
       }
       return null
     },
-  }],
+  }, json(), terser(), babel({
+    babelHelpers: 'runtime',
+  })],
 })
