@@ -11,9 +11,15 @@ module.exports = {
   },
   overrides: [
   ],
+  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    babelOptions: {
+      plugins: [
+        '@babel/plugin-syntax-import-assertions',
+      ],
+    },
   },
   rules: {
     'no-console': 0,

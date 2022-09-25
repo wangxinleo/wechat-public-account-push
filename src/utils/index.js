@@ -10,7 +10,8 @@ import config from '../../config/exp-config.js'
  * area_code: string,
  * ctime: string
  * }[]} */
-import weatherCity from '../store/weatherCity.json'
+
+import weatherCity from '../store/weatherCity.json' assert {type: "json"}
 
 /**
  * 驼峰转下划线

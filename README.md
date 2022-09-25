@@ -455,7 +455,7 @@ npm install && npm install pm2 -g
 
 ```shell
 
-vim ~/wechat-public-account-push/config/index.js
+vim ~/wechat-public-account-push/config/index.cjs
 
 ```
 
@@ -585,7 +585,7 @@ npm install && npm install pm2 -g
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/pm2-win.png)
 
-到 `wechat-public-account-push/config/index.js` 中修改配置。 
+到 `wechat-public-account-push/config/index.cjs` 中修改配置。 
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/pm2-win2.png)
 
