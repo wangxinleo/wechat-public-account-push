@@ -331,5 +331,5 @@ const USER_CONFIG = {
   COURSE_SCHEDULE: null
 }
 
-exports.default = USER_CONFIG
+module.exports = USER_CONFIG
 
