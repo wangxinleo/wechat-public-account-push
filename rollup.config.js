@@ -32,10 +32,6 @@ export default defineConfig({
         return (await fs.readFile(id)).toString()
           .replace('import USER_CONFIG from \'./index.cjs\'', 'var USER_CONFIG = require(\'../config/index.cjs\')')
       }
-      if (/\/utils\/index\.js$/.test(id)) {
-        return (await fs.readFile(id)).toString()
-          .replace(/assert {type: ["']json["']}/, '')
-      }
       return null
     },
   }],

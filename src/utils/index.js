@@ -10,8 +10,7 @@ import config from '../../config/exp-config.js'
  * area_code: string,
  * ctime: string
  * }[]} */
-
-import weatherCity from '../store/weatherCity.json' assert {type: "json"}
+import { WEATHER_CITY } from '../store/index.js'
 
 /**
  * 驼峰转下划线
@@ -103,11 +102,11 @@ export const getConstellation = (date) => {
  */
 export const getWeatherCityInfo = (province, city) => {
   const provName = province.replace(/[省市]$/, '')
-  const prov = weatherCity.find((it) => it.city_name === provName && it.pid === 0)
+  const prov = WEATHER_CITY.find((it) => it.city_name === provName && it.pid === 0)
   if (prov) {
     const cName = city.replace(/[市区县]$/, '')
     for (const name of '|市|区|县'.split('|')) {
-      const c = weatherCity.find((it) => it.pid === prov.id && it.city_name === `${cName}${name}`)
+      const c = WEATHER_CITY.find((it) => it.pid === prov.id && it.city_name === `${cName}${name}`)
       if (c) {
         return c
       }
