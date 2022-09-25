@@ -12,9 +12,8 @@
     "params-log": "cross-env APP_MODE=params-log node main.js",
     "server": "cross-env APP_MODE=server node main.js",
     "pm2start": "pm2 start start_pm2.js --name @wechat-push",
-    "build": "rollup -c",
-    "build-cloud": "npm run build && echo '{\"type\": \"commonjs\"}' > build/package.json",
-    "dev-cloud": "cross-env APP_MODE=prod node build"
+    "build-cloud": "rollup -c && echo '{\"type\": \"commonjs\"}' > cloud/package.json",
+    "dev-cloud": "cross-env APP_MODE=prod node cloud"
   },
   "repository": {
     "type": "git",
