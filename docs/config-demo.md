@@ -1,3 +1,8 @@
+[🪃返回首页 >>>](../README.md)
+
+# config参数说明
+
+```javascript
 /* eslint-disable */
 const USER_CONFIG = {
   /**
@@ -330,4 +335,10 @@ const USER_CONFIG = {
   // 默认的课表配置
   COURSE_SCHEDULE: null
 }
-export default USER_CONFIG
+
+module.exports = USER_CONFIG
+
+
+```
+
+[🪃返回首页 >>>](../README.md)
