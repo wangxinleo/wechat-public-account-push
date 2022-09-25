@@ -20,7 +20,7 @@ export default defineConfig({
     'node-schedule',
     'axios',
     'jsdom',
-    'lodash/cloneDeep',
+    'lodash/cloneDeep.js',
     'lunar-javascript',
     'dayjs',
     'dayjs/plugin/timezone.js',
