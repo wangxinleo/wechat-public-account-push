@@ -133,7 +133,7 @@ PushDeer(接入中)
 > 
 > 此通道[可能会被腾讯弃用](https://developers.weixin.qq.com/community/minihome/doc/000a46c7eb8468ba1a1cc863e51401)，请评估风险后再选择
 
-[微信测试号]()
+[微信测试号](./docs/message-channel/test-number.md)
 
 > 免费用户每天允许推送5条消息，付费用户每天1000条
 > 
