@@ -1,4 +1,4 @@
-[🪃返回首页 >>>](../README.md)
+[📌返回首页 >>>](../README.md)
 
 # Github-Action部署教程
 
@@ -62,4 +62,4 @@
 
 [5.1. github action如何更改自动执行时间](https://github.com/wangxinleo/wechat-public-account-push#5-githubgitee-%E5%A6%82%E4%BD%95%E6%9B%B4%E6%94%B9%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4)
 
-[🪃返回首页 >>>](../README.md)
+[📌返回首页 >>>](../README.md)

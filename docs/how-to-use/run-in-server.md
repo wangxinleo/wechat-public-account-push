@@ -1,4 +1,4 @@
-[🪃返回首页 >>>](../README.md)
+[📌返回首页 >>>](../README.md)
 
 # 本地或在线服务器部署教程
 
@@ -261,4 +261,4 @@ cd ~./wechat-public-account-push && git pull origin master
 pm2 restart @wechat-push 
 ```
 
-[🪃返回首页 >>>](../README.md)
+[📌返回首页 >>>](../README.md)
