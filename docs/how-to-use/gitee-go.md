@@ -8,41 +8,41 @@
 
 - fork仓库
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-fork.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-fork.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-fork2.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-fork2.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-fork3.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-fork3.png)
 
 - 保护个人隐私安全，将仓库设为私有
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-self.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-self.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-self2.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-self2.png)
 
 - 修改相应配置
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-config.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-config.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-config2.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-config2.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-config3.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-config3.png)
 
 - 按提示填入相应配置后保存
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-config4.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-config4.png)
 
 ## 2. 在私人仓库中写入自己公众号的信息，启用【流水线】自动任务，定时执行
 
 - 启用【流水线】
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-workflow.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-workflow.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-workflow2.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-workflow2.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-workflow4.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-workflow4.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-workflow5.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-workflow5.png)
 
 ```yaml
 version: '1.0'
@@ -82,27 +82,27 @@ stages:
           retry: '0'
 ```
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-workflow6.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-workflow6.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-workflow9.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-workflow9.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-workflow7.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-workflow7.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-workflow8.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-workflow8.png)
 
 ## 3. (选做)：检查脚本是否可以正常执行
 
 - 手动启动脚本
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-workflow12.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-workflow12.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-workflow15.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-workflow15.png)
 
 - 查看执行结果
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-workflow13.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-workflow13.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../img/gitee/gitee-workflow14.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/gitee/gitee-workflow14.png)
 
 ## 4. (选做)：如何更改自动执行时间
 
