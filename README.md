@@ -43,7 +43,6 @@ wechat-public-account-push
 - **网页自动生成配置插件**
 - **支持gitee go / github actions 不需要拥有服务器，白嫖actions执行，每天定时发送**
 - **支持本地化部署每天定时发送**
-- **目前仅支持测试号**
 
 ---
 [目录]
