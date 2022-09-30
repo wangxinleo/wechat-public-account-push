@@ -11,11 +11,6 @@ export default defineConfig({
     outDir: 'cloud',
     rollupOptions: {
       external: [
-        '@babel/runtime/helpers/asyncToGenerator',
-        '@babel/runtime/helpers/defineProperty',
-        '@babel/runtime/helpers/slicedToArray',
-        '@babel/runtime/helpers/typeof',
-        '@babel/runtime/regenerator',
         'node-schedule',
         'axios',
         'jsdom',
