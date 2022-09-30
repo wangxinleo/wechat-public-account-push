@@ -31,7 +31,7 @@ export const toLowerLine = (str) => {
  * @returns
  */
 export const getColor = () => {
-  if (!config.IS_SHOW_COLOR) {
+  if (config.IS_SHOW_COLOR === false) {
     return undefined
   }
   return `#${Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, '0')}`

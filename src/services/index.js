@@ -70,7 +70,7 @@ export const getAccessToken = async () => {
  * @param {*} city 城市
  */
 export const getWeather = async (province, city) => {
-  if (config.SWITCH && !config.SWITCH.weather) {
+  if (config.SWITCH && config.SWITCH.weather === false) {
     return {}
   }
 
@@ -154,7 +154,7 @@ export const getCIBA = async () => {
  * @returns
  */
 export const getHolidaytts = async () => {
-  if (config.SWITCH && !config.SWITCH.holidaytts) {
+  if (config.SWITCH && config.SWITCH.holidaytts === false) {
     return null
   }
 
@@ -174,7 +174,7 @@ export const getHolidaytts = async () => {
  * @returns
  */
 export const getOneTalk = async (type) => {
-  if (config.SWITCH && !config.SWITCH.oneTalk) {
+  if (config.SWITCH && config.SWITCH.oneTalk === false) {
     return {}
   }
 
@@ -223,7 +223,7 @@ export const getWordsFromApiShadiao = async (type) => {
  * @returns {Promise<String>} 土味情话(彩虹屁）内容
  */
 export const getEarthyLoveWords = async () => {
-  if (config.SWITCH && !config.SWITCH.earthyLoveWords) {
+  if (config.SWITCH && config.SWITCH.earthyLoveWords === false) {
     return ''
   }
   return getWordsFromApiShadiao('chp')
@@ -234,7 +234,7 @@ export const getEarthyLoveWords = async () => {
  * @returns {Promise<String>} 朋友圈文案内容
  */
 export const getMomentCopyrighting = async () => {
-  if (config.SWITCH && !config.SWITCH.momentCopyrighting) {
+  if (config.SWITCH && config.SWITCH.momentCopyrighting === false) {
     return ''
   }
 
@@ -246,7 +246,7 @@ export const getMomentCopyrighting = async () => {
  * @returns {Promise<String>} 毒鸡汤内容
  */
 export const getPoisonChickenSoup = async () => {
-  if (config.SWITCH && !config.SWITCH.poisonChickenSoup) {
+  if (config.SWITCH && config.SWITCH.poisonChickenSoup === false) {
     return ''
   }
 
@@ -257,7 +257,7 @@ export const getPoisonChickenSoup = async () => {
  * @returns {Promise<{}|{dynasty: string, author: string, title: string, content: string}>} 古诗内容 标题 作者 朝代
  */
 export const getPoetry = async () => {
-  if (config.SWITCH && !config.SWITCH.poetry) {
+  if (config.SWITCH && config.SWITCH.poetry === false) {
     return {}
   }
 
@@ -294,7 +294,7 @@ export const getPoetry = async () => {
  * @return
  */
 export const getBirthdayMessage = (festivals) => {
-  if (config.SWITCH && !config.SWITCH.birthdayMessage) {
+  if (config.SWITCH && config.SWITCH.birthdayMessage === false) {
     return ''
   }
 
@@ -514,7 +514,7 @@ export const sendMessageReply = async (users, accessToken, templateId = null, pa
  * @returns
  */
 export const getConstellationFortune = async (date, dateType) => {
-  if (config.SWITCH && !config.SWITCH.horoscope) {
+  if (config.SWITCH && config.SWITCH.horoscope === false) {
     return []
   }
 
@@ -541,9 +541,9 @@ export const getConstellationFortune = async (date, dateType) => {
     key: 'healthyHoroscope',
   }]
 
-  // 未填写时段，则取随机
+  // 未填写时段，则取今日
   if (!dateType) {
-    dateType = periods[Math.floor(Math.random() * periods.length + 1) - 1]
+    dateType = '今日'
   }
 
   const dateTypeIndex = periods.indexOf(dateType)
@@ -596,7 +596,7 @@ export const getConstellationFortune = async (date, dateType) => {
  * @returns {string}
  */
 export const getCourseSchedule = (courseSchedule) => {
-  if (config.SWITCH && !config.SWITCH.courseSchedule) {
+  if (config.SWITCH && config.SWITCH.courseSchedule === false) {
     return ''
   }
   if (!courseSchedule) {

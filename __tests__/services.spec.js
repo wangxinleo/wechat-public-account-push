@@ -429,6 +429,8 @@ describe('services', () => {
   })
   test('getOneTalk', async () => {
     config.SWITCH = {}
+    expect(await getOneTalk('动画')).toEqual('test')
+    config.SWITCH.oneTalk = false
     expect(await getOneTalk('动画')).toEqual({})
     config.SWITCH.oneTalk = true
     axios.get = async () => {
@@ -474,6 +476,8 @@ describe('services', () => {
       },
     })
     config.SWITCH = {}
+    expect(await getEarthyLoveWords()).toEqual('彩虹屁')
+    config.SWITCH.earthyLoveWords = false
     expect(await getEarthyLoveWords()).toEqual('')
     config.SWITCH.earthyLoveWords = true
     expect(await getEarthyLoveWords()).toEqual('彩虹屁')
@@ -484,8 +488,10 @@ describe('services', () => {
         },
       },
     })
-    config.SWITCH = {}
+    config.SWITCH.momentCopyrighting = false
     expect(await getMomentCopyrighting()).toEqual('')
+    config.SWITCH = {}
+    expect(await getMomentCopyrighting()).toEqual('朋友圈文案')
     config.SWITCH.momentCopyrighting = true
     expect(await getMomentCopyrighting()).toEqual('朋友圈文案')
     axios.get = async () => ({
@@ -496,6 +502,8 @@ describe('services', () => {
       },
     })
     config.SWITCH = {}
+    expect(await getPoisonChickenSoup()).toEqual('毒鸡汤')
+    config.SWITCH.poisonChickenSoup = false
     expect(await getPoisonChickenSoup()).toEqual('')
     config.SWITCH.poisonChickenSoup = true
     expect(await getPoisonChickenSoup()).toEqual('毒鸡汤')
