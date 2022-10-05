@@ -93,15 +93,16 @@ export const USER_CONFIG = {
     },
     {
       name: "老婆1",
-      id: "",
-      useTemplateId: "",
-      province: "",
-      city: "",
-      horoscopeDate: '',
-      horoscopeDateType: '',
+      id: "oMqH15l_3LzynNKdFq7myvGtZYDM",
+      useTemplateId: "nfML2cEpuf-ztZcfoZYXUot1EnPzbAXuxgoW5bXy-Uw",
+      province: "吉林",
+      city: "吉林",
+      horoscopeDate: '10-08',
+      horoscopeDateType: '今日',
       openUrl: "https://wangxinleo.cn",
-      festivals: [],
-      customizedDateList: []
+      festivals: [{"type": "生日", "name": "彤猪猪", "year": "2000", "date": "10-08"},
+        {"type": "节日", "name": "超级无敌大帅哥", "year": "2001", "date": "03-03"},],
+      customizedDateList: [{"keyword": "love_day", date: "2022-10-03"},{"keyword": "marry_day", date: "2022-10-03"},]
     },
     {
       name: "老婆2",
