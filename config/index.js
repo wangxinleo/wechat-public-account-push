@@ -109,7 +109,7 @@ export const USER_CONFIG = {
       id: "oMqH15m5DTAhG0-UWgeu_c90lxIQ",
       useTemplateId: "-j3R_C3_HGElNpqWuxsTx3VnEbwOT7x2eyU1GdMUXDI",
       province: "北京",
-      city: "通州",
+      city: "北京",
       horoscopeDate: '10-03',
       horoscopeDateType: '今日',
       openUrl: "https://www.xuexi.cn",
