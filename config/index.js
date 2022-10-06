@@ -82,7 +82,7 @@ export const config = {
 	//         {"type": "节日", "name": "结婚纪念日", "year": "2020", "date": "09-03"},
 	        // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
 	        {"type": "生日", "name": "小明", "year": "2001", "date": "03-03"},
-	        {"type": "节日", "name": "国庆节", "year": "2021", "date": "10-01"},
+	        {"type": "节日", "name": "除夕", "year": "2022", "date": "01-21"},
 	      ],
 	      // 专属纪念日/倒数日，如果你在这里填写了纪念日/倒数日，就不会计算CUSTOMIZED_DATE_LIST的日子了, 和CUSTOMIZED_DATE_LIST的配置方法相同，可以往下查看，我这里就不重复写了
 	      customizedDateList: [
@@ -118,7 +118,7 @@ export const config = {
 //         {"type": "节日", "name": "结婚纪念日", "year": "2020", "date": "09-03"},
         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
         {"type": "生日", "name": "李憨憨", "year": "2001", "date": "08-27"},
-        {"type": "节日", "name": "国庆节", "year": "2021", "date": "10-01"},
+        {"type": "节日", "name": "除夕", "year": "2022", "date": "01-21"},
       ],
       // 专属纪念日/倒数日，如果你在这里填写了纪念日/倒数日，就不会计算CUSTOMIZED_DATE_LIST的日子了, 和CUSTOMIZED_DATE_LIST的配置方法相同，可以往下查看，我这里就不重复写了
       customizedDateList: [
@@ -131,17 +131,38 @@ export const config = {
       ]
     },
     {
-      name: "老婆3",
-      id: "",
-      useTemplateId: "",
-      province: "",
-      city: "",
+      name: "友友，早上好",
+      id: "oJ1KC6vpZ-ir2xGlCSieZNf4f3Pg",
+      useTemplateId: "lfNTKOKyd9wunnzdQRH-MPM-GZi12JxOeo3mX-_WlqQ",
+      province: "江西",
+      city: "九江",
       horoscopeDate: '',
       horoscopeDateType: '',
       openUrl: "https://wangxinleo.cn",
-      festivals: [],
+      festivals: [
+        {"type": "生日", "name": "小鸿", "year": "2001", "date": "09-07"},
+        {"type": "节日", "name": "除夕", "year": "2022", "date": "01-21"},
+      ],
       customizedDateList: []
     },
+	
+	{
+	  name: "友友，早上好",
+	  id: "oJ1KC6pvVY8OF9JtgNUkkZZx_qS0",
+	  useTemplateId: "LdWAShDd7-aNFddkbMYrBwKAddDT4REYPlzYtdPdRSc",
+	  province: "广西壮族自治",
+	  city: "北海",
+	  horoscopeDate: '',
+	  horoscopeDateType: '',
+	  openUrl: "https://wangxinleo.cn",
+	  festivals: [
+	    {"type": "生日", "name": "刘憨憨", "year": "2001", "date": "05-28"},
+	    {"type": "节日", "name": "除夕", "year": "2022", "date": "01-21"},
+	  ],
+	  customizedDateList: []
+	},
+	
+	
     // 你可以不断按格式往下增加
     // ...
   ],
