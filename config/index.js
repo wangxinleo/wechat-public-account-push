@@ -106,15 +106,16 @@ export const USER_CONFIG = {
     },
     {
       name: "老婆2",
-      id: "",
-      useTemplateId: "",
-      province: "",
-      city: "",
-      horoscopeDate: '',
-      horoscopeDateType: '',
-      openUrl: "https://wangxinleo.cn",
-      festivals: [],
-      customizedDateList: []
+      id: "oMqH15m5DTAhG0-UWgeu_c90lxIQ",
+      useTemplateId: "-j3R_C3_HGElNpqWuxsTx3VnEbwOT7x2eyU1GdMUXDI",
+      province: "北京",
+      city: "通州",
+      horoscopeDate: '10-03',
+      horoscopeDateType: '今日',
+      openUrl: "https://www.xuexi.cn",
+      festivals: [{"type": "生日", "name": "怡宝", "year": "2004", "date": "10-03"},
+        {"type": "节日", "name": "超级无敌大帅哥", "year": "2001", "date": "03-03"},],
+      customizedDateList: [{"keyword": "love_day", date: "2022-10-05"},{"keyword": "marry_day", date: "2022-10-05"},]
     },
     {
       name: "老婆3",
