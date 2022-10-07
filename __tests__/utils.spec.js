@@ -72,6 +72,33 @@ describe('utils', () => {
       pid: 1,
       post_code: '101300',
     })
+    expect(getWeatherCityInfo('咸阳', '长武')).toEqual({
+      id: 2673,
+      pid: 317,
+      city_code: '101110209',
+      city_name: '长武县',
+      post_code: null,
+      area_code: null,
+      ctime: '2019-07-11 16:33:41',
+    })
+    expect(getWeatherCityInfo('', '长武县')).toEqual({
+      id: 2673,
+      pid: 317,
+      city_code: '101110209',
+      city_name: '长武县',
+      post_code: null,
+      area_code: null,
+      ctime: '2019-07-11 16:33:41',
+    })
+    expect(getWeatherCityInfo('咸阳市', '长武县')).toEqual({
+      id: 2673,
+      pid: 317,
+      city_code: '101110209',
+      city_name: '长武县',
+      post_code: null,
+      area_code: null,
+      ctime: '2019-07-11 16:33:41',
+    })
     expect(getWeatherCityInfo('北京市', '顺义区')).toEqual({
       area_code: '010',
       city_code: '101010400',

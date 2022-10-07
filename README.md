@@ -456,6 +456,8 @@ PR 来纠正我，一样都算是对开源做贡献了。
 
 时区查询: [https://www.zeitverschiebung.net/cn/all-time-zones.html](https://www.zeitverschiebung.net/cn/all-time-zones.html)
 
+城市数据: [https://github.com/baichengzhou/weather.api/blob/master/src/main/resources/citycode-2019-08-23.json](https://github.com/baichengzhou/weather.api/blob/master/src/main/resources/citycode-2019-08-23.json)
+
 <!-- ## 11. 叨叨两句
 
 **这个仓库只能算是重复实现一下别人的想法, 主要是了解到了这个想法却一直找不到原作者的源码很是苦恼, 结果还遇到了要求加关注的情况**
