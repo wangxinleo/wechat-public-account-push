@@ -103,19 +103,37 @@ export const getConstellation = (date) => {
  * @param city {String}
  */
 export const getWeatherCityInfo = (province, city) => {
-  const provName = province.replace(/[省市]$/, '')
-  const prov = WEATHER_CITY.find((it) => it.city_name === provName && it.pid === 0)
-  if (prov) {
+  let prov = null
+  if (province) {
+    const provName = province.replace(/[省市]$/, '')
+    prov = WEATHER_CITY.find((it) => it.city_name.indexOf(provName) !== -1)
+  }
+  if (!prov) {
+    console.log(`您当前填写的province: 【${province}】, 找不到该城市或省份，城市天气可能会因此不准确。请知悉 `)
+  }
+
+  // 如果找到父级地区，则在父级地区中找
+  if (city) {
     const cName = city.replace(/[市区县]$/, '')
-    for (const name of '|市|区|县'.split('|')) {
-      const c = WEATHER_CITY.find((it) => it.pid === prov.id && it.city_name === `${cName}${name}`)
+    // 先后顺序县 => 区 => 市 => 无
+    for (const name of '县|区|市|'.split('|')) {
+      const c = WEATHER_CITY.find((it) => {
+        if (prov) {
+          return it.pid === prov.id && it.city_name === `${cName}${name}`
+        }
+        return it.city_name === `${cName}${name}`
+      
+      })
       if (c) {
         return c
       }
     }
-    if (prov.city_code) {
-      return prov
-    }
   }
+  
+  // city 找不到，那就返回prov的
+  if (prov && prov.city_code) {
+    return prov
+  }
+  
   return null
 }
