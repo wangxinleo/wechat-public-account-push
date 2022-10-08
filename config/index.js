@@ -149,7 +149,7 @@ export const config = {
 	{
 	  name: "友友，早上好",
 	  id: "oJ1KC6pvVY8OF9JtgNUkkZZx_qS0",
-	  useTemplateId: "4hjXkJ6TfHiQJFpMNEBSmFlcikI9g2y5cXMqaXXhHIo",
+	  useTemplateId: "OLiVp9cKCbqk7-smHHPkqQx8XKvp-wykFWUmXye8P8c",
 	  province: "广西",
 	  city: "北海",
 	  horoscopeDate: '',
