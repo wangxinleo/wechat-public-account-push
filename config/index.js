@@ -133,7 +133,7 @@ export const config = {
     {
       name: "友友，早上好",
       id: "oJ1KC6vpZ-ir2xGlCSieZNf4f3Pg",
-      useTemplateId: "lfNTKOKyd9wunnzdQRH-MPM-GZi12JxOeo3mX-_WlqQ",
+      useTemplateId: "LhX6iVkrpfv2bvQS_vV6pX2c2k0LSVG9dUbdG__e7fM",
       province: "江西",
       city: "九江",
       horoscopeDate: '',
@@ -149,8 +149,8 @@ export const config = {
 	{
 	  name: "友友，早上好",
 	  id: "oJ1KC6pvVY8OF9JtgNUkkZZx_qS0",
-	  useTemplateId: "LdWAShDd7-aNFddkbMYrBwKAddDT4REYPlzYtdPdRSc",
-	  province: "广西壮族自治",
+	  useTemplateId: "4hjXkJ6TfHiQJFpMNEBSmFlcikI9g2y5cXMqaXXhHIo",
+	  province: "广西",
 	  city: "北海",
 	  horoscopeDate: '',
 	  horoscopeDateType: '',
