@@ -266,6 +266,17 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 | birthday_message.DATA | 生日消息和节日消息                 | 距离 宝贝 的生日还有122天，距离 中秋节还有30天                                   |
 | course_schedule.DATA  | 每日的课表                     | 08:00-09:35 高等数学<br/> 09:35-10:35 大学语文 <br/> 10:35-11:35 大学英语 |
 
+**天行API**
+
+以下配置需要在[天行数据](https://www.tianapi.com)上申请对应的接口，并将APIKEY放置在配置文件的`TIAN_API_KEY`字段中
+
+| 参数                                         | 详细                                                                                                                                     | 示例                                                                                                                                                         |
+|--------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| tian_api_morning_greeting.DATA             | [点击此处申请接口](https://www.tianapi.com/apiview/143)                                                                                        | 你可能在一个人面前一文不值，却在另一个人面前是无价之宝。谨记自己的价值所在，这就是人挪活的道理所在。早安！                                                                                                      |
+| tian_api_evening_greeting.DATA             | [点击此处申请接口](https://www.tianapi.com/apiview/142)                                                                                        | 所谓的成熟，就是你越长大越能学会一个人适应一切。晚安！                                                                                                                                |
+| tian_api_weather_{field}_{offset}.DATA     | [点击此处申请接口](https://www.tianapi.com/apiview/72)（**该接口每次调用独立按次计费，具体计费规则请查阅接口文档**) <br/>{field}替换为申请接口页面中`返回参数`的名称<br/>{offset}替换为距离今天的天数 | 例：<br/>今天的最高气温请填写<br/> tian_api_weather_highest_0.DATA -> 26℃<br/>明天的最低气温请填写<br/> tian_api_weather_lowest_1.DATA -> 17℃ <br/>(请确保在配置文件中设置了正确的天数）           |
+| tian_api_network_hot_{field}_{offset}.DATA | [点击此处申请接口](https://www.tianapi.com/apiview/223) <br/>{field}替换为申请接口页面中`返回参数`的名称<br/>{offset}替换为条目的序号（从0开始）                             | 例：<br/>第一条的标题请填写<br/> tian_api_network_hot_title_0.DATA -> 掌舵远航 <br/>第二条的热度请填写<br/> tian_api_network_hot_hotnum_1.DATA -> 12017742<br/>(请确保在配置文件中设置了正确的条数） |
+
 **推送回执(特有, 仅在其他模板发送完成后才能获取)**
 
 | 参数                       | 详细        | 示例                  |
