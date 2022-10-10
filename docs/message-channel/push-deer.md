@@ -2,6 +2,10 @@
 
 # 使用PushDeer
 
+运行图示：
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/message-channel/push-deer-app4.jpg)
+
 ## Ⅰ. 扫描以下二维码或使用APP
 
 **iOS14+**
@@ -55,11 +59,11 @@
 ## Ⅳ. 进行基础config配置
 
 打开仓库中`config/index.cjs`的进行，进行编辑
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/github-into-config.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/github-into-config.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/github-into-config-2.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/github-into-config-2.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/github-into-config-3.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/github-into-config-3.png)
 
 1. 使用pushdeer模式
    ```javascript

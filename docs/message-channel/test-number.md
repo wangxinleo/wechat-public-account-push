@@ -2,17 +2,23 @@
 
 # 使用微信测试号
 
+运行图示：
+
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/run-img.jpg)
+
+![图片无法查看请移步顶部访问 国内备用仓库地址)](../../img/how-to-use/run-img-2.jpg)
+
 ## Ⅰ. 注册一个微信公众测试号
 
 - 浏览器打开并登录 [微信公众测试号](https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login)
 
 - 登录成功后, 就可以生成微信公众测试号的appID和appsecret这两串数字, 记下备用
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/wx-test-id.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/wx-test-id.png)
 
 - 扫描测试号二维码关注测试号, 扫描之后, 右边就会出现相应的已关注人员id, 记下备用
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/wx-test-follow.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/wx-test-follow.png)
 
 ## Ⅱ. 进行模板配置
 
@@ -58,7 +64,7 @@
 
 记下模板代码
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/wx-test-tmp.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/wx-test-tmp.png)
 
 
 **以上步骤完成后请返回首页继续进行后续操作**

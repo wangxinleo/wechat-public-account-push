@@ -100,9 +100,9 @@ wechat-public-account-push
 
 运行图示：
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/run-img.jpg)
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/how-to-use/run-img.jpg)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址)](img/run-img-2.jpg)
+![图片无法查看请移步顶部访问 国内备用仓库地址)](img/how-to-use/run-img-2.jpg)
 
 ## 1. 如何使用
 
@@ -296,11 +296,11 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 > 大概的实现原理类似于下图标注的这样：
 > 
-> ![图片无法查看请移步顶部访问 国内备用仓库地址](img/self-keyword.png)
+> ![图片无法查看请移步顶部访问 国内备用仓库地址](img/how-to-use/self-keyword.png)
 > 
 > 但是有以下情况需要注意，不要占用表中已有的关键字，会发生不可预料的状况噢！
 > 
-> ![图片无法查看请移步顶部访问 国内备用仓库地址](img/self-keyword-2.png)
+> ![图片无法查看请移步顶部访问 国内备用仓库地址](img/how-to-use/self-keyword-2.png)
 
 ## 3. config参数说明
 > 配置文件的详细说明，使用旧配置的小伙伴可以对照此文档增加新的配置
@@ -350,7 +350,7 @@ on:
 
 **定时任务注意尽量避免设置在 `utc 0:00, XX:00` 这类高拥堵时段。**
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/action-cron.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/how-to-use/action-cron.png)
 
 或使用[https://crontab.guru](https://crontab.guru)帮助配置
 
@@ -395,7 +395,7 @@ on:
 
 - 点击 "Update branch" 完成
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/pr-1.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/how-to-use/pr-1.png)
 
 可能会遇到 **因为冲突需要你们删除你们已经更改的记录**
 
@@ -454,7 +454,7 @@ PR 来纠正我，一样都算是对开源做贡献了。
 
 2022-09-10 算啦还是不隐藏了，你们来尽情问吧。
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/wechat-public-account-push.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/how-to-use/wechat-public-account-push.png)
 
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=y0plwm9zhOI35EwlOdRh372g4KWbqMSt&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="wechat-public-account-push 交流群" title="wechat-public-account-push 交流群"></a>
 
@@ -472,6 +472,6 @@ PR 来纠正我，一样都算是对开源做贡献了。
 
 **虽然我无权谴责这些流量变现的做法, 但是我认为作者既然开源自己的作品, 那就是希望其他人能一起体会coding的喜悦, 请部分博主尊重作者意愿, 尊重开源协议**
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/dis.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/how-to-use/dis.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](img/dis-2.png) -->
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/how-to-use/dis-2.png) -->

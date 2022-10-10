@@ -93,9 +93,9 @@ cd ~/wechat-public-account-push && npm run pm2start
 
 **运行完成效果图**
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/pm2-win6.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/pm2-win6.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/pm2-win7.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/pm2-win7.png)
 
 Ⅵ. **如何停止/重启/删除服务？如何查看运行日志/清空日志？**
 
@@ -117,7 +117,7 @@ pm2 flush
 
 1. **在github上先 `fork syncing`**
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/pr-1.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/pr-1.png)
 
 2. **执行以下代码**
 
@@ -156,7 +156,7 @@ pm2 restart @wechat-push
 
 (win11 则点开【显示更多选项】即可看到 【Git Base Here】)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/right-click.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/right-click.png)
 
 执行以下命令
 
@@ -176,28 +176,28 @@ npm install && npm install pm2 -g
 
 当黑窗口回到光标闪烁状态时即完成。
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/git-win.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/git-win.png)
 
 ### Ⅲ. **填写发送配置**
 
 如果上一步执行成功了，你当前文件夹里面肯定会出现 `wechat-public-account-push` 文件夹
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/pm2-win.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/pm2-win.png)
 
 到 `wechat-public-account-push/config/index.cjs` 中修改配置。
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/pm2-win2.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/pm2-win2.png)
 
 如果显示无法打开，选中该文件 --> 右键 --> 打开方式 --> 记事本
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/pm2-win3.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/pm2-win3.png)
 
 按照提示修改配置
 
 ### Ⅳ. **填写定时配置**
 到 `wechat-public-account-push/config/server-config.js` 中修改配置。
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/pm2-win4.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/pm2-win4.png)
 
 > 此时间为每天的早上8点，*为匹配任意一个
 >
@@ -209,7 +209,7 @@ npm install && npm install pm2 -g
 
 在 `wechat-public-account-push` 文件夹中，右键 --> 【Git Base Here】
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/pm2-win5.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/pm2-win5.png)
 
 执行以下命令
 
@@ -221,9 +221,9 @@ npm run pm2start
 
 **运行完成效果图**
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/pm2-win6.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/pm2-win6.png)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/pm2-win7.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/pm2-win7.png)
 
 ### Ⅵ. **如何停止/重启/删除服务？如何查看运行日志/清空日志？**
 
@@ -245,7 +245,7 @@ pm2 flush
 
 1. **在github上先 `fork syncing`**
 
-![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/pr-1.png)
+![图片无法查看请移步顶部访问 国内备用仓库地址](../../img/how-to-use/pr-1.png)
 
 2. **执行以下代码**
 

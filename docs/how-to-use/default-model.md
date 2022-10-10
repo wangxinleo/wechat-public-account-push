@@ -23,7 +23,7 @@
 {{note_ch.DATA}}
 ```
 
-![](../img/run-img.jpg)
+![](../../img/how-to-use/run-img.jpg)
 
 **样例2：** from `群里的小伙伴`
 
@@ -59,6 +59,6 @@
 失败用户: {{fail_post_ids.DATA}}
 ```
 
-![](../img/run-img-2.jpg)
+![](../../img/how-to-use/run-img-2.jpg)
 
 [📌返回首页 >>>](../../README.md)
