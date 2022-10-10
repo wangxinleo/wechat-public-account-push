@@ -602,7 +602,7 @@ export const getTianApiWeather = (user) => buildTianApi(user, 'tianqi', { city: 
 export const getTianApiNetworkHot = (user) => buildTianApi(user, 'networkhot')
 
 /**
- * 获取处理好的用户数据
+ * 获取全部处理好的用户数据
  * @returns
  */
 // istanbul ignore next
