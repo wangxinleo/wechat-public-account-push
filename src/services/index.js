@@ -3,7 +3,8 @@ import dayjs from 'dayjs'
 import { JSDOM } from 'jsdom'
 
 import config from '../../config/exp-config.js'
-import { DEFAULT_OUTPUT, TYPE_LIST } from '../store/index.js'
+import TEMPLATE_CONFIG from '../../config/template-config.cjs'
+import { DEFAULT_OUTPUT, TYPE_LIST, RUN_TIME_STORAGE } from '../store/index.js'
 import {
   getConstellation,
   randomNum,
@@ -62,6 +63,26 @@ export const getAccessToken = async () => {
   }
 
   return accessToken
+}
+
+/**
+ * 获取天气icon
+ * @param {*} weather
+ * @returns
+ */
+export const getWeatherIcon = (weather) => {
+  let weatherIcon = '🌈'
+  const weatherIconList = ['☀️', '☁️', '⛅️',
+    '☃️', '⛈️', '🏜️', '🏜️', '🌫️', '🌫️', '🌪️', '🌧️']
+  const weatherType = ['晴', '阴', '云', '雪', '雷', '沙', '尘', '雾', '霾', '风', '雨']
+
+  weatherType.forEach((item, index) => {
+    if (weather.indexOf(item) !== -1) {
+      weatherIcon = weatherIconList[index]
+    }
+  })
+
+  return weatherIcon
 }
 
 /**
@@ -191,6 +212,7 @@ export const getOneTalk = async (type) => {
   console.error('每日一言: 发生错误', res)
   return {}
 }
+
 /**
  * 从沙雕APP开放接口中获取数据
  * @param {'chp' | 'pyq' | 'du'} type
@@ -252,6 +274,7 @@ export const getPoisonChickenSoup = async () => {
 
   return getWordsFromApiShadiao('du')
 }
+
 /**
  * 古诗古文
  * @returns {Promise<{}|{dynasty: string, author: string, title: string, content: string}>} 古诗内容 标题 作者 朝代
@@ -286,6 +309,140 @@ export const getPoetry = async () => {
     console.error('古诗古文：发生错误', e)
     return {}
   }
+}
+
+/**
+ * 星座运势请求
+ * @param {string} date
+ * @param {string} dateType
+ * @returns
+ */
+export const getConstellationFortune = async (date, dateType) => {
+  if (config.SWITCH && config.SWITCH.horoscope === false) {
+    return []
+  }
+
+  const res = []
+  if (!date) {
+    return res
+  }
+
+  const periods = ['今日', '明日', '本周', '本月', '今年']
+  const defaultType = [{
+    name: '综合运势',
+    key: 'comprehensiveHoroscope',
+  }, {
+    name: '爱情运势',
+    key: 'loveHoroscope',
+  }, {
+    name: '事业学业',
+    key: 'careerHoroscope',
+  }, {
+    name: '财富运势',
+    key: 'wealthHoroscope',
+  }, {
+    name: '健康运势',
+    key: 'healthyHoroscope',
+  }]
+
+  // 未填写时段，则取今日
+  if (!dateType) {
+    dateType = '今日'
+  }
+
+  const dateTypeIndex = periods.indexOf(dateType)
+  if (dateTypeIndex === -1) {
+    console.error('星座日期类型horoscopeDateType错误, 请确认是否按要求填写!')
+    return res
+  }
+
+  // 获取星座id
+  const { en: constellation } = getConstellation(date)
+  const url = `https://www.xzw.com/fortune/${constellation}/${dateTypeIndex}.html`
+  try {
+    const { data } = await axios.get(url).catch((err) => err)
+    if (data) {
+      const jsdom = new JSDOM(data)
+      defaultType.forEach((item, index) => {
+        let value = jsdom.window.document.querySelector(`.c_cont p strong.p${index + 1}`).nextElementSibling.innerHTML.replace(/<small.*/, '')
+        if (!value) {
+          value = DEFAULT_OUTPUT.constellationFortune
+          console.error(`${item.name}获取失败`)
+        }
+        res.push({
+          name: toLowerLine(item.key),
+          value: `${dateType}${item.name}: ${value}`,
+          color: getColor(),
+        })
+      })
+    } else {
+      // 拿不到数据则拼假数据, 保证运行
+      defaultType.forEach((item) => {
+        const value = DEFAULT_OUTPUT.constellationFortune
+        res.push({
+          name: toLowerLine(item.key),
+          value: `${dateType}${item.name}: ${value}`,
+          color: getColor(),
+        })
+      })
+    }
+
+    return res
+  } catch (e) {
+    console.error('星座运势：发生错误', e)
+    return res
+  }
+}
+
+/**
+ * 获取课程表
+ * @param courseSchedule {Array<Array<String>>|{benchmark: {date: string, isOdd: boolean}, courses: {odd: Array<Array<string>>, even:Array<Array<string>>}}}
+ * @returns {string}
+ */
+export const getCourseSchedule = (courseSchedule) => {
+  if (config.SWITCH && config.SWITCH.courseSchedule === false) {
+    return ''
+  }
+  if (!courseSchedule) {
+    return ''
+  }
+  const week = (selfDayjs().day() + 6) % 7
+  // 如果课程表是一个数组，认为只有单周的课表
+  if (Array.isArray(courseSchedule)) {
+    return (courseSchedule[week] || []).join('\n')
+  }
+  // 如果是一个对象，则根据基准日期判断单双周
+  const benchmarkDate = selfDayjs(courseSchedule.benchmark.date)
+  const diff = selfDayjs().diff(benchmarkDate.set('day', 0).set('hour', 0).set('minute', 0).set('second', 0)
+    .set('millisecond', 0), 'millisecond')
+  const isSameKind = Math.floor(diff / 7 / 86400000) % 2 === 0
+  const kind = ((isSameKind && courseSchedule.benchmark.isOdd) || (!isSameKind && !courseSchedule.benchmark.isOdd)) ? 'odd' : 'even'
+  return ((courseSchedule.courses && courseSchedule.courses[kind] && courseSchedule.courses[kind][week]) || []).join('\n')
+}
+
+/**
+ * 获取bing每日壁纸数据
+ */
+export const getBing = async () => {
+  const url = 'https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'
+
+  const res = await axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).catch((err) => err)
+
+  if (res.data && res.data.images) {
+    const imgUrl = `https://cn.bing.com/${res.data.images[0].url}`
+    const imgTitle = res.data.images[0].title
+    const imgContent = res.data.images[0].copyright.replace(/\(.*?\)/, '')
+    return {
+      imgUrl,
+      imgTitle,
+      imgContent,
+    }
+  }
+  return {}
 }
 
 /**
@@ -406,218 +563,7 @@ export const getSlotList = () => {
 }
 
 /**
- * 发送消息模板
- * @param {*} templateId
- * @param {*} user
- * @param {*} accessToken
- * @param {*} params
- * @returns
- */
-export const sendMessage = async (templateId, user, accessToken, params) => {
-  const url = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${accessToken}`
-
-  const wxTemplateData = {}
-  if (Object.prototype.toString.call(params) === '[object Array]') {
-    params.forEach((item) => {
-      wxTemplateData[item.name] = {
-        value: item.value,
-        color: item.color,
-      }
-    })
-  }
-
-  // 组装数据
-  const data = {
-    touser: user.id,
-    template_id: templateId,
-    url: user.openUrl || 'https://wangxinleo.cn',
-    topcolor: '#FF0000',
-    data: wxTemplateData,
-  }
-
-  // 发送消息
-  const res = await axios.post(url, data, {
-    headers: {
-      'Content-Type': 'application/json',
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
-    },
-  }).catch((err) => err)
-
-  if (res.data && res.data.errcode === 0) {
-    console.log(`${user.name}: 推送消息成功`)
-    return {
-      name: user.name,
-      success: true,
-    }
-  }
-
-  if (res.data && res.data.errcode === 40003) {
-    console.error(`${user.name}: 推送消息失败! id填写不正确！应该填用户扫码后生成的id！要么就是填错了！请检查配置文件！`)
-  } else if (res.data && res.data.errcode === 40036) {
-    console.error(`${user.name}: 推送消息失败! 模板id填写不正确！应该填模板id！要么就是填错了！请检查配置文件！`)
-  } else {
-    console.error(`${user.name}: 推送消息失败`, res.data)
-  }
-  return {
-    name: user.name,
-    success: false,
-  }
-}
-
-/**
- * 推送消息, 进行成功失败统计
- * @param {*} users
- * @param {*} accessToken
- * @param {*} templateId
- * @param {*} params
- * @returns
- */
-export const sendMessageReply = async (users, accessToken, templateId = null, params = null) => {
-  const allPromise = []
-  const needPostNum = users.length
-  let successPostNum = 0
-  let failPostNum = 0
-  const successPostIds = []
-  const failPostIds = []
-  for (const user of users) {
-    allPromise.push(sendMessage(
-      templateId || user.useTemplateId,
-      user,
-      accessToken,
-      params || user.wxTemplateParams,
-    ))
-  }
-  const resList = await Promise.all(allPromise)
-  resList.forEach((item) => {
-    if (item.success) {
-      successPostNum++
-      successPostIds.push(item.name)
-    } else {
-      failPostNum++
-      failPostIds.push(item.name)
-    }
-  })
-
-  return {
-    needPostNum,
-    successPostNum,
-    failPostNum,
-    successPostIds: successPostIds.length ? successPostIds.join(',') : '无',
-    failPostIds: failPostIds.length ? failPostIds.join(',') : '无',
-  }
-}
-
-/**
- * 星座运势请求
- * @param {string} date
- * @param {string} dateType
- * @returns
- */
-export const getConstellationFortune = async (date, dateType) => {
-  if (config.SWITCH && config.SWITCH.horoscope === false) {
-    return []
-  }
-
-  const res = []
-  if (!date) {
-    return res
-  }
-
-  const periods = ['今日', '明日', '本周', '本月', '今年']
-  const defaultType = [{
-    name: '综合运势',
-    key: 'comprehensiveHoroscope',
-  }, {
-    name: '爱情运势',
-    key: 'loveHoroscope',
-  }, {
-    name: '事业学业',
-    key: 'careerHoroscope',
-  }, {
-    name: '财富运势',
-    key: 'wealthHoroscope',
-  }, {
-    name: '健康运势',
-    key: 'healthyHoroscope',
-  }]
-
-  // 未填写时段，则取今日
-  if (!dateType) {
-    dateType = '今日'
-  }
-
-  const dateTypeIndex = periods.indexOf(dateType)
-  if (dateTypeIndex === -1) {
-    console.error('星座日期类型horoscopeDateType错误, 请确认是否按要求填写!')
-    return res
-  }
-
-  // 获取星座id
-  const { en: constellation } = getConstellation(date)
-  const url = `https://www.xzw.com/fortune/${constellation}/${dateTypeIndex}.html`
-  try {
-    const { data } = await axios.get(url).catch((err) => err)
-    if (data) {
-      const jsdom = new JSDOM(data)
-      defaultType.forEach((item, index) => {
-        let value = jsdom.window.document.querySelector(`.c_cont p strong.p${index + 1}`).nextElementSibling.innerHTML.replace(/<small.*/, '')
-        if (!value) {
-          value = DEFAULT_OUTPUT.constellationFortune
-          console.error(`${item.name}获取失败`)
-        }
-        res.push({
-          name: toLowerLine(item.key),
-          value: `${dateType}${item.name}: ${value}`,
-          color: getColor(),
-        })
-      })
-    } else {
-      // 拿不到数据则拼假数据, 保证运行
-      defaultType.forEach((item) => {
-        const value = DEFAULT_OUTPUT.constellationFortune
-        res.push({
-          name: toLowerLine(item.key),
-          value: `${dateType}${item.name}: ${value}`,
-          color: getColor(),
-        })
-      })
-    }
-
-    return res
-  } catch (e) {
-    console.error('星座运势：发生错误', e)
-    return res
-  }
-}
-
-/**
- * 获取课程表
- * @param courseSchedule {Array<Array<String>>|{benchmark: {date: string, isOdd: boolean}, courses: {odd: Array<Array<string>>, even:Array<Array<string>>}}}
- * @returns {string}
- */
-export const getCourseSchedule = (courseSchedule) => {
-  if (config.SWITCH && config.SWITCH.courseSchedule === false) {
-    return ''
-  }
-  if (!courseSchedule) {
-    return ''
-  }
-  const week = (selfDayjs().day() + 6) % 7
-  // 如果课程表是一个数组，认为只有单周的课表
-  if (Array.isArray(courseSchedule)) {
-    return (courseSchedule[week] || []).join('\n')
-  }
-  // 如果是一个对象，则根据基准日期判断单双周
-  const benchmarkDate = selfDayjs(courseSchedule.benchmark.date)
-  const diff = selfDayjs().diff(benchmarkDate.set('day', 0).set('hour', 0).set('minute', 0).set('second', 0)
-    .set('millisecond', 0), 'millisecond')
-  const isSameKind = Math.floor(diff / 7 / 86400000) % 2 === 0
-  const kind = ((isSameKind && courseSchedule.benchmark.isOdd) || (!isSameKind && !courseSchedule.benchmark.isOdd)) ? 'odd' : 'even'
-  return ((courseSchedule.courses && courseSchedule.courses[kind] && courseSchedule.courses[kind][week]) || []).join('\n')
-}
-
-/**
- * 获取处理好的用户数据
+ * 获取全部处理好的用户数据
  * @returns
  */
 // istanbul ignore next
@@ -717,6 +663,63 @@ export const getAggregatedData = async () => {
 }
 
 /**
+ * 本地模板拼装
+ * @param templateId
+ * @param wxTemplateData
+ * @param urlencode
+ * @param turnToOA \n转换成 %0A
+ * @returns {{title: string, desc: string}|null}
+ */
+export const model2Data = (templateId, wxTemplateData, urlencode = false, turnToOA = false) => {
+  if (!templateId || !wxTemplateData) {
+    console.log('templateId:', templateId)
+    console.log('wxTemplateData:', wxTemplateData)
+    console.log('发生错误，templateId 或 wxTemplateData 不能为 null')
+    return null
+  }
+  let targetValue = null
+  // 获取模板
+  const model = TEMPLATE_CONFIG.find((o) => o.id === templateId)
+
+  if (!model) {
+    console.log(`TEMPLATE_CONFIG中找不到模板id为 ${templateId} 的模板`)
+    return null
+  }
+
+  // 替换模板
+  targetValue = model.desc.replace(/[{]{2}(.*?).DATA[}]{2}/gm, (paramText) => {
+    // 提取变量
+    const param = paramText.match(/(?<=[{]{2})(.*?)(?=.DATA[}]{2})/g)
+    if (param && param[0]) {
+      const replaceText = wxTemplateData[param[0]]
+      return replaceText && (replaceText.value || replaceText.value === 0) ? replaceText.value : ''
+    }
+    return ''
+  })
+
+  // 统一格式
+  targetValue = JSON.stringify(targetValue).replace(/(?<=\\n|^)[ ]{1,}/gm, '')
+  // 去除前后双引号
+  targetValue = targetValue.substring(1, targetValue.length - 1)
+
+  // urlencode
+  if (urlencode) {
+    model.title = encodeURI(model.title)
+    targetValue = encodeURI(targetValue)
+  }
+
+  // \n转换成 %0A
+  if (turnToOA) {
+    targetValue = targetValue.replace(/%5Cn+/g, '%0A%0A')
+  }
+
+  return {
+    title: model.title,
+    desc: targetValue,
+  }
+}
+
+/**
  * 获取处理好的回执消息
  * @param {*} messageReply
  * @returns
@@ -734,4 +737,181 @@ export const getCallbackTemplateParams = (messageReply) => {
     { name: toLowerLine('successPostIds'), value: messageReply.successPostIds, color: getColor() },
     { name: toLowerLine('failPostIds'), value: messageReply.failPostIds, color: getColor() },
   ]
+}
+
+// 组装openUrl
+const assembleOpenUrl = () => ''
+
+/**
+ * 使用pushDeer
+ * @param user
+ * @param templateId
+ * @param wxTemplateData
+ * @returns {Promise<{success: boolean, name}>}
+ */
+const sendMessageByPushDeer = async (user, templateId, wxTemplateData) => {
+  // 模板拼装
+  const modelData = model2Data(templateId, wxTemplateData, true, true)
+  if (!modelData) {
+    return {
+      name: user.name,
+      success: false,
+    }
+  }
+
+  const url = `https://api2.pushdeer.com/message/push?pushkey=${user.id}&text=${modelData.title}&desp=${modelData.desc}&type=markdown`
+
+  // 发送消息
+  const res = await axios.get(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+    },
+  }).catch((err) => err)
+
+  if (res.data && res.data.code === 0) {
+    console.log(`${user.name}: 推送消息成功`)
+    return {
+      name: user.name,
+      success: true,
+    }
+  }
+  console.error(`${user.name}: 推送消息失败`, res)
+  return {
+    name: user.name,
+    success: false,
+  }
+}
+
+/**
+ * 使用wechat-test
+ * @param user
+ * @param templateId
+ * @param wxTemplateData
+ * @returns {Promise<{success: boolean, name}>}
+ */
+const sendMessageByWeChatTest = async (user, templateId, wxTemplateData) => {
+  let accessToken = null
+
+  if (RUN_TIME_STORAGE.accessToken) {
+    accessToken = RUN_TIME_STORAGE.accessToken
+  } else {
+    accessToken = await getAccessToken()
+    RUN_TIME_STORAGE.accessToken = accessToken
+  }
+
+  if (!accessToken) {
+    return {
+      name: user.name,
+      success: false,
+    }
+  }
+
+  const url = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${accessToken}`
+  const data = {
+    touser: user.id,
+    template_id: templateId,
+    url: assembleOpenUrl(),
+    topcolor: '#FF0000',
+    data: wxTemplateData,
+  }
+
+  // 发送消息
+  const res = await axios.post(url, data, {
+    headers: {
+      'Content-Type': 'application/json',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+    },
+  }).catch((err) => err)
+
+  if (res.data && res.data.errcode === 0) {
+    console.log(`${user.name}: 推送消息成功`)
+    return {
+      name: user.name,
+      success: true,
+    }
+  }
+
+  if (res.data && res.data.errcode === 40003) {
+    console.error(`${user.name}: 推送消息失败! id填写不正确！应该填用户扫码后生成的id！要么就是填错了！请检查配置文件！`)
+  } else if (res.data && res.data.errcode === 40036) {
+    console.error(`${user.name}: 推送消息失败! 模板id填写不正确！应该填模板id！要么就是填错了！请检查配置文件！`)
+  } else {
+    console.error(`${user.name}: 推送消息失败`, res.data)
+  }
+
+  return {
+    name: user.name,
+    success: false,
+  }
+}
+
+/**
+ * 执行发送消息
+ * @param templateId
+ * @param user
+ * @param params
+ * @param usePassage
+ * @returns {Promise<{success: boolean, name}>}
+ */
+export const sendMessage = async (templateId, user, params, usePassage) => {
+  const wxTemplateData = {}
+  if (Object.prototype.toString.call(params) === '[object Array]') {
+    params.forEach((item) => {
+      wxTemplateData[item.name] = {
+        value: item.value,
+        color: item.color,
+      }
+    })
+  }
+
+  if (usePassage === 'push-deer') {
+    console.log('使用push-deer推送')
+    return sendMessageByPushDeer(user, templateId, wxTemplateData)
+  }
+
+  console.log('使用微信测试号推送')
+  return sendMessageByWeChatTest(user, templateId, wxTemplateData)
+}
+
+/**
+ * 推送消息, 进行成功失败统计
+ * @param users
+ * @param templateId
+ * @param params
+ * @param usePassage
+ * @returns {Promise<{failPostIds: (string|string), failPostNum: number, successPostIds: (string|string), needPostNum: *, successPostNum: number}>}
+ */
+export const sendMessageReply = async (users, templateId = null, params = null, usePassage = null) => {
+  const allPromise = []
+  const needPostNum = users.length
+  let successPostNum = 0
+  let failPostNum = 0
+  const successPostIds = []
+  const failPostIds = []
+  for (const user of users) {
+    allPromise.push(sendMessage(
+      templateId || user.useTemplateId,
+      user,
+      params || user.wxTemplateParams,
+      usePassage,
+    ))
+  }
+  const resList = await Promise.all(allPromise)
+  resList.forEach((item) => {
+    if (item.success) {
+      successPostNum++
+      successPostIds.push(item.name)
+    } else {
+      failPostNum++
+      failPostIds.push(item.name)
+    }
+  })
+
+  return {
+    needPostNum,
+    successPostNum,
+    failPostNum,
+    successPostIds: successPostIds.length ? successPostIds.join(',') : '无',
+    failPostIds: failPostIds.length ? failPostIds.join(',') : '无',
+  }
 }

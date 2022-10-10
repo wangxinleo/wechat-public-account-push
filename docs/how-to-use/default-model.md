@@ -37,7 +37,7 @@
 风级: {{wind_scale.DATA}} 
 今日星座： {{comprehensive_horoscope.DATA}} 
 
-今天是我们相识的第{{ love_day.DATA }}天 
+今天是我们相识的第{{love_day.DATA}}天 
 {{birthday_message.DATA}} 
 
 {{moment_copyrighting.DATA}} 
