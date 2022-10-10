@@ -731,7 +731,7 @@ describe('services', () => {
     axios.post = async () => {
       throw new Error()
     }
-    expect(await sendMessage('templateId', { id: '123', name: 'me' }, 'accessToken', [{
+    expect(await sendMessage('templateId', { id: '123', name: 'me' }, [{
       name: 'name1',
       value: 'value1',
       color: 'color1',
@@ -739,7 +739,7 @@ describe('services', () => {
       name: 'name2',
       value: 'value2',
       color: 'color2',
-    }])).toEqual({
+    }], null)).toEqual({
       name: 'me',
       success: false,
     })
@@ -748,7 +748,7 @@ describe('services', () => {
         errcode: 0,
       },
     })
-    expect(await sendMessage('templateId', { id: '123', name: 'me' }, 'accessToken', [{
+    expect(await sendMessage('templateId', { id: '123', name: 'me' }, [{
       name: 'name1',
       value: 'value1',
       color: 'color1',
@@ -756,16 +756,16 @@ describe('services', () => {
       name: 'name2',
       value: 'value2',
       color: 'color2',
-    }])).toEqual({
+    }], null)).toEqual({
       name: 'me',
-      success: true,
+      success: false,
     })
     axios.post = async () => ({
       data: {
         errcode: 40003,
       },
     })
-    expect(await sendMessage('templateId', { id: '123', name: 'me' }, 'accessToken', [{
+    expect(await sendMessage('templateId', { id: '123', name: 'me' }, [{
       name: 'name1',
       value: 'value1',
       color: 'color1',
@@ -773,7 +773,7 @@ describe('services', () => {
       name: 'name2',
       value: 'value2',
       color: 'color2',
-    }])).toEqual({
+    }], null)).toEqual({
       name: 'me',
       success: false,
     })
@@ -782,7 +782,7 @@ describe('services', () => {
         errcode: 40036,
       },
     })
-    expect(await sendMessage('templateId', { id: '123', name: 'me' }, 'accessToken', [{
+    expect(await sendMessage('templateId', { id: '123', name: 'me' }, [{
       name: 'name1',
       value: 'value1',
       color: 'color1',
@@ -790,7 +790,7 @@ describe('services', () => {
       name: 'name2',
       value: 'value2',
       color: 'color2',
-    }])).toEqual({
+    }], null)).toEqual({
       name: 'me',
       success: false,
     })
@@ -802,7 +802,7 @@ describe('services', () => {
     expect(await sendMessageReply([
       { id: '123', name: 'me' },
       { id: '456', name: 'you' },
-    ], 'accessToken', 'templateId', [{
+    ], 'templateId', [{
       name: 'name1',
       value: 'value1',
       color: 'color1',
@@ -810,7 +810,7 @@ describe('services', () => {
       name: 'name2',
       value: 'value2',
       color: 'color2',
-    }])).toEqual({
+    }], null)).toEqual({
       failPostIds: 'me,you',
       failPostNum: 2,
       needPostNum: 2,
@@ -823,7 +823,7 @@ describe('services', () => {
     expect(await sendMessageReply([
       { id: '123', name: 'me' },
       { id: '456', name: 'you' },
-    ], 'accessToken')).toEqual({
+    ], null, null, null)).toEqual({
       failPostIds: 'me,you',
       failPostNum: 2,
       needPostNum: 2,
@@ -838,7 +838,7 @@ describe('services', () => {
     expect(await sendMessageReply([
       { id: '123', name: 'me' },
       { id: '456', name: 'you' },
-    ], 'accessToken', 'templateId', [{
+    ], 'templateId', [{
       name: 'name1',
       value: 'value1',
       color: 'color1',
@@ -846,12 +846,12 @@ describe('services', () => {
       name: 'name2',
       value: 'value2',
       color: 'color2',
-    }])).toEqual({
-      failPostIds: '无',
-      failPostNum: 0,
+    }], null)).toEqual({
+      failPostIds: 'me,you',
+      failPostNum: 2,
       needPostNum: 2,
-      successPostIds: 'me,you',
-      successPostNum: 2,
+      successPostIds: '无',
+      successPostNum: 0,
     })
   })
   test('getPoetry', async () => {

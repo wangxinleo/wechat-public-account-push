@@ -1,7 +1,6 @@
 import schedule from 'node-schedule'
 import dayjs from 'dayjs'
 import {
-  getAccessToken,
   sendMessageReply,
   getAggregatedData,
   getCallbackTemplateParams,
@@ -9,20 +8,12 @@ import {
 import config from './config/exp-config.js'
 import cornTime from './config/server-config.js'
 import mainForTest from './main-for-test.js'
+import { RUN_TIME_STORAGE } from './src/store/index.js'
 
 export default async function mainForProd() {
   // 获取accessToken
   console.log('\n\n')
   console.log(dayjs().format('YYYY-MM-DD HH:mm:ss'))
-  console.log('---')
-  console.log('【连接微信公众平台】开始')
-  const accessToken = await getAccessToken()
-  if (!accessToken) {
-    console.log('遇到错误，执行终止！')
-    return
-  }
-  console.log('【连接微信公众平台】结束')
-  console.log('---')
 
   // 处理好的用户数据
   console.log('---')
@@ -40,7 +31,7 @@ export default async function mainForProd() {
     failPostNum,
     successPostIds,
     failPostIds,
-  } = await sendMessageReply(aggregatedData, accessToken)
+  } = await sendMessageReply(aggregatedData, null, null, config.USE_PASSAGE)
   console.log('【常规模板】推送结束')
   console.log('---')
 
@@ -57,10 +48,13 @@ export default async function mainForProd() {
   if (config.CALLBACK_TEMPLATE_ID) {
     console.log('---')
     console.log('【推送完成提醒】推送开始')
-    await sendMessageReply(config.CALLBACK_USERS, accessToken, config.CALLBACK_TEMPLATE_ID, callbackTemplateParams)
+    await sendMessageReply(config.CALLBACK_USERS, config.CALLBACK_TEMPLATE_ID, callbackTemplateParams, config.USE_PASSAGE)
     console.log('【推送完成提醒】推送结束')
     console.log('---')
   }
+
+  // 释放运行时临时存储的数据
+  RUN_TIME_STORAGE.accessToken = null
 }
 
 const main = () => {
