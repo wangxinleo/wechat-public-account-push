@@ -59,22 +59,23 @@ wechat-public-account-push
     - [1.2.5 方式五：使用云函数运行（需要使用运营商提供的 __付费__ 云函数功能，非常准时)](#125-方式五使用云函数运行需要使用运营商提供的-付费-云函数功能非常准时)
 - [2. 公众号模板参数说明](#2-公众号模板参数说明)
 - [3. config参数说明](#3-config参数说明)
-- [4. 常用的推送模板样例](#4-常用的推送模板样例)
-- [5. GitHub/Gitee 如何更改自动执行时间](#5-githubgitee-如何更改自动执行时间)
-  - [5.1 github action如何更改自动执行时间](#51-github-action如何更改自动执行时间)
-  - [5.2 gitee go如何更改自动执行时间](#52-gitee-go如何更改自动执行时间)
-- [6. 常见问题](#6-常见问题)
-- [7. 版本发布及更新](#7-版本发布及更新)
-  - [7.1 重新fork](#71-重新fork)
-  - [7.2 GitHub Fetch Upstream Branch](#72-github-fetch-upstream-branch)
-  - [7.3 actions 脚本自动](#73-actions-脚本自动)
-- [8. 成为开源贡献成员](#8-成为开源贡献成员)
-  - [8.1 贡献代码](#81-贡献代码)
-  - [8.2 贡献文档](#82-贡献文档)
-- [9. 致谢](#9-致谢)
+- [4. template-config推送模板参数说明](#4-template-config推送模板参数说明)
+- [5. 常用的推送模板样例](#5-常用的推送模板样例)
+- [6. GitHub/Gitee 如何更改自动执行时间](#6-githubgitee-如何更改自动执行时间)
+  - [6.1 github action如何更改自动执行时间](#61-github-action如何更改自动执行时间)
+  - [6.2 gitee go如何更改自动执行时间](#62-gitee-go如何更改自动执行时间)
+- [7. 常见问题](#7-常见问题)
+- [8. 版本发布及更新](#8-版本发布及更新)
+  - [8.1 重新fork](#81-重新fork)
+  - [8.2 GitHub Fetch Upstream Branch](#82-github-fetch-upstream-branch)
+  - [8.3 actions 脚本自动](#83-actions-脚本自动)
+- [9. 成为开源贡献成员](#9-成为开源贡献成员)
+  - [9.1 贡献代码](#91-贡献代码)
+  - [9.2 贡献文档](#92-贡献文档)
+- [10. 致谢](#10-致谢)
   - [贡献/参与者](#贡献参与者)
-- [10. wechat-public-account-push答疑群](#10-wechat-public-account-push答疑群)
-- [11. 其他](#11-其他)
+- [11. wechat-public-account-push答疑群](#11-wechat-public-account-push答疑群)
+- [12. 其他](#12-其他)
 
 <!-- /TOC -->
 
@@ -201,12 +202,12 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 **基础类**
 
-| 参数                     | 详细             | 示例             |
-|------------------------|----------------|----------------|
-| to_name.DATA        | 收件人姓名          | 老婆3            |
+| 参数                     | 详细             | 示例           |
+|------------------------|----------------|--------------|
+| to_name.DATA        | 收件人姓名          | 老婆3          |
 | date.DATA              | YYYY-MM-DD 星期d | 2022-08-26 星期五 |
-| province.DATA       | 省份             |  广东            |
-| city.DATA              | 城市             |  惠州            |
+| province.DATA       | 省份             | 广东           |
+| city.DATA              | 城市             | 惠州           |
 
 **天气类**
 
@@ -306,15 +307,20 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 [❓config参数说明 >>>](./docs/how-to-use/config-demo.md)
 
-## 4. 常用的推送模板样例
+## 4. template-config推送模板参数说明
+> 配置文件的详细说明，使用旧配置的小伙伴可以对照此文档增加新的配置
+
+[❓template-config推送模板参数说明 >>>](./docs/how-to-use/template-config-demo.md)
+
+## 5. 常用的推送模板样例
 > 收录一些常用好看的模板消息
 
 [❓常用的推送模板样例 >>>](./docs/how-to-use/default-model.md)
 
 
-## 5. GitHub/Gitee 如何更改自动执行时间
+## 6. GitHub/Gitee 如何更改自动执行时间
 
-### 5.1 github action如何更改自动执行时间
+### 6.1 github action如何更改自动执行时间
 
 这里的脚本使用的是 github 的 workflow 定时任务, 具体脚本文件放置在:
 
@@ -330,10 +336,10 @@ wechat-public-account-push/.github/workflows/weixin-push-on-time.yml
 
 ```
 on:
-  workflow_dispatch:
-  schedule:
-    # 每天国际时间2:10 运行, 即北京时间 10:10 运行
-    - cron: '30 23 * * *'
+ workflow_dispatch:
+ schedule:
+  # 每天国际时间2:10 运行, 即北京时间 10:10 运行
+  - cron: '30 23 * * *'
 ```
 
 **推荐设置: `30 22 * * *` 或 `30 23 * * *` 等冷门时间，拥堵率低**
@@ -348,13 +354,13 @@ on:
 
 或使用[https://crontab.guru](https://crontab.guru)帮助配置
 
-### 5.2 gitee go如何更改自动执行时间
+### 6.2 gitee go如何更改自动执行时间
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow10.png)
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/gitee/gitee-workflow11.png)
 
-## 6. 常见问题
+## 7. 常见问题
 
 [关于获取accessToken:请求失败invalid appsecret rid xxxxx](https://github.com/wangxinleo/wechat-public-account-push/discussions/68)
 
@@ -375,15 +381,15 @@ on:
 
 如果确认还未解决，可以自己提交 Issue，我会尽快确认并解决。
 
-## 7. 版本发布及更新
+## 8. 版本发布及更新
 
 关于新版本发布后，如何同步最新的内容到自己 Fork 的仓库
 
-### 7.1 重新fork
+### 8.1 重新fork
 
 **删掉后重新Fork会导致之前配置过的GitHub Secrets和提交的代码更改全部丢掉，只能重新部署。**
 
-### 7.2 GitHub Fetch Upstream Branch
+### 8.2 GitHub Fetch Upstream Branch
 
 - 在自己的项目仓库中选择 "Sync fork"
 
@@ -397,7 +403,7 @@ on:
 
 如果**你更改了源代码进行了部分定制**, 请注意备份代码段。
 
-### 7.3 actions 脚本自动
+### 8.3 actions 脚本自动
 
 **以后会考虑加入actions 脚本每周自动更新fork仓库，但是目前精力不足，只能采用上述保守方案**
 
@@ -405,9 +411,9 @@ on:
 
 也建议把右上角的 Star 点一下，这样有重要更新时就会有邮件推送了。
 
-## 8. 成为开源贡献成员
+## 9 成为开源贡献成员
 
-### 8.1 贡献代码
+### 9.1 贡献代码
 
 如果你有好的想法，欢迎向仓库贡献你的代码，贡献步骤：
 
@@ -421,12 +427,12 @@ on:
 
 我会尽快进行代码审核，测试成功后会合并入 main 主分支，提前感谢您的贡献。
 
-### 8.2 贡献文档
+### 9.2 贡献文档
 
 文档部分由于我个人精力有限（写文档比写代码累多了），所以有些地方写的很简略，甚至有遗漏和错别字，不能贡献代码的朋友也欢迎来一起维护文档，欢迎
 PR 来纠正我，一样都算是对开源做贡献了。
 
-## 9. 致谢
+## 10. 致谢
 
 ### 贡献/参与者
 
@@ -440,7 +446,7 @@ PR 来纠正我，一样都算是对开源做贡献了。
 
 感谢所有参与到开发/测试中的朋友们，是大家的帮助让 TA 越来越好！ (*´▽｀)ノノ
 
-## 10. wechat-public-account-push答疑群
+## 11. wechat-public-account-push答疑群
 
 不管文档写得多详细，还是会有人不会呐！还是建个群答疑吧!
 
@@ -452,7 +458,7 @@ PR 来纠正我，一样都算是对开源做贡献了。
 
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=y0plwm9zhOI35EwlOdRh372g4KWbqMSt&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="wechat-public-account-push 交流群" title="wechat-public-account-push 交流群"></a>
 
-## 11. 其他
+## 12. 其他
 
 时区查询: [https://www.zeitverschiebung.net/cn/all-time-zones.html](https://www.zeitverschiebung.net/cn/all-time-zones.html)
 
