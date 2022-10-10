@@ -22840,3 +22840,7 @@ export const DEFAULT_OUTPUT = {
   holidaytts: '嘿嘿，今天不告诉你~',
   courseSchedule: '今天没有课哟~',
 }
+
+export const RUN_TIME_STORAGE = {
+
+}
