@@ -82,14 +82,14 @@ wechat-public-account-push
 
 **Github 仓库地址：[wangxinleo/wechat-public-account-push](https://github.com/wangxinleo/wechat-public-account-push)**
 
-**Github
-镜像仓库地址（国内备用01）：[wangxinleo/wechat-public-account-push](https://hub.fastgit.xyz/wangxinleo/wechat-public-account-push)**
+~~**Github
+镜像仓库地址（国内备用01）：[wangxinleo/wechat-public-account-push](https://hub.fastgit.xyz/wangxinleo/wechat-public-account-push)**~~
 
-**Github
-镜像仓库地址（国内备用02）：[wangxinleo/wechat-public-account-push](https://hub.njuu.cf/wangxinleo/wechat-public-account-push)**
+~~**Github
+镜像仓库地址（国内备用02）：[wangxinleo/wechat-public-account-push](https://hub.njuu.cf/wangxinleo/wechat-public-account-push)**~~
 
 **Gitee
-仓库地址：[wangxinleo/wechat-public-account-push](https://gitee.com/wangxin_leo/wechat-public-account-push)**
+国内仓库地址：[wangxinleo/wechat-public-account-push](https://gitee.com/wangxin_leo/wechat-public-account-push)**
 
 **注意：**
 
@@ -102,7 +102,7 @@ wechat-public-account-push
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/how-to-use/run-img.jpg)
 
-![图片无法查看请移步顶部访问 国内备用仓库地址)](img/how-to-use/run-img-2.jpg)
+![图片无法查看请移步顶部访问 国内备用仓库地址](img/how-to-use/run-img-2.jpg)
 
 ## 1. 如何使用
 
