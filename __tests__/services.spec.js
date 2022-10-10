@@ -1,9 +1,9 @@
-import { jest } from '@jest/globals'
-
 import axios from 'axios'
 import dayjs from 'dayjs'
 import MockDate from 'mockdate'
 import config from '../config/exp-config.js'
+import TEMPLATE_CONFIG from '../config/template-config.cjs'
+import { RUN_TIME_STORAGE } from '../src/store/index.js'
 
 import {
   getWeather,
@@ -23,12 +23,16 @@ import {
   getConstellationFortune,
   getHolidaytts,
   getCourseSchedule,
+  getWeatherIcon,
+  getBing,
+  buildTianApi,
+  getTianApiWeather,
+  getTianApiNetworkHot,
+  getTianApiMorningGreeting,
+  getTianApiEveningGreeting,
+  model2Data,
 } from '../src/services'
 import { selfDayjs } from '../src/utils/set-def-dayjs.js'
-
-jest.mock('axios')
-jest.mock('dayjs')
-jest.mock('../config')
 
 describe('services', () => {
   test('getWeather', async () => {
@@ -362,6 +366,10 @@ describe('services', () => {
       throw new Error()
     }
     expect(await getWeather('北京', '北京')).toEqual({})
+    config.SWITCH = {
+      weather: false,
+    }
+    expect(await getWeather('北京', '北京')).toEqual({})
   })
   test('getAccessToken', async () => {
     axios.get = async () => {
@@ -651,6 +659,10 @@ describe('services', () => {
 距离 被搭讪纪念日 还有310天 
 距离 结婚纪念日 还有312天 
 `.trimStart())
+    config.SWITCH = {
+      birthdayMessage: false,
+    }
+    expect(getBirthdayMessage()).toEqual('')
   })
   test('getDateDiffList', () => {
     config.CUSTOMIZED_DATE_LIST = [
@@ -794,11 +806,33 @@ describe('services', () => {
       name: 'me',
       success: false,
     })
+    expect(await sendMessage('templateId', { id: '123', name: 'me' }, [{
+      name: 'name1',
+      value: 'value1',
+      color: 'color1',
+    }, {
+      name: 'name2',
+      value: 'value2',
+      color: 'color2',
+    }], 'push-deer')).toEqual({
+      name: 'me',
+      success: false,
+    })
   })
   test('sendMessageReply', async () => {
     axios.post = async () => {
       throw new Error()
     }
+    expect(await sendMessageReply([
+      { id: '123', name: 'me' },
+      { id: '456', name: 'you' },
+    ])).toEqual({
+      failPostIds: 'me,you',
+      failPostNum: 2,
+      needPostNum: 2,
+      successPostIds: '无',
+      successPostNum: 0,
+    })
     expect(await sendMessageReply([
       { id: '123', name: 'me' },
       { id: '456', name: 'you' },
@@ -853,6 +887,147 @@ describe('services', () => {
       successPostIds: '无',
       successPostNum: 0,
     })
+    RUN_TIME_STORAGE.accessToken = 'secret'
+    expect(await sendMessageReply([
+      { id: '123', name: 'me' },
+      { id: '456', name: 'you' },
+    ], 'templateId', [{
+      name: 'name1',
+      value: 'value1',
+      color: 'color1',
+    }, {
+      name: 'name2',
+      value: 'value2',
+      color: 'color2',
+    }], null)).toEqual({
+      failPostIds: '无',
+      failPostNum: 0,
+      needPostNum: 2,
+      successPostIds: 'me,you',
+      successPostNum: 2,
+    })
+    axios.post = async () => {
+      throw new Error()
+    }
+    expect(await sendMessageReply([
+      { id: '123', name: 'me' },
+      { id: '456', name: 'you' },
+    ], 'templateId', [{
+      name: 'name1',
+      value: 'value1',
+      color: 'color1',
+    }, {
+      name: 'name2',
+      value: 'value2',
+      color: 'color2',
+    }], null)).toEqual({
+      failPostIds: 'me,you',
+      failPostNum: 2,
+      needPostNum: 2,
+      successPostIds: '无',
+      successPostNum: 0,
+    })
+    axios.post = async () => ({
+      data: {
+        errcode: 40036,
+      },
+    })
+    expect(await sendMessageReply([
+      { id: '123', name: 'me' },
+      { id: '456', name: 'you' },
+    ], 'templateId', [{
+      name: 'name1',
+      value: 'value1',
+      color: 'color1',
+    }, {
+      name: 'name2',
+      value: 'value2',
+      color: 'color2',
+    }], null)).toEqual({
+      failPostIds: 'me,you',
+      failPostNum: 2,
+      needPostNum: 2,
+      successPostIds: '无',
+      successPostNum: 0,
+    })
+    axios.post = async () => ({
+      data: {
+        errcode: 40003,
+      },
+    })
+    expect(await sendMessageReply([
+      { id: '123', name: 'me' },
+      { id: '456', name: 'you' },
+    ], 'templateId', [{
+      name: 'name1',
+      value: 'value1',
+      color: 'color1',
+    }, {
+      name: 'name2',
+      value: 'value2',
+      color: 'color2',
+    }], null)).toEqual({
+      failPostIds: 'me,you',
+      failPostNum: 2,
+      needPostNum: 2,
+      successPostIds: '无',
+      successPostNum: 0,
+    })
+    TEMPLATE_CONFIG.splice(0, TEMPLATE_CONFIG.length, {
+      id: '0001',
+      title: '亲爱的, 早上好',
+      desc: `
+      **{{date.DATA}}**
+      下个休息日：{{holidaytts.DATA}}
+      ---
+      城市：{{city.DATA}}
+      天气：{{weather.DATA}}
+      气温(最高/最低):{{max_temperature.DATA}} / {{min_temperature.DATA}}
+      风向: {{wind_direction.DATA}}
+      风级: {{wind_scale.DATA}}
+      {{comprehensive_horoscope.DATA}}
+      ---
+      今天是我们相识的第{{love_day.DATA}}天
+      {{birthday_message.DATA}}
+      ---
+      {{moment_copyrighting.DATA}}
+      
+      
+      {{poetry_title.DATA}} {{poetry_content.DATA}}
+    `,
+    })
+    expect(await sendMessage('0001', { id: '123', name: 'me' }, [{
+      name: 'date',
+      value: 'value1',
+      color: 'color1',
+    }], 'push-deer')).toEqual({
+      name: 'me',
+      success: false,
+    })
+    axios.get = async () => {
+      throw new Error()
+    }
+    expect(await sendMessage('0001', { id: '123', name: 'me' }, [{
+      name: 'date',
+      value: 'value1',
+      color: 'color1',
+    }], 'push-deer')).toEqual({
+      name: 'me',
+      success: false,
+    })
+    axios.get = async () => ({
+      data: {
+        code: 0,
+      },
+    })
+    expect(await sendMessage('0001', { id: '123', name: 'me' }, [{
+      name: 'date',
+      value: 'value1',
+      color: 'color1',
+    }], 'push-deer')).toEqual({
+      name: 'me',
+      success: true,
+    })
   })
   test('getPoetry', async () => {
     config.SWITCH = {}
@@ -902,6 +1077,10 @@ describe('services', () => {
       dynasty: '唐',
       title: '静夜思',
     })
+    config.SWITCH = {
+      poetry: false,
+    }
+    expect(await getPoetry()).toEqual({})
   })
   test('selfDayjs', () => {
     dayjs.tz.guess = () => 'UTC'
@@ -974,6 +1153,10 @@ describe('services', () => {
       value: '今日爱情运势: 单身的遇到一些契机，打开彼此的心扉。恋爱中的得到恋人行动上的重视，也会收到承诺的兑现。',
       name: 'love_horoscope',
     }])
+    config.SWITCH = {
+      horoscope: false,
+    }
+    expect(getConstellationFortune('09-02', '今日')).resolves.toEqual([])
   })
   test('getHolidaytts', async () => {
     config.SWITCH = {}
@@ -998,6 +1181,10 @@ describe('services', () => {
         tts: 'xxx',
       },
     })
+    expect(await getHolidaytts()).toEqual(null)
+    config.SWITCH = {
+      holidaytts: false,
+    }
     expect(await getHolidaytts()).toEqual(null)
   })
   test('getCourseSchedule', () => {
@@ -1124,5 +1311,151 @@ describe('services', () => {
       },
     })).toEqual('')
     MockDate.reset()
+  })
+  test('getWeatherIcon', () => {
+    expect(getWeatherIcon('晴')).toEqual('☀️')
+    expect(getWeatherIcon('未知')).toEqual('🌈')
+  })
+  test('getBing', async () => {
+    axios.get = async () => {
+      throw new Error()
+    }
+    expect(await getBing()).toEqual({})
+    axios.get = async () => ({
+      status: 200,
+      data: {
+        images: [{
+          url: 'url',
+          title: 'title',
+          copyright: 'abc(def)ghi(jkl)',
+        }],
+      },
+    })
+    expect(await getBing()).toEqual({
+      imgUrl: 'https://cn.bing.com/url',
+      imgTitle: 'title',
+      imgContent: 'abcghi(jkl)',
+    })
+  })
+  test('buildTianApi', async () => {
+    await expect(buildTianApi({})).resolves.toEqual([])
+    await expect(buildTianApi({
+      tianApi: {
+        weather: true,
+      },
+    }, 'tianqi')).rejects.toThrow(new Error('配置中没有TIAN_API_KEY'))
+    await expect(buildTianApi({
+      tianApi: {
+        weather: 3,
+      },
+    }, 'tianqi')).rejects.toThrow(new Error('配置中没有TIAN_API_KEY'))
+    config.TIAN_API_KEY = 'secret'
+    axios.get = async () => ({
+    })
+    await expect(buildTianApi({
+      tianApi: {
+        weather: 3,
+      },
+    }, 'tianqi')).rejects.toThrow(new Error('天行API接口返回为空'))
+    axios.get = async () => ({
+      data: {
+        code: 199,
+        msg: 'error msg',
+      },
+    })
+    await expect(buildTianApi({
+      tianApi: {
+        weather: 3,
+      },
+    }, 'tianqi')).rejects.toThrow(new Error('error msg'))
+    axios.get = async () => ({
+      data: {
+        code: 200,
+      },
+    })
+    await expect(buildTianApi({
+      tianApi: {
+        weather: 3,
+      },
+    }, 'tianqi')).resolves.toEqual([])
+    axios.get = async () => ({
+      data: {
+        code: 200,
+        newslist: [1, 2, 3, 4, 5],
+      },
+    })
+    await expect(buildTianApi({
+      tianApi: {
+        weather: 3,
+      },
+    }, 'tianqi')).resolves.toEqual([1, 2, 3])
+    axios.get = async () => ({
+      data: {
+        code: 200,
+        newslist: [{
+          content: 'xxx',
+        }],
+      },
+    })
+    const user = {
+      tianApi: {
+        morningGreeting: true,
+        eveningGreeting: true,
+        weather: true,
+        networkHot: true,
+      },
+    }
+    await expect(getTianApiMorningGreeting(user)).resolves.toEqual('xxx')
+    await expect(getTianApiEveningGreeting(user)).resolves.toEqual('xxx')
+    await expect(getTianApiWeather(user)).resolves.toEqual([{ content: 'xxx' }])
+    await expect(getTianApiNetworkHot(user)).resolves.toEqual([{ content: 'xxx' }])
+  })
+  test('model2Data', () => {
+    expect(model2Data()).toEqual(null)
+    expect(model2Data('0001')).toEqual(null)
+    expect(model2Data('0003', 'abc')).toEqual(null)
+    TEMPLATE_CONFIG.splice(0, TEMPLATE_CONFIG.length, {
+      id: '0001',
+      title: '亲爱的, 早上好',
+      desc: `
+      **{{date.DATA}}**
+      下个休息日：{{holidaytts.DATA}}
+      ---
+      城市：{{city.DATA}}
+      天气：{{weather.DATA}}
+      气温(最高/最低):{{max_temperature.DATA}} / {{min_temperature.DATA}}
+      风向: {{wind_direction.DATA}}
+      风级: {{wind_scale.DATA}}
+      {{comprehensive_horoscope.DATA}}
+      ---
+      今天是我们相识的第{{love_day.DATA}}天
+      {{birthday_message.DATA}}
+      ---
+      {{moment_copyrighting.DATA}}
+      
+      
+      {{poetry_title.DATA}} {{poetry_content.DATA}}
+    `,
+    })
+    expect(model2Data('0001', {
+      date: {
+        value: '2022-10-11',
+      },
+    })).toEqual({ desc: '\\n**2022-10-11**\\n下个休息日：\\n---\\n城市：\\n天气：\\n气温(最高/最低): / \\n风向: \\n风级: \\n\\n---\\n今天是我们相识的第天\\n\\n---\\n\\n\\n\\n\\n', title: '亲爱的, 早上好' })
+    expect(model2Data('0001', {
+      date: {
+        value: 0,
+      },
+    })).toEqual({ desc: '\\n**0**\\n下个休息日：\\n---\\n城市：\\n天气：\\n气温(最高/最低): / \\n风向: \\n风级: \\n\\n---\\n今天是我们相识的第天\\n\\n---\\n\\n\\n\\n\\n', title: '亲爱的, 早上好' })
+    expect(model2Data('0001', {
+      date: {
+        value: 0,
+      },
+    }, true)).toEqual({ desc: '%5Cn**0**%5Cn%E4%B8%8B%E4%B8%AA%E4%BC%91%E6%81%AF%E6%97%A5%EF%BC%9A%5Cn---%5Cn%E5%9F%8E%E5%B8%82%EF%BC%9A%5Cn%E5%A4%A9%E6%B0%94%EF%BC%9A%5Cn%E6%B0%94%E6%B8%A9(%E6%9C%80%E9%AB%98/%E6%9C%80%E4%BD%8E):%20/%20%5Cn%E9%A3%8E%E5%90%91:%20%5Cn%E9%A3%8E%E7%BA%A7:%20%5Cn%5Cn---%5Cn%E4%BB%8A%E5%A4%A9%E6%98%AF%E6%88%91%E4%BB%AC%E7%9B%B8%E8%AF%86%E7%9A%84%E7%AC%AC%E5%A4%A9%5Cn%5Cn---%5Cn%5Cn%5Cn%5Cn%5Cn', title: '%E4%BA%B2%E7%88%B1%E7%9A%84,%20%E6%97%A9%E4%B8%8A%E5%A5%BD' })
+    expect(model2Data('0001', {
+      date: {
+        value: 0,
+      },
+    }, true, true)).toEqual({ desc: '%0A%0A**0**%0A%0A%E4%B8%8B%E4%B8%AA%E4%BC%91%E6%81%AF%E6%97%A5%EF%BC%9A%0A%0A---%0A%0A%E5%9F%8E%E5%B8%82%EF%BC%9A%0A%0A%E5%A4%A9%E6%B0%94%EF%BC%9A%0A%0A%E6%B0%94%E6%B8%A9(%E6%9C%80%E9%AB%98/%E6%9C%80%E4%BD%8E):%20/%20%0A%0A%E9%A3%8E%E5%90%91:%20%0A%0A%E9%A3%8E%E7%BA%A7:%20%0A%0A%0A%0A---%0A%0A%E4%BB%8A%E5%A4%A9%E6%98%AF%E6%88%91%E4%BB%AC%E7%9B%B8%E8%AF%86%E7%9A%84%E7%AC%AC%E5%A4%A9%0A%0A%0A%0A---%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A', title: '%25E4%25BA%25B2%25E7%2588%25B1%25E7%259A%2584,%2520%25E6%2597%25A9%25E4%25B8%258A%25E5%25A5%25BD' })
   })
 })

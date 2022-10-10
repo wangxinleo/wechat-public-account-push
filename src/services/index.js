@@ -750,18 +750,15 @@ export const model2Data = (templateId, wxTemplateData, urlencode = false, turnTo
   }
 
   // 替换模板
-  targetValue = model.desc.replace(/[{]{2}(.*?).DATA[}]{2}/gm, (paramText) => {
+  targetValue = model.desc.replace(/\{{2}(.*?)\.DATA}{2}/gm, (paramText) => {
     // 提取变量
-    const param = paramText.match(/(?<=[{]{2})(.*?)(?=.DATA[}]{2})/g)
-    if (param && param[0]) {
-      const replaceText = wxTemplateData[param[0]]
-      return replaceText && (replaceText.value || replaceText.value === 0) ? replaceText.value : ''
-    }
-    return ''
+    const param = paramText.match(/\{{2}(.*?)\.DATA}{2}/)
+    const replaceText = wxTemplateData[param[1]]
+    return replaceText && (replaceText.value || replaceText.value === 0) ? replaceText.value : ''
   })
 
   // 统一格式
-  targetValue = JSON.stringify(targetValue).replace(/(?<=\\n|^)[ ]{1,}/gm, '')
+  targetValue = JSON.stringify(targetValue).replace(/(?<=\\n|^) +/gm, '')
   // 去除前后双引号
   targetValue = targetValue.substring(1, targetValue.length - 1)
 
