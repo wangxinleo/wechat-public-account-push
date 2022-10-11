@@ -782,6 +782,34 @@ const sendMessageByPushDeer = async (user, templateId, wxTemplateData) => {
   }
 }
 
+const sendMessageByServerChan = async (user, templateId, wxTemplateData) => {
+  // 模板拼装
+  const modelData = model2Data(templateId, wxTemplateData, true, true)
+  if (!modelData) {
+    return {
+      name: user.name,
+      success: false,
+    }
+  }
+
+  const url = `https://sctapi.ftqq.com/${user.id}.send?title=${modelData.title}&desp=${modelData.desc}`
+  // 发送消息
+  const res = await axios.get(url).catch((err) => err)
+
+  if (res.data && res.data.code === 0) {
+    console.log(`${user.name}: 推送消息成功`)
+    return {
+      name: user.name,
+      success: true,
+    }
+  }
+  console.error(`${user.name}: 推送消息失败`, res)
+  return {
+    name: user.name,
+    success: false,
+  }
+}
+
 /**
  * 使用wechat-test
  * @param user
@@ -867,6 +895,9 @@ export const sendMessage = async (templateId, user, params, usePassage) => {
   if (usePassage === 'push-deer') {
     console.log('使用push-deer推送')
     return sendMessageByPushDeer(user, templateId, wxTemplateData)
+  } if (usePassage === 'server-chan') {
+    console.log('使用server-chan推送')
+    return sendMessageByServerChan(user, templateId, wxTemplateData)
   }
 
   console.log('使用微信测试号推送')
