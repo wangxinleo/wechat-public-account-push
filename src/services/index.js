@@ -562,6 +562,45 @@ export const getSlotList = () => {
   return slotList
 }
 
+export const buildTianApi = (user, apiType, params) => {
+  const typeMap = {
+    zaoan: 'morningGreeting',
+    wanan: 'eveningGreeting',
+    networkhot: 'networkHot',
+    tianqi: 'weather',
+  }
+  if (!(user.tianApi && user.tianApi[typeMap[apiType]])) {
+    return Promise.resolve([])
+  }
+  let count = user.tianApi[typeMap[apiType]]
+  if (typeof count !== 'number') {
+    count = 1
+  }
+  if (!config.TIAN_API_KEY) {
+    return Promise.reject(new Error('配置中没有TIAN_API_KEY'))
+  }
+  const url = `http://api.tianapi.com/${apiType}/index`
+  return axios.get(url, {
+    params: { key: config.TIAN_API_KEY, ...params },
+  }).then((res) => {
+    if (res.data) {
+      if (res.data.code === 200) {
+        return (res.data.newslist || []).slice(0, count)
+      }
+      throw new Error(res.data.msg)
+    }
+    throw new Error('天行API接口返回为空')
+  })
+}
+
+export const getTianApiMorningGreeting = (user) => buildTianApi(user, 'zaoan').then((res) => res[0] && res[0].content)
+
+export const getTianApiEveningGreeting = (user) => buildTianApi(user, 'wanan').then((res) => res[0] && res[0].content)
+
+export const getTianApiWeather = (user) => buildTianApi(user, 'tianqi', { city: user.city || config.CITY })
+
+export const getTianApiNetworkHot = (user) => buildTianApi(user, 'networkhot')
+
 /**
  * 获取全部处理好的用户数据
  * @returns
@@ -627,6 +666,27 @@ export const getAggregatedData = async () => {
     // 获取课表信息
     const courseSchedule = getCourseSchedule(user.courseSchedule || config.courseSchedule) || DEFAULT_OUTPUT.courseSchedule
 
+    const tianApiGreeting = [{
+      name: toLowerLine('tianApiMorningGreeting'),
+      value: await getTianApiMorningGreeting(user),
+      color: getColor(),
+    }, {
+      name: toLowerLine('tianApiEveningGreeting'),
+      value: await getTianApiEveningGreeting(user),
+      color: getColor(),
+    }].filter((it) => it.value)
+
+    const tianApiWeather = (await getTianApiWeather(user) || []).map((it, index) => Object.keys((it)).filter((weatherKey) => ['province', 'area', 'weatherimg'].indexOf(weatherKey) === -1).map((key) => ({
+      name: toLowerLine(`tianApiWeather_${key}_${index}`),
+      value: it[key],
+      color: getColor(),
+    }))).flat()
+
+    const tianApiNetworkHot = (await getTianApiNetworkHot(user) || []).map((it, index) => Object.keys((it)).map((key) => ({
+      name: toLowerLine(`tianApiNetworkHot_${key}_${index}`),
+      value: it[key],
+      color: getColor(),
+    }))).flat()
     // 集成所需信息
     const wxTemplateParams = [
       { name: toLowerLine('toName'), value: user.name, color: getColor() },
@@ -655,6 +715,9 @@ export const getAggregatedData = async () => {
       .concat(constellationFortune)
       .concat(dateDiffParams)
       .concat(slotParams)
+      .concat(tianApiGreeting)
+      .concat(tianApiWeather)
+      .concat(tianApiNetworkHot)
 
     user.wxTemplateParams = wxTemplateParams
   }
@@ -687,18 +750,15 @@ export const model2Data = (templateId, wxTemplateData, urlencode = false, turnTo
   }
 
   // 替换模板
-  targetValue = model.desc.replace(/[{]{2}(.*?).DATA[}]{2}/gm, (paramText) => {
+  targetValue = model.desc.replace(/\{{2}(.*?)\.DATA}{2}/gm, (paramText) => {
     // 提取变量
-    const param = paramText.match(/(?<=[{]{2})(.*?)(?=.DATA[}]{2})/g)
-    if (param && param[0]) {
-      const replaceText = wxTemplateData[param[0]]
-      return replaceText && (replaceText.value || replaceText.value === 0) ? replaceText.value : ''
-    }
-    return ''
+    const param = paramText.match(/\{{2}(.*?)\.DATA}{2}/)
+    const replaceText = wxTemplateData[param[1]]
+    return replaceText && (replaceText.value || replaceText.value === 0) ? replaceText.value : ''
   })
 
   // 统一格式
-  targetValue = JSON.stringify(targetValue).replace(/(?<=\\n|^)[ ]{1,}/gm, '')
+  targetValue = JSON.stringify(targetValue).replace(/(?<=\\n|^) +/gm, '')
   // 去除前后双引号
   targetValue = targetValue.substring(1, targetValue.length - 1)
 

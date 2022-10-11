@@ -63,6 +63,9 @@ const USER_CONFIG = {
     courseSchedule: false,
   },
 
+  // 天行API KEY
+  TIAN_API_KEY: '',
+  
   /** 每日一言 */
 
   // 每日一言的内容类型
@@ -183,6 +186,21 @@ const USER_CONFIG = {
           ]
         }
       },
+      // 天行API
+      tianApi: {
+
+        // 早安心语
+        morningGreeting: true,
+
+        // 早安心语
+        eveningGreeting: true,
+
+        // 天气预报（未来3天）
+        weather: 3,
+
+        // 全网热搜榜（展示3条）
+        networkHot: 3
+      }
     },
     {
       name: '老婆1',
