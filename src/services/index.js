@@ -17,6 +17,14 @@ import { selfDayjs, timeZone } from '../utils/set-def-dayjs.js'
 
 axios.defaults.timeout = 10000
 
+// 使用单空行还是双空行
+const getLB = () => {
+  if (!config.USE_PASSAGE || config.USE_PASSAGE === 'wechat-test') {
+    return '\n'
+  }
+  return '\n\n'
+}
+
 /**
  * 获取 accessToken
  * @returns accessToken
@@ -409,7 +417,7 @@ export const getCourseSchedule = (courseSchedule) => {
   const week = (selfDayjs().day() + 6) % 7
   // 如果课程表是一个数组，认为只有单周的课表
   if (Array.isArray(courseSchedule)) {
-    return (courseSchedule[week] || []).join('\n')
+    return (courseSchedule[week] || []).join(getLB())
   }
   // 如果是一个对象，则根据基准日期判断单双周
   const benchmarkDate = selfDayjs(courseSchedule.benchmark.date)
@@ -417,7 +425,7 @@ export const getCourseSchedule = (courseSchedule) => {
     .set('millisecond', 0), 'millisecond')
   const isSameKind = Math.floor(diff / 7 / 86400000) % 2 === 0
   const kind = ((isSameKind && courseSchedule.benchmark.isOdd) || (!isSameKind && !courseSchedule.benchmark.isOdd)) ? 'odd' : 'even'
-  return ((courseSchedule.courses && courseSchedule.courses[kind] && courseSchedule.courses[kind][week]) || []).join('\n')
+  return ((courseSchedule.courses && courseSchedule.courses[kind] && courseSchedule.courses[kind][week]) || []).join(getLB())
 }
 
 /**
@@ -509,7 +517,7 @@ export const getBirthdayMessage = (festivals) => {
 
       // 存储数据
       if (message) {
-        resMessage += `${message} \n`
+        resMessage += `${message} ${getLB()}`
       }
     }
   })
@@ -560,6 +568,78 @@ export const getSlotList = () => {
   })
 
   return slotList
+}
+
+/**
+ * 天行统一调用接口
+ * @param apiType
+ * @param params
+ * @returns {Promise<T[]|*[]>}
+ */
+export const buildTianApi = async (apiType, params = null) => {
+  const typeMap = {
+    zaoan: 'morningGreeting',
+    wanan: 'eveningGreeting',
+    networkhot: 'networkHot',
+    tianqi: 'weather',
+  }
+  if (!(config.TIAN_API && config.TIAN_API[typeMap[apiType]])) {
+    return []
+  }
+  let count = config.TIAN_API[typeMap[apiType]]
+  if (typeof count !== 'number') {
+    count = 1
+  }
+  if (!(config.TIAN_API && config.TIAN_API.key)) {
+    console.error('配置中config.TIAN_API.key 未填写，无法请求TIAN_API')
+    return []
+  }
+  const url = `http://api.tianapi.com/${apiType}/index`
+  const res = await axios.get(url, {
+    params: { key: config.TIAN_API.key, ...params },
+  }).catch((err) => err)
+
+  if (res && res.data && res.data.code === 200) {
+    return (res.data.newslist || []).slice(0, count)
+  }
+
+  console.error(`获取天行API接口 ${apiType} 发生错误: `, res.data || res)
+  return []
+}
+
+/**
+ * 天行-早安心语
+ * @returns {Promise<T>}
+ */
+export const getTianApiMorningGreeting = () => buildTianApi('zaoan').then((res) => res[0] && res[0].content)
+
+/**
+ * 天行-晚安心语
+ * @returns {Promise<T>}
+ */
+export const getTianApiEveningGreeting = () => buildTianApi('wanan').then((res) => res[0] && res[0].content)
+
+/**
+ * 天行-天气（付费）
+ * @param user
+ * @returns {Promise<[]>|Promise<never>|Promise<AxiosResponse<any>>}
+ */
+export const getTianApiWeather = async (user) => buildTianApi('tianqi', { city: user.city || config.CITY })
+
+/**
+ * 天行-每日热搜
+ * @returns {Promise<[]>|Promise<never>|Promise<AxiosResponse<any>>}
+ * @param type
+ */
+export const getTianApiNetworkHot = async (type = 'default') => {
+  let result = ''
+  const res = await buildTianApi('networkhot')
+  res.forEach((item, index) => {
+    if (item.digest) {
+      result += `${index + 1}、 ${type === 'default' ? item.digest : item.title} ${getLB()}`
+    }
+  })
+  return result
 }
 
 /**
@@ -627,6 +707,30 @@ export const getAggregatedData = async () => {
     // 获取课表信息
     const courseSchedule = getCourseSchedule(user.courseSchedule || config.courseSchedule) || DEFAULT_OUTPUT.courseSchedule
 
+    // 天行-早晚安
+    const tianApiGreeting = [{
+      name: toLowerLine('tianApiMorningGreeting'),
+      value: await getTianApiMorningGreeting(),
+      color: getColor(),
+    }, {
+      name: toLowerLine('tianApiEveningGreeting'),
+      value: await getTianApiEveningGreeting(),
+      color: getColor(),
+    }].filter((it) => it.value)
+
+    // 天行-天气
+    const tianApiWeather = (await getTianApiWeather(user) || []).map((it, index) => Object.keys((it)).filter((weatherKey) => ['province', 'area', 'weatherimg'].indexOf(weatherKey) === -1).map((key) => ({
+      name: toLowerLine(`tianApiWeather_${key}_${index}`),
+      value: it[key],
+      color: getColor(),
+    }))).flat()
+
+    // 天行-热榜
+    const tianApiNetworkHot = [{
+      name: toLowerLine('tianApiNetworkHot'),
+      value: await getTianApiNetworkHot(config.TIAN_API && config.TIAN_API.networkHotType),
+      color: getColor(),
+    }]
     // 集成所需信息
     const wxTemplateParams = [
       { name: toLowerLine('toName'), value: user.name, color: getColor() },
@@ -655,6 +759,9 @@ export const getAggregatedData = async () => {
       .concat(constellationFortune)
       .concat(dateDiffParams)
       .concat(slotParams)
+      .concat(tianApiGreeting)
+      .concat(tianApiWeather)
+      .concat(tianApiNetworkHot)
 
     user.wxTemplateParams = wxTemplateParams
   }
@@ -687,23 +794,22 @@ export const model2Data = (templateId, wxTemplateData, urlencode = false, turnTo
   }
 
   // 替换模板
-  targetValue = model.desc.replace(/[{]{2}(.*?).DATA[}]{2}/gm, (paramText) => {
+  targetValue = model.desc.replace(/\{{2}(.*?)\.DATA}{2}/gm, (paramText) => {
     // 提取变量
-    const param = paramText.match(/(?<=[{]{2})(.*?)(?=.DATA[}]{2})/g)
-    if (param && param[0]) {
-      const replaceText = wxTemplateData[param[0]]
-      return replaceText && (replaceText.value || replaceText.value === 0) ? replaceText.value : ''
-    }
-    return ''
+    const param = paramText.match(/\{{2}(.*?)\.DATA}{2}/)
+    const replaceText = wxTemplateData[param[1]]
+    return replaceText && (replaceText.value || replaceText.value === 0) ? replaceText.value : ''
   })
-
-  // 统一格式
-  targetValue = JSON.stringify(targetValue).replace(/(?<=\\n|^)[ ]{1,}/gm, '')
-  // 去除前后双引号
-  targetValue = targetValue.substring(1, targetValue.length - 1)
+  // 清除每行前的空格
+  targetValue = targetValue.replace(/(?<=\\n|^) +/gm, '')
 
   // urlencode
   if (urlencode) {
+    // json序列化
+    targetValue = JSON.stringify(targetValue)
+    // 去除前后双引号
+    targetValue = targetValue.substring(1, targetValue.length - 1)
+    // urlencode
     model.title = encodeURI(model.title)
     targetValue = encodeURI(targetValue)
   }
@@ -751,7 +857,7 @@ const assembleOpenUrl = () => ''
  */
 const sendMessageByPushDeer = async (user, templateId, wxTemplateData) => {
   // 模板拼装
-  const modelData = model2Data(templateId, wxTemplateData, true, true)
+  const modelData = model2Data(templateId, wxTemplateData, false, false)
   if (!modelData) {
     return {
       name: user.name,
@@ -759,10 +865,15 @@ const sendMessageByPushDeer = async (user, templateId, wxTemplateData) => {
     }
   }
 
-  const url = `https://api2.pushdeer.com/message/push?pushkey=${user.id}&text=${modelData.title}&desp=${modelData.desc}&type=markdown`
+  const url = 'https://api2.pushdeer.com/message/push'
 
   // 发送消息
-  const res = await axios.get(url, {
+  const res = await axios.post(url, {
+    pushkey: user.id,
+    text: modelData.title,
+    desp: modelData.desc,
+    type: 'markdown',
+  }, {
     headers: {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
     },
@@ -782,9 +893,16 @@ const sendMessageByPushDeer = async (user, templateId, wxTemplateData) => {
   }
 }
 
+/**
+ * 使用server-chan
+ * @param user
+ * @param templateId
+ * @param wxTemplateData
+ * @returns {Promise<{success: boolean, name}>}
+ */
 const sendMessageByServerChan = async (user, templateId, wxTemplateData) => {
   // 模板拼装
-  const modelData = model2Data(templateId, wxTemplateData, true, true)
+  const modelData = model2Data(templateId, wxTemplateData, false, false)
   if (!modelData) {
     return {
       name: user.name,
@@ -792,9 +910,12 @@ const sendMessageByServerChan = async (user, templateId, wxTemplateData) => {
     }
   }
 
-  const url = `https://sctapi.ftqq.com/${user.id}.send?title=${modelData.title}&desp=${modelData.desc}`
+  const url = `https://sctapi.ftqq.com/${user.id}.send`
   // 发送消息
-  const res = await axios.get(url).catch((err) => err)
+  const res = await axios.post(url, {
+    title: modelData.title,
+    desp: modelData.desc,
+  }).catch((err) => err)
 
   if (res.data && res.data.code === 0) {
     console.log(`${user.name}: 推送消息成功`)
