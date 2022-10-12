@@ -284,6 +284,8 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 
 以下配置需要在[天行数据](https://www.tianapi.com)上申请对应的接口，并将APIKEY放置在配置文件的`TIAN_API.key`字段中
 
+[点击此处申请接口](https://www.tianapi.com/apiview/72)
+
 **该接口每次调用独立按次计费，具体计费规则请查阅接口文档**
 
 `{offset}`替换为距离今天的天数
