@@ -1015,7 +1015,7 @@ describe('services', () => {
       name: 'me',
       success: false,
     })
-    axios.get = async () => ({
+    axios.post = async () => ({
       data: {
         code: 0,
       },
@@ -1338,57 +1338,36 @@ describe('services', () => {
     })
   })
   test('buildTianApi', async () => {
-    await expect(buildTianApi({})).resolves.toEqual([])
-    await expect(buildTianApi({
-      tianApi: {
-        weather: true,
-      },
-    }, 'tianqi')).rejects.toThrow(new Error('配置中没有TIAN_API_KEY'))
-    await expect(buildTianApi({
-      tianApi: {
-        weather: 3,
-      },
-    }, 'tianqi')).rejects.toThrow(new Error('配置中没有TIAN_API_KEY'))
-    config.TIAN_API_KEY = 'secret'
+    config.TIAN_API = {}
+    await expect(buildTianApi(null)).resolves.toEqual([])
+    config.TIAN_API.weather = true
+    await expect(buildTianApi('tianqi')).resolves.toEqual([])
+    config.TIAN_API.weather = 3
+    await expect(buildTianApi('tianqi')).resolves.toEqual([])
+    config.TIAN_API.key = 'secret'
     axios.get = async () => ({
     })
-    await expect(buildTianApi({
-      tianApi: {
-        weather: 3,
-      },
-    }, 'tianqi')).rejects.toThrow(new Error('天行API接口返回为空'))
+    await expect(buildTianApi('tianqi')).resolves.toEqual([])
     axios.get = async () => ({
       data: {
         code: 199,
         msg: 'error msg',
       },
     })
-    await expect(buildTianApi({
-      tianApi: {
-        weather: 3,
-      },
-    }, 'tianqi')).rejects.toThrow(new Error('error msg'))
+    await expect(buildTianApi('tianqi')).resolves.toEqual([])
     axios.get = async () => ({
       data: {
         code: 200,
       },
     })
-    await expect(buildTianApi({
-      tianApi: {
-        weather: 3,
-      },
-    }, 'tianqi')).resolves.toEqual([])
+    await expect(buildTianApi('tianqi')).resolves.toEqual([])
     axios.get = async () => ({
       data: {
         code: 200,
         newslist: [1, 2, 3, 4, 5],
       },
     })
-    await expect(buildTianApi({
-      tianApi: {
-        weather: 3,
-      },
-    }, 'tianqi')).resolves.toEqual([1, 2, 3])
+    await expect(buildTianApi('tianqi')).resolves.toEqual([1, 2, 3])
     axios.get = async () => ({
       data: {
         code: 200,
@@ -1397,18 +1376,15 @@ describe('services', () => {
         }],
       },
     })
-    const user = {
-      tianApi: {
-        morningGreeting: true,
-        eveningGreeting: true,
-        weather: true,
-        networkHot: true,
-      },
-    }
-    await expect(getTianApiMorningGreeting(user)).resolves.toEqual('xxx')
-    await expect(getTianApiEveningGreeting(user)).resolves.toEqual('xxx')
+    const user = {}
+    config.TIAN_API.morningGreeting = true
+    config.TIAN_API.eveningGreeting = true
+    config.TIAN_API.weather = true
+    config.TIAN_API.networkHot = true
+    await expect(getTianApiMorningGreeting()).resolves.toEqual('xxx')
+    await expect(getTianApiEveningGreeting()).resolves.toEqual('xxx')
     await expect(getTianApiWeather(user)).resolves.toEqual([{ content: 'xxx' }])
-    await expect(getTianApiNetworkHot(user)).resolves.toEqual([{ content: 'xxx' }])
+    await expect(getTianApiNetworkHot(user)).resolves.toEqual('')
   })
   test('model2Data', () => {
     expect(model2Data()).toEqual(null)
@@ -1437,16 +1413,6 @@ describe('services', () => {
       {{poetry_title.DATA}} {{poetry_content.DATA}}
     `,
     })
-    expect(model2Data('0001', {
-      date: {
-        value: '2022-10-11',
-      },
-    })).toEqual({ desc: '\\n**2022-10-11**\\n下个休息日：\\n---\\n城市：\\n天气：\\n气温(最高/最低): / \\n风向: \\n风级: \\n\\n---\\n今天是我们相识的第天\\n\\n---\\n\\n\\n\\n\\n', title: '亲爱的, 早上好' })
-    expect(model2Data('0001', {
-      date: {
-        value: 0,
-      },
-    })).toEqual({ desc: '\\n**0**\\n下个休息日：\\n---\\n城市：\\n天气：\\n气温(最高/最低): / \\n风向: \\n风级: \\n\\n---\\n今天是我们相识的第天\\n\\n---\\n\\n\\n\\n\\n', title: '亲爱的, 早上好' })
     expect(model2Data('0001', {
       date: {
         value: 0,

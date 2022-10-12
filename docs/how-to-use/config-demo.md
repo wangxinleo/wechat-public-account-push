@@ -6,7 +6,7 @@
 /* eslint-disable */
 const USER_CONFIG = {
   /**
-   * 公众号配置
+   * 基本配置
    */
   
   // 使用的推送通道：['push-deer', 'wechat-test', 'server-chan']
@@ -26,51 +26,81 @@ const USER_CONFIG = {
   // 如果你非要填这里也行。脚本也能运行
   APP_SECRET: '',
 
-  // 是否给文字设置多彩颜色, 和emoji不兼容
-  // 如果您使用了微信测试号的模板中含有emoji表情，请填 false
-  IS_SHOW_COLOR: true,
-
   // 功能开关,打开：true，关闭：false
   SWITCH: {
     /** 每日天气 */
+    // 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
     weather: true,
 
     /** 节假日 */
-    // 下一休息日综合提醒
+    // 下一休息日综合提醒, 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
     holidaytts: true,
 
     /** 每日N句 */
-    // 金山每日一句
+    // 金山每日一句, 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
     CIBA: true,
-    // 每日一言
-    oneTalk: false,
-    // 土味情话(彩虹屁)
-    earthyLoveWords: false,
-    // 朋友圈文案
-    momentCopyrighting: false,
-    // 毒鸡汤
-    poisonChickenSoup: false,
-    // 古诗古文
-    poetry: false,
+    
+    // 每日一言, 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
+    oneTalk: true,
+    
+    // 土味情话(彩虹屁), 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
+    earthyLoveWords: true,
+    
+    // 朋友圈文案, 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
+    momentCopyrighting: true,
+    
+    // 毒鸡汤, 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
+    poisonChickenSoup: true,
+    
+    // 古诗古文, 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
+    poetry: true,
 
     /** 星座运势 */
-    horoscope: false,
-
+    // 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
+    horoscope: true,
+  
     /** 生日消息和节日消息 */
+    // 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
     birthdayMessage: true,
-
-    // 学生课表
-    courseSchedule: false,
+  
+    /** 学生课表 */
+    // 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
+    courseSchedule: true,
   },
-
-  // 天行API KEY
-  TIAN_API_KEY: '',
+  
+  TIAN_API: {
+    // 天行API KEY，如果使用天行API则需要填写此项
+    key: '',
+    
+    /** 天行API相关，需要config中配置 TIAN_API_KEY  */
+    // 早安心语, 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
+    morningGreeting: true,
+  
+    // 晚安心语, 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
+    eveningGreeting: true,
+  
+    // 晚安心语, 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
+    eveningGreeting: true,
+  
+    // 天行天气（展示未来N天，最多7天）, 填 0 则不使用，按需关闭不使用的功能可以提高运行速度
+    weather: 3,
+  
+    // 全网热搜榜（展示N条，最多30条）, 填 0 则不使用，按需关闭不使用的功能可以提高运行速度
+    networkHot: 3,
+  
+    // 全网热搜榜展示类型，默认展示概要信息: ['title': 仅展示标题, 'default': 展示概要信息]
+    networkHotType: 'default',
+  },
+  
+  /** 是否给文字设置多彩颜色, 和emoji不兼容 */
+  // 如果您使用了微信测试号的模板中含有emoji表情，请填 false
+  IS_SHOW_COLOR: true,
   
   /** 每日一言 */
-
   // 每日一言的内容类型
   // 可以填写【动画，漫画，游戏，小说，原创，网络，其他】； 随机则填写 ""
   LITERARY_PREFERENCE: '',
+  
 
   /**
    * 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔
@@ -186,21 +216,6 @@ const USER_CONFIG = {
           ]
         }
       },
-      // 天行API
-      tianApi: {
-
-        // 早安心语
-        morningGreeting: true,
-
-        // 早安心语
-        eveningGreeting: true,
-
-        // 天气预报（未来3天）
-        weather: 3,
-
-        // 全网热搜榜（展示3条）
-        networkHot: 3
-      }
     },
     {
       name: '老婆1',
@@ -347,6 +362,9 @@ const USER_CONFIG = {
     // 你可以不断按格式往下增加
     // ...
   ],
+  
+  // 默认的课表配置
+  COURSE_SCHEDULE: null,
 
   /** 插槽 */
 
@@ -370,8 +388,6 @@ const USER_CONFIG = {
     // 你可以不断按格式往下增加
     // ...
   ],
-  // 默认的课表配置
-  COURSE_SCHEDULE: null
 }
 
 module.exports = USER_CONFIG

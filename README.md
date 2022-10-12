@@ -43,6 +43,7 @@ wechat-public-account-push
 - **网页自动生成配置插件**
 - **支持gitee go / github actions 不需要拥有服务器，白嫖actions执行，每天定时发送**
 - **支持本地化部署每天定时发送**
+- **支持多推送渠道**
 
 ---
 [目录]
@@ -269,21 +270,63 @@ wechat-public-account-push 实现自消息推送的原理，是通过调用一�
 | birthday_message.DATA | 生日消息和节日消息                 | 距离 宝贝 的生日还有122天，距离 中秋节还有30天                                   |
 | course_schedule.DATA  | 每日的课表                     | 08:00-09:35 高等数学<br/> 09:35-10:35 大学语文 <br/> 10:35-11:35 大学英语 |
 
-**天行API**
+**天行简单API**
 
-以下配置需要在[天行数据](https://www.tianapi.com)上申请对应的接口，并将APIKEY放置在配置文件的`TIAN_API_KEY`字段中
+以下配置需要在[天行数据](https://www.tianapi.com)上申请对应的接口，并将APIKEY放置在配置文件的`TIAN_API.key`字段中
 
-| 参数                                         | 详细                                                                                                                                     | 示例                                                                                                                                                         |
-|--------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| tian_api_morning_greeting.DATA             | [点击此处申请接口](https://www.tianapi.com/apiview/143)                                                                                        | 你可能在一个人面前一文不值，却在另一个人面前是无价之宝。谨记自己的价值所在，这就是人挪活的道理所在。早安！                                                                                                      |
-| tian_api_evening_greeting.DATA             | [点击此处申请接口](https://www.tianapi.com/apiview/142)                                                                                        | 所谓的成熟，就是你越长大越能学会一个人适应一切。晚安！                                                                                                                                |
-| tian_api_weather_{field}_{offset}.DATA     | [点击此处申请接口](https://www.tianapi.com/apiview/72)（**该接口每次调用独立按次计费，具体计费规则请查阅接口文档**) <br/>{field}替换为申请接口页面中`返回参数`的名称<br/>{offset}替换为距离今天的天数 | 例：<br/>今天的最高气温请填写<br/> tian_api_weather_highest_0.DATA -> 26℃<br/>明天的最低气温请填写<br/> tian_api_weather_lowest_1.DATA -> 17℃ <br/>(请确保在配置文件中设置了正确的天数）           |
-| tian_api_network_hot_{field}_{offset}.DATA | [点击此处申请接口](https://www.tianapi.com/apiview/223) <br/>{field}替换为申请接口页面中`返回参数`的名称<br/>{offset}替换为条目的序号（从0开始）                             | 例：<br/>第一条的标题请填写<br/> tian_api_network_hot_title_0.DATA -> 掌舵远航 <br/>第二条的热度请填写<br/> tian_api_network_hot_hotnum_1.DATA -> 12017742<br/>(请确保在配置文件中设置了正确的条数） |
+| 参数                             | 详细                                              | 示例                                                                                                                                                  |
+|--------------------------------|-------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| tian_api_morning_greeting.DATA | [点击此处申请接口](https://www.tianapi.com/apiview/143) | 你可能在一个人面前一文不值，却在另一个人面前是无价之宝。谨记自己的价值所在，这就是人挪活的道理所在。早安！                                                                                               |
+| tian_api_evening_greeting.DATA | [点击此处申请接口](https://www.tianapi.com/apiview/142) | 所谓的成熟，就是你越长大越能学会一个人适应一切。晚安！                                                                                                                         |
+| tian_api_network_hot.DATA      | [点击此处申请接口](https://www.tianapi.com/apiview/223) | 1、中国共产党第二十次全国代表大会新闻发言人定于2022年10月15日（星期六）下午在人民大会堂举行新闻发布会。<br/> 2、为了能安然过冬，越来越多的欧洲人向中国制造寻求“解决方案”。在浙江义乌国际商贸城，一外贸公司的采购员表示，现在店里上新速度赶不上欧洲客人问货的节奏。 <br> ... |
+
+**天行天气API**
+
+以下配置需要在[天行数据](https://www.tianapi.com)上申请对应的接口，并将APIKEY放置在配置文件的`TIAN_API.key`字段中
+
+**该接口每次调用独立按次计费，具体计费规则请查阅接口文档**
+
+`{offset}`替换为距离今天的天数
+
+> 用法示例：
+> 
+> 今天的 天气信息请填写
+> 
+> **tian_api_weather_weather_0.DATA** -> 晴转多云
+> 
+> 明天的 天气信息请填写
+> 
+> **tian_api_weather_weather_1.DATA** -> 多云转晴
+> 
+> (请确保在配置文件中设置了正确的天数）
+
+| 参数                                       | 详细         | 示例                                                        |
+|------------------------------------------|------------|-----------------------------------------------------------|
+| tian_api_weather_date_{offset}.DATA      | 日期         | 2020-03-23                                                |
+| tian_api_weather_week_{offset}.DATA      | 	星期        | 	星期一                                                      |
+| tian_api_weather_weather_{offset}.DATA   | 早晚天气变化     | 晴转多云                                                      |
+| tian_api_weather_real_{offset}.DATA      | 	实时天气      | 18℃                                                       |
+| tian_api_weather_lowest_{offset}.DATA    | 	最低温       | 	6℃                                                       |
+| tian_api_weather_highest_{offset}.DATA   | 最高温        | 	22℃                                                      |
+| tian_api_weather_wind_{offset}.DATA      | 	风向        | 东南风                                                       |
+| tian_api_weather_winddeg_{offset}.DATA   | 	风向360°角度  | 121                                                       |
+| tian_api_weather_windspeed_{offset}.DATA | 	风速，km/h   | 	7                                                        |
+| tian_api_weather_windsc_{offset}.DATA    | 	风力        | 1-2级                                                      |
+| tian_api_weather_sunrise_{offset}.DATA   | 	日出时间      | 	06:10                                                    |
+| tian_api_weather_sunset_{offset}.DATA    | 日落时间       | 	18:31                                                    |
+| tian_api_weather_moonrise_{offset}.DATA  | 	月升时间      | 06:02                                                     |
+| tian_api_weather_moondown_{offset}.DATA  | 	月落时间      | 17:22                                                     |
+| tian_api_weather_pcpn_{offset}.DATA      | 	降雨量       | 	0.0                                                      |
+| tian_api_weather_pop_{offset}.DATA       | 	降雨概率      | 1                                                         |
+| tian_api_weather_uv_index_{offset}.DATA  | 	紫外线强度指数   | 	9                                                        |
+| tian_api_weather_vis_{offset}.DATA       | 	能见度，单位：公里 | 	9                                                        |
+| tian_api_weather_humidity_{offset}.DATA  | 	相对湿度      | 23                                                        |
+| tian_api_weather_tips_{offset}.DATA      | 	生活指数提示    | 天气暖和，适宜着单层棉麻面料的短套装、T恤衫、薄牛仔衫裤、休闲服、职业套装等春秋过渡装。年老体弱者请适当增减衣服。 |
 
 **推送回执(特有, 仅在其他模板发送完成后才能获取)**
 
-| 参数                       | 详细        | 示例                  |
-|--------------------------|-----------|---------------------|
+| 参数                    | 详细        | 示例                  |
+|-----------------------|-----------|---------------------|
 | post_time_zone.DATA   | 服务器时区     | Asia/Shanghai       |
 | post_time.DATA        | 服务器执行脚本时间 | 2022-08-31 19:41:57 |
 | need_post_num.DATA    | 共需推送N人    | 4                   |
