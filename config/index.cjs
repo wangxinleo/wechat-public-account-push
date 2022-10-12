@@ -8,10 +8,10 @@
 const USER_CONFIG = {
 
   // 使用微信测试号：公众号APP_ID
-  APP_ID: 'wxe6a9ad7383d643ff',
+  APP_ID: '',
 
   // 使用微信测试号：公众号APP_SECRET
-  APP_SECRET: '3f23e2909849810ead9434072562f42f',
+  APP_SECRET: '',
 
   PROVINCE: '广东',
   CITY: '深圳',
@@ -21,9 +21,9 @@ const USER_CONFIG = {
       // 想要发送的人的名字
       name: '哈哈',
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: 'o3Mys6Qy-5JZoVIme_If1fomgU48',
+      id: '',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: 'tCfsZGDdx-KD1zZZubINZliXPcBkxUWJliflSRvTrRI',
+      useTemplateId: '',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
       horoscopeDate: '03-26',
       festivals: [
@@ -55,9 +55,9 @@ const USER_CONFIG = {
 
   CALLBACK_USERS: [
     {
-      name: 'ㅤ',
+      name: '',
       // 使用微信测试号：自己的微信id，扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: 'o3Mys6cGr9EcABbeT-3CfvtX08hk',
+      id: '',
     }
   ],
 
