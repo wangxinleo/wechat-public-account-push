@@ -13,9 +13,17 @@ const USER_CONFIG = {
   // 使用微信测试号：公众号APP_SECRET
   APP_SECRET: 'deacbf0e1d3abe24e9c2f74157ddffe1',
 
-  PROVINCE: '河南',
+  PROVINCE: '',
   CITY: '登封市',
-
+  SWITCH:{
+    weather:true,
+    holidaytts:true,
+    CIBA:true,
+    birthdayMessage:true,
+  },
+  TIAN_API:{
+  
+  },
   USERS: [
     {
       // 想要发送的人的名字
