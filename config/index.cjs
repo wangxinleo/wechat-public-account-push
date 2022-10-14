@@ -92,7 +92,7 @@ const USER_CONFIG = {
       ],
       SLOT_LIST: [
     // 这样配置的话，就会每次发送这句话
-    { keyword: 'encourage_oneself', contents: '你主要的问题在于读书太少而想得太多' },
+//     { keyword: 'encourage_oneself', contents: '你主要的问题在于读书太少而想得太多' },
     // 这样配置的话，就会每次随机选一句话发送
     {
       keyword: 'lover_prattle',
@@ -105,6 +105,7 @@ const USER_CONFIG = {
     },
   ],
     }
+    ],
 
   // 【推送完成提醒】模板id, 用来看自己有没有发送成功的那个模板
   CALLBACK_TEMPLATE_ID: 'MitolUxx2qvxaQRYgFbi0ABMaoKzp_vUVMxdVv7T46U',
