@@ -79,9 +79,6 @@ const USER_CONFIG = {
     // 晚安心语, 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
     eveningGreeting: true,
   
-    // 晚安心语, 填 false 则不使用，按需关闭不使用的功能可以提高运行速度
-    eveningGreeting: true,
-  
     // 天行天气（展示未来N天，最多7天）, 填 0 则不使用，按需关闭不使用的功能可以提高运行速度
     weather: 3,
   
