@@ -531,7 +531,7 @@ describe('services', () => {
       name: '结婚纪念日',
       year: '2020',
       date: '09-03',
-    }])).toEqual('今天是 结婚纪念日 哦，要开心！ \n\n')
+    }])).toEqual('今天是 结婚纪念日 哦，要开心！ \n')
     config.FESTIVALS = [
       {
         type: '*生日', name: '老婆', year: '1999', date: '09-19', isShowAge: true,
@@ -547,7 +547,7 @@ describe('services', () => {
       },
     ]
     config.FESTIVALS_LIMIT = 4
-    expect(getBirthdayMessage()).toEqual('今天是 结婚纪念日 哦，要开心！ \n\n距离 李四 的26岁生日还有28天 \n\n距离 老婆 的23岁生日还有41天 \n\n距离 被搭讪纪念日 还有363天 \n\n'.trimStart())
+    expect(getBirthdayMessage()).toEqual('今天是 结婚纪念日 哦，要开心！ \n距离 李四 的26岁生日还有28天 \n距离 老婆 的23岁生日还有41天 \n距离 被搭讪纪念日 还有363天 \n'.trimStart())
     MockDate.reset()
     MockDate.set('2022-09-31')
     config.FESTIVALS = [
@@ -564,7 +564,7 @@ describe('services', () => {
         type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01',
       },
     ]
-    expect(getBirthdayMessage()).toEqual('今天是 李四 的26岁生日哦，祝李四生日快乐！ \n\n距离 老婆 的23岁生日还有13天 \n\n距离 被搭讪纪念日 还有335天 \n\n距离 结婚纪念日 还有337天 \n\n'.trimStart())
+    expect(getBirthdayMessage()).toEqual('今天是 李四 的26岁生日哦，祝李四生日快乐！ \n距离 老婆 的23岁生日还有13天 \n距离 被搭讪纪念日 还有335天 \n距离 结婚纪念日 还有337天 \n'.trimStart())
     MockDate.reset()
     MockDate.set('1999-10-27')
     config.FESTIVALS = [
@@ -581,7 +581,7 @@ describe('services', () => {
         type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01',
       },
     ]
-    expect(getBirthdayMessage()).toEqual('今天是 老婆 的0岁生日哦，祝老婆生日快乐！ \n\n距离 被搭讪纪念日 还有310天 \n\n距离 结婚纪念日 还有312天 \n\n距离 李四 的4岁生日还有340天 \n\n'.trimStart())
+    expect(getBirthdayMessage()).toEqual('今天是 老婆 的0岁生日哦，祝老婆生日快乐！ \n距离 被搭讪纪念日 还有310天 \n距离 结婚纪念日 还有312天 \n距离 李四 的4岁生日还有340天 \n'.trimStart())
     MockDate.reset()
     config.FESTIVALS_LIMIT = -1
     MockDate.set('2022-09-03')
@@ -620,7 +620,7 @@ describe('services', () => {
         type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01',
       },
     ]
-    expect(getBirthdayMessage()).toEqual('距离 被搭讪纪念日 还有309天 \n\n距离 结婚纪念日 还有311天 \n\n距离 李四 的4岁生日还有339天 \n\n距离 老婆 的生日还有354天 \n\n'.trimStart())
+    expect(getBirthdayMessage()).toEqual('距离 被搭讪纪念日 还有309天 \n距离 结婚纪念日 还有311天 \n距离 李四 的4岁生日还有339天 \n距离 老婆 的生日还有354天 \n'.trimStart())
     MockDate.set('1999-10-27')
     config.FESTIVALS = [
       {
@@ -636,7 +636,7 @@ describe('services', () => {
         type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01',
       },
     ]
-    expect(getBirthdayMessage()).toEqual('今天是 老婆 的生日哦，祝老婆生日快乐！ \n\n距离 李四 的0岁生日还有100天 \n\n距离 被搭讪纪念日 还有310天 \n\n距离 结婚纪念日 还有312天 \n\n'.trimStart())
+    expect(getBirthdayMessage()).toEqual('今天是 老婆 的生日哦，祝老婆生日快乐！ \n距离 李四 的0岁生日还有100天 \n距离 被搭讪纪念日 还有310天 \n距离 结婚纪念日 还有312天 \n'.trimStart())
     config.SWITCH = {
       birthdayMessage: false,
     }
@@ -1190,7 +1190,7 @@ describe('services', () => {
         '09:50-11:35 高等物理',
       ],
       [],
-    ])).toEqual('08-00:09:35 高等数学\n\n09:50-11:35 高等物理')
+    ])).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
     expect(getCourseSchedule([
       [],
       [],
@@ -1217,7 +1217,7 @@ describe('services', () => {
         ],
         even: [],
       },
-    })).toEqual('08-00:09:35 高等数学\n\n09:50-11:35 高等物理')
+    })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
     expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-23',
@@ -1238,7 +1238,7 @@ describe('services', () => {
         ],
         odd: [],
       },
-    })).toEqual('08-00:09:35 高等数学\n\n09:50-11:35 高等物理')
+    })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
     expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-26',
@@ -1259,7 +1259,7 @@ describe('services', () => {
         ],
         odd: [],
       },
-    })).toEqual('08-00:09:35 高等数学\n\n09:50-11:35 高等物理')
+    })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
     expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-18',
@@ -1280,7 +1280,7 @@ describe('services', () => {
         ],
         odd: [],
       },
-    })).toEqual('08-00:09:35 高等数学\n\n09:50-11:35 高等物理')
+    })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
     expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-18',
