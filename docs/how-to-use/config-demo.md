@@ -9,11 +9,12 @@ const USER_CONFIG = {
    * 基本配置
    */
   
-  // 使用的推送通道：['push-deer', 'wechat-test', 'server-chan']
+  // 使用的推送通道：['push-deer', 'wechat-test', 'server-chan', 'push-plus']
   // 默认使用 【微信测试号】
   // 使用【pushDeer】请填写 push-deer
   // 使用【微信测试号】请填写 wechat-test
   // 使用【方糖服务号】请填写 server-chan
+  // 使用【pushplus推送加服务号】请填写 push-plus
   USE_PASSAGE: 'wechat-test',
   
   // 使用微信测试号时才需要填写：公众号APP_ID
@@ -25,6 +26,13 @@ const USER_CONFIG = {
   // 建议不要填这里，请使用文档中github secret的方法进行保密配置，保护您的隐私安全。
   // 如果你非要填这里也行。脚本也能运行
   APP_SECRET: '',
+  
+  // 为了避免推送服务器误将脚本列为恶意推送脚本，可设置每分钟脚本最大推送数
+  // 每分钟脚本最大推送数，超过此数将会休眠1分钟后再发送剩余消息，不填则默认为5
+  // 此项不建议随意修改
+  MAX_PUSH_ONE_MINUTE: 5,
+  // 配合MAX_PUSH_ONE_MINUTE使用，休眠<SLEEP_TIME>毫秒后再发送剩余消息，不填则默认为65000
+  SLEEP_TIME: 65000,
 
   // 功能开关,打开：true，关闭：false
   SWITCH: {

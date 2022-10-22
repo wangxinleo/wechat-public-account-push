@@ -122,18 +122,24 @@ export const getWeatherCityInfo = (province, city) => {
           return it.pid === prov.id && it.city_name === `${cName}${name}`
         }
         return it.city_name === `${cName}${name}`
-      
       })
       if (c) {
         return c
       }
     }
   }
-  
+
   // city 找不到，那就返回prov的
   if (prov && prov.city_code) {
     return prov
   }
-  
+
   return null
 }
+
+/**
+ * 带promise的sleep
+ * @param time
+ * @returns {Promise<unknown>}
+ */
+export const sleep = (time) => new Promise((resolve) => { setTimeout(resolve, time) })
