@@ -894,6 +894,50 @@ const sendMessageByPushDeer = async (user, templateId, wxTemplateData) => {
 }
 
 /**
+ * 使用pushplus
+ * @param user
+ * @param templateId
+ * @param wxTemplateData
+ * @returns {Promise<{success: boolean, name}>}
+ */
+const sendMessageByPushPlus = async (user, templateId, wxTemplateData) => {
+  // 模板拼装
+  const modelData = model2Data(templateId, wxTemplateData, false, false)
+  if (!modelData) {
+    return {
+      name: user.name,
+      success: false,
+    }
+  }
+
+  const url = 'http://www.pushplus.plus/send'
+  // 发送消息
+  const res = await axios.post(url, {
+    token: user.id,
+    title: modelData.title,
+    content: modelData.desc,
+    template: 'markdown',
+  }, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).catch((err) => err)
+
+  if (res.data && res.data.code === 200) {
+    console.log(`${user.name}: 推送消息成功`)
+    return {
+      name: user.name,
+      success: true,
+    }
+  }
+  console.error(`${user.name}: 推送消息失败`, res)
+  return {
+    name: user.name,
+    success: false,
+  }
+}
+
+/**
  * 使用server-chan
  * @param user
  * @param templateId
@@ -1019,6 +1063,9 @@ export const sendMessage = async (templateId, user, params, usePassage) => {
   } if (usePassage === 'server-chan') {
     console.log('使用server-chan推送')
     return sendMessageByServerChan(user, templateId, wxTemplateData)
+  } if (usePassage === 'push-plus') {
+    console.log('使用push-plus推送')
+    return sendMessageByPushPlus(user, templateId, wxTemplateData)
   }
 
   console.log('使用微信测试号推送')
