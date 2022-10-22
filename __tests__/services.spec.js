@@ -357,6 +357,9 @@ describe('services', () => {
         },
       },
     })
+    Object.keys(RUN_TIME_STORAGE).forEach((o) => {
+      RUN_TIME_STORAGE[o] = null
+    })
     expect(await getWeather('天津', '天津')).toEqual({})
     axios.get = async () => ({
       status: 199,
@@ -528,7 +531,7 @@ describe('services', () => {
       name: '结婚纪念日',
       year: '2020',
       date: '09-03',
-    }])).toEqual('今天是 结婚纪念日 哦，要开心！ \n')
+    }])).toEqual('今天是 结婚纪念日 哦，要开心！ \n\n')
     config.FESTIVALS = [
       {
         type: '*生日', name: '老婆', year: '1999', date: '09-19', isShowAge: true,
@@ -544,12 +547,7 @@ describe('services', () => {
       },
     ]
     config.FESTIVALS_LIMIT = 4
-    expect(getBirthdayMessage()).toEqual(`
-今天是 结婚纪念日 哦，要开心！ 
-距离 李四 的26岁生日还有28天 
-距离 老婆 的23岁生日还有41天 
-距离 被搭讪纪念日 还有363天 
-`.trimStart())
+    expect(getBirthdayMessage()).toEqual('今天是 结婚纪念日 哦，要开心！ \n\n距离 李四 的26岁生日还有28天 \n\n距离 老婆 的23岁生日还有41天 \n\n距离 被搭讪纪念日 还有363天 \n\n'.trimStart())
     MockDate.reset()
     MockDate.set('2022-09-31')
     config.FESTIVALS = [
@@ -566,12 +564,7 @@ describe('services', () => {
         type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01',
       },
     ]
-    expect(getBirthdayMessage()).toEqual(`
-今天是 李四 的26岁生日哦，祝李四生日快乐！ 
-距离 老婆 的23岁生日还有13天 
-距离 被搭讪纪念日 还有335天 
-距离 结婚纪念日 还有337天 
-`.trimStart())
+    expect(getBirthdayMessage()).toEqual('今天是 李四 的26岁生日哦，祝李四生日快乐！ \n\n距离 老婆 的23岁生日还有13天 \n\n距离 被搭讪纪念日 还有335天 \n\n距离 结婚纪念日 还有337天 \n\n'.trimStart())
     MockDate.reset()
     MockDate.set('1999-10-27')
     config.FESTIVALS = [
@@ -588,12 +581,7 @@ describe('services', () => {
         type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01',
       },
     ]
-    expect(getBirthdayMessage()).toEqual(`
-今天是 老婆 的0岁生日哦，祝老婆生日快乐！ 
-距离 被搭讪纪念日 还有310天 
-距离 结婚纪念日 还有312天 
-距离 李四 的4岁生日还有340天 
-`.trimStart())
+    expect(getBirthdayMessage()).toEqual('今天是 老婆 的0岁生日哦，祝老婆生日快乐！ \n\n距离 被搭讪纪念日 还有310天 \n\n距离 结婚纪念日 还有312天 \n\n距离 李四 的4岁生日还有340天 \n\n'.trimStart())
     MockDate.reset()
     config.FESTIVALS_LIMIT = -1
     MockDate.set('2022-09-03')
@@ -632,12 +620,7 @@ describe('services', () => {
         type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01',
       },
     ]
-    expect(getBirthdayMessage()).toEqual(`
-距离 被搭讪纪念日 还有309天 
-距离 结婚纪念日 还有311天 
-距离 李四 的4岁生日还有339天 
-距离 老婆 的生日还有354天 
-`.trimStart())
+    expect(getBirthdayMessage()).toEqual('距离 被搭讪纪念日 还有309天 \n\n距离 结婚纪念日 还有311天 \n\n距离 李四 的4岁生日还有339天 \n\n距离 老婆 的生日还有354天 \n\n'.trimStart())
     MockDate.set('1999-10-27')
     config.FESTIVALS = [
       {
@@ -653,12 +636,7 @@ describe('services', () => {
         type: '节日', name: '被搭讪纪念日', year: '2021', date: '09-01',
       },
     ]
-    expect(getBirthdayMessage()).toEqual(`
-今天是 老婆 的生日哦，祝老婆生日快乐！ 
-距离 李四 的0岁生日还有100天 
-距离 被搭讪纪念日 还有310天 
-距离 结婚纪念日 还有312天 
-`.trimStart())
+    expect(getBirthdayMessage()).toEqual('今天是 老婆 的生日哦，祝老婆生日快乐！ \n\n距离 李四 的0岁生日还有100天 \n\n距离 被搭讪纪念日 还有310天 \n\n距离 结婚纪念日 还有312天 \n\n'.trimStart())
     config.SWITCH = {
       birthdayMessage: false,
     }
@@ -823,6 +801,7 @@ describe('services', () => {
     axios.post = async () => {
       throw new Error()
     }
+    RUN_TIME_STORAGE.pushNum = 0
     expect(await sendMessageReply([
       { id: '123', name: 'me' },
       { id: '456', name: 'you' },
@@ -833,6 +812,7 @@ describe('services', () => {
       successPostIds: '无',
       successPostNum: 0,
     })
+    RUN_TIME_STORAGE.pushNum = 0
     expect(await sendMessageReply([
       { id: '123', name: 'me' },
       { id: '456', name: 'you' },
@@ -854,6 +834,7 @@ describe('services', () => {
     axios.post = async () => {
       throw new Error()
     }
+    RUN_TIME_STORAGE.pushNum = 0
     expect(await sendMessageReply([
       { id: '123', name: 'me' },
       { id: '456', name: 'you' },
@@ -869,6 +850,7 @@ describe('services', () => {
         errcode: 0,
       },
     })
+    RUN_TIME_STORAGE.pushNum = 0
     expect(await sendMessageReply([
       { id: '123', name: 'me' },
       { id: '456', name: 'you' },
@@ -888,6 +870,7 @@ describe('services', () => {
       successPostNum: 0,
     })
     RUN_TIME_STORAGE.accessToken = 'secret'
+    RUN_TIME_STORAGE.pushNum = 0
     expect(await sendMessageReply([
       { id: '123', name: 'me' },
       { id: '456', name: 'you' },
@@ -909,6 +892,7 @@ describe('services', () => {
     axios.post = async () => {
       throw new Error()
     }
+    RUN_TIME_STORAGE.pushNum = 0
     expect(await sendMessageReply([
       { id: '123', name: 'me' },
       { id: '456', name: 'you' },
@@ -932,6 +916,7 @@ describe('services', () => {
         errcode: 40036,
       },
     })
+    RUN_TIME_STORAGE.pushNum = 0
     expect(await sendMessageReply([
       { id: '123', name: 'me' },
       { id: '456', name: 'you' },
@@ -955,6 +940,7 @@ describe('services', () => {
         errcode: 40003,
       },
     })
+    RUN_TIME_STORAGE.pushNum = 0
     expect(await sendMessageReply([
       { id: '123', name: 'me' },
       { id: '456', name: 'you' },
@@ -1204,7 +1190,7 @@ describe('services', () => {
         '09:50-11:35 高等物理',
       ],
       [],
-    ])).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
+    ])).toEqual('08-00:09:35 高等数学\n\n09:50-11:35 高等物理')
     expect(getCourseSchedule([
       [],
       [],
@@ -1231,7 +1217,7 @@ describe('services', () => {
         ],
         even: [],
       },
-    })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
+    })).toEqual('08-00:09:35 高等数学\n\n09:50-11:35 高等物理')
     expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-23',
@@ -1252,7 +1238,7 @@ describe('services', () => {
         ],
         odd: [],
       },
-    })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
+    })).toEqual('08-00:09:35 高等数学\n\n09:50-11:35 高等物理')
     expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-26',
@@ -1273,7 +1259,7 @@ describe('services', () => {
         ],
         odd: [],
       },
-    })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
+    })).toEqual('08-00:09:35 高等数学\n\n09:50-11:35 高等物理')
     expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-18',
@@ -1294,7 +1280,7 @@ describe('services', () => {
         ],
         odd: [],
       },
-    })).toEqual('08-00:09:35 高等数学\n09:50-11:35 高等物理')
+    })).toEqual('08-00:09:35 高等数学\n\n09:50-11:35 高等物理')
     expect(getCourseSchedule({
       benchmark: {
         date: '2022-09-18',
@@ -1361,6 +1347,9 @@ describe('services', () => {
       },
     })
     await expect(buildTianApi('tianqi')).resolves.toEqual([])
+    Object.keys(RUN_TIME_STORAGE).forEach((o) => {
+      RUN_TIME_STORAGE[o] = null
+    })
     axios.get = async () => ({
       data: {
         code: 200,

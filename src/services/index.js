@@ -1,7 +1,7 @@
 import axios from 'axios'
 import dayjs from 'dayjs'
 import { JSDOM } from 'jsdom'
-
+import cloneDeep from 'lodash/cloneDeep.js'
 import config from '../../config/exp-config.js'
 import TEMPLATE_CONFIG from '../../config/template-config.cjs'
 import { DEFAULT_OUTPUT, TYPE_LIST, RUN_TIME_STORAGE } from '../store/index.js'
@@ -12,6 +12,7 @@ import {
   getColor,
   toLowerLine,
   getWeatherCityInfo,
+  sleep,
 } from '../utils/index.js'
 import { selfDayjs, timeZone } from '../utils/set-def-dayjs.js'
 
@@ -103,6 +104,12 @@ export const getWeather = async (province, city) => {
     return {}
   }
 
+  // 读取缓存
+  if (RUN_TIME_STORAGE[`${province}_${city}`]) {
+    console.log(`获取了相同的数据，读取缓存 >>> ${province}_${city}`)
+    return RUN_TIME_STORAGE[`${province}_${city}`]
+  }
+
   const cityInfo = getWeatherCityInfo(province, city)
   if (!cityInfo) {
     console.error('配置文件中找不到相应的省份或城市')
@@ -123,7 +130,8 @@ export const getWeather = async (province, city) => {
       console.error('天气情况: 找不到天气信息, 获取失败')
       return {}
     }
-    return {
+
+    const result = {
       // 湿度
       shidu: commonInfo.shidu,
       // PM2.5
@@ -153,6 +161,10 @@ export const getWeather = async (province, city) => {
       // 温馨提示
       notice: info.notice,
     }
+
+    RUN_TIME_STORAGE[`${province}_${city}`] = cloneDeep(result)
+
+    return result
   }
   console.error('天气情况获取失败', res)
   return {}
@@ -366,6 +378,13 @@ export const getConstellationFortune = async (date, dateType) => {
 
   // 获取星座id
   const { en: constellation } = getConstellation(date)
+
+  // 读取缓存
+  if (RUN_TIME_STORAGE[`${constellation}_${dateTypeIndex}`]) {
+    console.log(`获取了相同的数据，读取缓存 >>> ${constellation}_${dateTypeIndex}`)
+    return RUN_TIME_STORAGE[`${constellation}_${dateTypeIndex}`]
+  }
+
   const url = `https://www.xzw.com/fortune/${constellation}/${dateTypeIndex}.html`
   try {
     const { data } = await axios.get(url).catch((err) => err)
@@ -394,6 +413,8 @@ export const getConstellationFortune = async (date, dateType) => {
         })
       })
     }
+
+    RUN_TIME_STORAGE[`${constellation}_${dateTypeIndex}`] = cloneDeep(res)
 
     return res
   } catch (e) {
@@ -594,13 +615,23 @@ export const buildTianApi = async (apiType, params = null) => {
     console.error('配置中config.TIAN_API.key 未填写，无法请求TIAN_API')
     return []
   }
+
+  if (RUN_TIME_STORAGE[`${apiType}_${count}`]) {
+    console.log(`获取了相同的数据，读取缓存 >>> ${apiType}_${count}`)
+    return RUN_TIME_STORAGE[`${apiType}_${count}`]
+  }
+
   const url = `http://api.tianapi.com/${apiType}/index`
   const res = await axios.get(url, {
     params: { key: config.TIAN_API.key, ...params },
   }).catch((err) => err)
 
   if (res && res.data && res.data.code === 200) {
-    return (res.data.newslist || []).slice(0, count)
+    const result = (res.data.newslist || []).slice(0, count)
+
+    RUN_TIME_STORAGE[`${apiType}_${count}`] = cloneDeep(result)
+
+    return result
   }
 
   console.error(`获取天行API接口 ${apiType} 发生错误: `, res.data || res)
@@ -684,7 +715,9 @@ export const getAggregatedData = async () => {
   const users = config.USERS
   for (const user of users) {
     // 获取每日天气
-    const weatherInfo = await getWeather(user.province || config.PROVINCE, user.city || config.CITY)
+    const useProvince = user.province || config.PROVINCE
+    const useCity = user.city || config.CITY
+    const weatherInfo = await getWeather(useProvince, useCity)
     const weatherMessage = Object.keys(weatherInfo).map((item) => ({
       name: toLowerLine(item),
       value: weatherInfo[item] || '获取失败',
@@ -986,6 +1019,7 @@ const sendMessageByWeChatTest = async (user, templateId, wxTemplateData) => {
   let accessToken = null
 
   if (RUN_TIME_STORAGE.accessToken) {
+    console.log('获取了相同的数据，读取缓存 >>> accessToken')
     accessToken = RUN_TIME_STORAGE.accessToken
   } else {
     accessToken = await getAccessToken()
@@ -1081,21 +1115,33 @@ export const sendMessage = async (templateId, user, params, usePassage) => {
  * @returns {Promise<{failPostIds: (string|string), failPostNum: number, successPostIds: (string|string), needPostNum: *, successPostNum: number}>}
  */
 export const sendMessageReply = async (users, templateId = null, params = null, usePassage = null) => {
-  const allPromise = []
+  const resList = []
   const needPostNum = users.length
   let successPostNum = 0
   let failPostNum = 0
   const successPostIds = []
   const failPostIds = []
+
+  const maxPushOneMinute = typeof config.MAX_PUSH_ONE_MINUTE === 'number' && config.MAX_PUSH_ONE_MINUTE > 0 ? config.MAX_PUSH_ONE_MINUTE : 5
   for (const user of users) {
-    allPromise.push(sendMessage(
+    if (RUN_TIME_STORAGE.pushNum >= maxPushOneMinute) {
+      RUN_TIME_STORAGE.pushNum = 0
+      // 请求超过N个则等待60秒再发送
+      console.log(`单次脚本已发送 ${maxPushOneMinute} 条消息，为避免推送服务器识别为恶意推送，脚本将休眠 ${config.SLEEP_TIME ? config.SLEEP_TIME / 1000 : 65} 秒。休眠结束后将自动推送剩下的消息。`)
+      await sleep(config.SLEEP_TIME || 65000)
+    }
+    resList.push(await sendMessage(
       templateId || user.useTemplateId,
       user,
       params || user.wxTemplateParams,
       usePassage,
     ))
+    if (RUN_TIME_STORAGE.pushNum) {
+      RUN_TIME_STORAGE.pushNum += 1
+    } else {
+      RUN_TIME_STORAGE.pushNum = 1
+    }
   }
-  const resList = await Promise.all(allPromise)
   resList.forEach((item) => {
     if (item.success) {
       successPostNum++

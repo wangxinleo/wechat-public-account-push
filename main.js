@@ -54,7 +54,9 @@ export default async function mainForProd() {
   }
 
   // 释放运行时临时存储的数据
-  RUN_TIME_STORAGE.accessToken = null
+  Object.keys(RUN_TIME_STORAGE).forEach((o) => {
+    RUN_TIME_STORAGE[o] = null
+  })
 }
 
 const main = () => {
