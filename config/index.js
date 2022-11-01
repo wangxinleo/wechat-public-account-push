@@ -119,15 +119,16 @@ export const USER_CONFIG = {
     },
     {
       name: "老婆3",
-      id: "",
-      useTemplateId: "",
-      province: "",
-      city: "",
-      horoscopeDate: '',
-      horoscopeDateType: '',
-      openUrl: "https://wangxinleo.cn",
-      festivals: [],
-      customizedDateList: []
+      id: "oMqH15vWkQFSnSmrqx0h05-C1Ryk",
+      useTemplateId: "W5kqU3cFhcumpyQG4K9bEhw782EcJpDeTP-pIDucYbM",
+      province: "山东",
+      city: "枣庄",
+      horoscopeDate: '04-14',
+      horoscopeDateType: '今日',
+      openUrl: "https://www.baidu.com/index.php?tn=monline_3_dg",
+      festivals: [{"type": "生日", "name": "自己", "year": "1970", "date": "04-14"},
+        {"type": "节日", "name": "媳妇", "year": "1976", "date": "10-22"},],
+      customizedDateList: [{"keyword": "love_day", date: "2001-03-03"},{"keyword": "marry_day", date: "2001-03-03"},]
     },
     // 你可以不断按格式往下增加
     // ...
