@@ -29,12 +29,12 @@ const USER_CONFIG = {
       festivals: [
         // 注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
         {
-          type: '*生日', name: '大傻逼', year: '1994', date: '06-27',
+          type: '节日', name: '兰溪婚礼', year: '2023', date: '03-25',
         },
         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
         {
-          type: '生日', name: '小傻逼', year: '1997', date: '05-26',
-        },        
+          type: '节日', name: '新昌婚礼', year: '2023', date: '04-15',
+        },
       ],
       // 我们在一起已经有xxxx天了的配置
       customizedDateList: [
