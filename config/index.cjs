@@ -8,7 +8,7 @@
 const USER_CONFIG = {
 
   // 使用微信测试号：公众号APP_ID
-  APP_ID: '',
+  APP_ID: 'wx932fc2963d7c8f76',
 
   // 使用微信测试号：公众号APP_SECRET
   APP_SECRET: '',
