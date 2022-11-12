@@ -21,9 +21,9 @@ const USER_CONFIG = {
       // 想要发送的人的名字
       name: '宝贝老婆',
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: 'oFLTa6e3LJfvG9UyTyfzqTwqdiRA','oFLTa6U5sIp02eTyBMXlJsDfTosw',
+      id: 'oFLTa6e3LJfvG9UyTyfzqTwqdiRA''oFLTa6U5sIp02eTyBMXlJsDfTosw',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: 'S2K0MetdheSeIPMI5vrk2nepjKxS1JgmEFMFGFh7oXQ',
+      useTemplateId: '	kOBnNXrBGtv8XkaKrY-OV8KiO9aa3bLy-GpxZFryG0Q',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
       horoscopeDate: '11-19',
       festivals: [
@@ -36,7 +36,7 @@ const USER_CONFIG = {
           type: '生日', name: '老公', year: '1996', date: '11-15',
         },
         {
-          type: '节日', name: '相识纪念日', year: '2021', date: '8-15',
+          type: '节日', name: '相识纪念日', year: '2021', date: '8-20',
         },
       ],
       // 我们在一起已经有xxxx天了的配置
