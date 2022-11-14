@@ -616,9 +616,9 @@ export const buildTianApi = async (apiType, params = null) => {
     return []
   }
 
-  if (RUN_TIME_STORAGE[`${apiType}_${count}`]) {
-    console.log(`获取了相同的数据，读取缓存 >>> ${apiType}_${count}`)
-    return RUN_TIME_STORAGE[`${apiType}_${count}`]
+  if (RUN_TIME_STORAGE[`${apiType}_${JSON.stringify(params)}_${count}`]) {
+    console.log(`获取了相同的数据，读取缓存 >>> ${apiType}_${JSON.stringify(params)}_${count}`)
+    return RUN_TIME_STORAGE[`${apiType}_${JSON.stringify(params)}_${count}`]
   }
 
   const url = `http://api.tianapi.com/${apiType}/index`
@@ -629,7 +629,7 @@ export const buildTianApi = async (apiType, params = null) => {
   if (res && res.data && res.data.code === 200) {
     const result = (res.data.newslist || []).slice(0, count)
 
-    RUN_TIME_STORAGE[`${apiType}_${count}`] = cloneDeep(result)
+    RUN_TIME_STORAGE[`${apiType}_${JSON.stringify(params)}_${count}`] = cloneDeep(result)
 
     return result
   }
