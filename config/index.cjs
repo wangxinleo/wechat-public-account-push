@@ -32,11 +32,11 @@ const USER_CONFIG = {
       festivals: [
         // 注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
         {
-          type: '*生日', name: '潇桦宝贝', year: '1995', date: '02-15',
+          type: '*生日', name: '潇桦宝贝', year: '1995', date: '02-16',
         },
         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
         {
-          type: '生日', name: '李四', year: '1996', date: '09-31',
+          type: '生日', name: '潇桦宝贝', year: '1995', date: '02-15',
         },
         {
           type: '节日', name: '结婚纪念日', year: '2022', date: '09-21',
