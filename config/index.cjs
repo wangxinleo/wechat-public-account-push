@@ -6,8 +6,10 @@
  * 自行添加属性，以支持更多个性化功能
  */
 const USER_CONFIG = {
-
-  SE_PASSAGE: 'push-deer',
+  
+  // 推送平台
+  USE_PASSAGE: 'push-deer',
+  
   // 使用微信测试号：公众号APP_ID
   APP_ID: 'wxfff8444d1e474ea6',
 
