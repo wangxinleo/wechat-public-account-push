@@ -25,9 +25,9 @@ const USER_CONFIG = {
       name: '潇桦宝贝',
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
       // 力明
-//       id: 'PDU18513TzYo0tlfTketuOqwjmrdFLNH7jdjvkm0L',
+      id: 'PDU18513TzYo0tlfTketuOqwjmrdFLNH7jdjvkm0L',
       // 潇桦
-      id: 'PDU18515TqGp7ud1jUnaKRcx6eg5L4HFZkSS8zVJ2',
+//       id: 'PDU18515TqGp7ud1jUnaKRcx6eg5L4HFZkSS8zVJ2',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
       useTemplateId: '0001',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
