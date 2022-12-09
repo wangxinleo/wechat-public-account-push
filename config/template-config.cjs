@@ -24,7 +24,7 @@ const TEMPLATE_CONFIG = [
       
       ---
       
-      今天是我们相识的第{{love_day.DATA}}天
+      今天是我们恋爱的第{{love_day.DATA}}天
       
       {{birthday_message.DATA}}
       
@@ -32,7 +32,7 @@ const TEMPLATE_CONFIG = [
       
       {{moment_copyrighting.DATA}}
       
-      {{poetry_title.DATA}} {{poetry_content.DATA}}
+//       {{poetry_title.DATA}} {{poetry_content.DATA}}
     `
   },
   {
