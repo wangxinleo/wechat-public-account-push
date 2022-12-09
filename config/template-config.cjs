@@ -25,6 +25,7 @@ const TEMPLATE_CONFIG = [
       ---
       
       今天是我们恋爱的第{{love_day.DATA}}天
+      我们已经成为合法夫妻{{marry_day.DATA}}天了
       
       {{birthday_message.DATA}}
       
