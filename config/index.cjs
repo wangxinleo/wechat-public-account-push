@@ -8,18 +8,18 @@
 const USER_CONFIG = {
 
   // 使用微信测试号：公众号APP_ID
-  APP_ID: 'wx775648c194be5508',
+  APP_ID: 'wx4ca9568bea24ba81',
 
   // 使用微信测试号：公众号APP_SECRET
-  APP_SECRET: '1ccfda75c9e3e36c0a932cbedfd74761',
+  APP_SECRET: 'bbbce8b9607116f97567292571113474',
 
   PROVINCE: '福建',
-  CITY: '福州',
+  CITY: '福清',
 
   USERS: [
     {
       // 想要发送的人的名字
-      name: '林七七',
+      name: '世界上最漂亮的林七七小仙女',
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
       id: 'oZIu45vv-UTdygfiyvvyul3GmWBs',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
@@ -29,7 +29,7 @@ const USER_CONFIG = {
       festivals: [
         // 注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
         {
-          type: '*生日', name: '宝贝', year: '1996', date: '09-09',
+          type: '*生日', name: '宝贝', year: '1997', date: '12-17',
         },
         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
         {
