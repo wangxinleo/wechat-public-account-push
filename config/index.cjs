@@ -14,7 +14,7 @@ const USER_CONFIG = {
   APP_SECRET: '1ccfda75c9e3e36c0a932cbedfd74761',
 
   PROVINCE: ' ',
-  CITY: '福清市',
+  CITY: '三亚市',
 
   USERS: [
     {
@@ -44,17 +44,25 @@ const USER_CONFIG = {
 
 
   // 【推送完成提醒】模板id, 用来看自己有没有发送成功的那个模板
-  CALLBACK_TEMPLATE_ID: 'jLOMe4agkNR0rMDNa3qgPORaly0m5Q4swExZ51VnlLY',
+ {
+    id: 'oZIu45vv-UTdygfiyvvyul3GmWBs	',
+    title: '推送完成提醒',
+    desc: `
+      服务器信息：{{post_time_zone.DATA}} {{post_time.DATA}}
+      
+      ---
+      
+      共推送 {{need_post_num.DATA}} 人
+      
+      成功: {{success_post_num.DATA}} | 失败: {{fail_post_num.DATA}}
+      
+      成功用户: {{success_post_ids.DATA}}
+      
+      失败用户: {{fail_post_ids.DATA}}
+    `
+  },
+]
 
-  CALLBACK_USERS: [
-    {
-      name: '海星',
-      // 使用微信测试号：自己的微信id，扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: 'oZIu45vv-UTdygfiyvvyul3GmWBs',
-    }
-  ],
-
-}
 
 
 module.exports = USER_CONFIG
