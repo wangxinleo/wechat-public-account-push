@@ -36,7 +36,7 @@ const USER_CONFIG = {
           type: '*生日', name: '林七七小仙女', year: '1998', date: '06-18',
         },
         {
-          type: '节日', name: '[06.24}', year: '2010', date: '06-24',
+          type: '节日', name: '【06.24】', year: '2010', date: '06-24',
         },
       ],
     },
