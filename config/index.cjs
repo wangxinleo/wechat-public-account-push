@@ -14,7 +14,7 @@ const USER_CONFIG = {
   APP_SECRET: '1ccfda75c9e3e36c0a932cbedfd74761',
 
   PROVINCE: ' ',
-  CITY: '福清市',
+  CITY: '平潭县',
 
   USERS: [
     {
