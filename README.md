@@ -533,7 +533,19 @@ PR 来纠正我，一样都算是对开源做贡献了。
 
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=y0plwm9zhOI35EwlOdRh372g4KWbqMSt&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="wechat-public-account-push 交流群" title="wechat-public-account-push 交流群"></a>
 
-## 12. 其他
+## 12. 运行
+
+注意，在官方文档中有这么一段：
+
+```
+To prevent unnecessary workflow runs, scheduled workflows may be disabled automatically. When a public repository is forked, scheduled workflows are disabled by default. In a public repository, scheduled workflows are automatically disabled when no repository activity has occurred in 60 days.
+```
+
+也就是说，定时执行的任务需要每隔 60 天激活一次。
+
+使用 “import repository” 功能重新导入自己已经fork过的仓库，选为私有后，就不会出现这种情况了。
+
+## 13. 其他
 
 时区查询: [https://www.zeitverschiebung.net/cn/all-time-zones.html](https://www.zeitverschiebung.net/cn/all-time-zones.html)
 
