@@ -53,7 +53,7 @@ const USER_CONFIG = {
     },
     {
       name: '小饼干',
-      id: 'oflue5xNSeh9L-tni7sWeM-ikV5EE',
+      id: 'oflue5xNSeh9L-tni7sWeM-ikV5E',
       useTemplateId: 'u5rx1C4Dx7uPOKwiNhCR63nSa86iLvaqzZA1Yx7qLKw',
       province: '北京',
       city: '顺义',
