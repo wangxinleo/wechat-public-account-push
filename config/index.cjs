@@ -27,7 +27,7 @@ const USER_CONFIG = {
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
       id: 'oflue509txg2m4lyZ7SXx2OKdjmM',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: 'u5rx1C4Dx7uPOKwiNhCR63nSa86iLvaqzZA1Yx7qLKw',
+      useTemplateId: '_RjELDhk4p9dKwauRT016idVzgj71NiUyoN9nB5Cp-s',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
       horoscopeDate: '10-19',
       festivals: [
@@ -53,8 +53,8 @@ const USER_CONFIG = {
     },
     {
       name: '小饼干',
-      id: 'oflue5xNSeh9L-tni7sWeM-ikV5E',
-      useTemplateId: 'u5rx1C4Dx7uPOKwiNhCR63nSa86iLvaqzZA1Yx7qLKw',
+      id: 'oflue5xNSeh9L-tni7sWeM-ikV5EE',
+      useTemplateId: '_RjELDhk4p9dKwauRT016idVzgj71NiUyoN9nB5Cp-s',
       province: '北京',
       city: '顺义',
       festivals: [],
