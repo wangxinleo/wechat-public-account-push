@@ -8,24 +8,28 @@
 const USER_CONFIG = {
 
   // 使用微信测试号：公众号APP_ID
-  APP_ID: '',
+  APP_ID: 'wx6da87ed98ee23242',
 
   // 使用微信测试号：公众号APP_SECRET
-  APP_SECRET: '',
+  APP_SECRET: '5d2898409471024c585dd82fec350ca1',
 
-  PROVINCE: '广东',
-  CITY: '惠州',
+  PROVINCE: '北京',
+  CITY: '顺义',
+  
+  /** 是否给文字设置多彩颜色, 和emoji不兼容 */
+  // 如果您使用了微信测试号的模板中含有emoji表情，请填 false
+  //IS_SHOW_COLOR: true,
 
   USERS: [
     {
       // 想要发送的人的名字
-      name: '宝贝',
+      name: '小饼干',
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: '',
+      id: 'oflue509txg2m4lyZ7SXx2OKdjmM',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: '',
+      useTemplateId: '	TvPGRmdNdOV3DFlNCNi8Wnmed0zLWVsjGtdlioKyLNA',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
-      horoscopeDate: '12-27',
+      horoscopeDate: '10-19',
       festivals: [
         // 注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
         {
@@ -64,4 +68,3 @@ const USER_CONFIG = {
 }
 
 module.exports = USER_CONFIG
-
