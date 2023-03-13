@@ -51,6 +51,15 @@ const USER_CONFIG = {
         { keyword: 'marry_day', date: '2022-09-09' },
       ],
     },
+    {
+      name: '小饼干',
+      id: 'oflue5xNSeh9L-tni7sWeM-ikV5E',
+      useTemplateId: 'TvPGRmdNdOV3DFlNCNi8Wnmed0zLWVsjGtdlioKyLNA',
+      province: '北京',
+      city: '顺义',
+      festivals: [],
+      customizedDateList: [],
+    },
   ],
 
 
