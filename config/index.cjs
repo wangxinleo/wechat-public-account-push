@@ -29,7 +29,7 @@ const USER_CONFIG = {
       festivals: [
         // 注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
         {
-          type: '节日', name: '兰溪婚礼', year: '2023', date: '03-25',
+          type: '节日', name: '小兔崽汁来我家', year: '2023', date: '11-08',
         },
         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
         {
@@ -41,7 +41,7 @@ const USER_CONFIG = {
         // 在一起的日子
         { keyword: 'love_day', date: '2016-06-26' },
         // 结婚纪念日
-        { keyword: 'marry_day', date: '2022-09-09' },
+        { keyword: 'marry_day', date: '2023-03-23' },
       ],
     },
     {
@@ -56,7 +56,7 @@ const USER_CONFIG = {
       festivals: [
         // 注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
         {
-          type: '节日', name: '兰溪婚礼', year: '2023', date: '03-25',
+          type: '节日', name: '小兔崽汁来我家', year: '2023', date: '11-08',
         },
         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
         {
@@ -68,7 +68,7 @@ const USER_CONFIG = {
         // 在一起的日子
         { keyword: 'love_day', date: '2016-06-26' },
         // 结婚纪念日
-        { keyword: 'marry_day', date: '2023-06-26' },
+        { keyword: 'marry_day', date: '2023-03-23' },
       ],
     },
   ],
