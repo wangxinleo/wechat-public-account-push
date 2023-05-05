@@ -29,6 +29,15 @@ wechat-public-account-push
 
 [>>> 点这里获取更新公告✨](https://github.com/wangxinleo/wechat-public-account-push/discussions/categories/announcements)
 
+<h3 style="color: red;">重要通知：</h3>
+**微信团队于2023-05-04日晚12点下线【自定义颜色】、【emoji表情符号】、【自定义换行】、【尾部/备注字段】。**
+
+**现已严重影响【微信测试号】的推送服务，目前正修复中...**
+
+**使用服务号推送不受影响**
+
+---
+
 详细功能如下：
 
 - **支持多个收件人设置成不同的测试号模板，专属定制更贴心**
