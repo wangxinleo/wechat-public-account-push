@@ -15,7 +15,7 @@ const USER_CONFIG = {
 
   PROVINCE: '北京',
   CITY: '石景山',
-  to_name: '人族大帝',
+  TO_NAME: '人族大帝',
 
   USERS: [
     {
@@ -24,7 +24,7 @@ const USER_CONFIG = {
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
       id: 'o1sO_6gMlAfHuUhBznoKnjtnCw_Q',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: '7THoEh3OspCCSdJVLzOqQn1ztZaFW3W9wXgN-D50a2w',
+      useTemplateId: '7q0uah8g86WtCEG1-xDmGQWOmGtubBFubNKk3muG2bQ',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
       horoscopeDate: '03-07',
       festivals: [
@@ -55,7 +55,7 @@ const USER_CONFIG = {
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
       id: 'o1sO_6gMlAfHuUhBznoKnjtnCw_Q',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: '7THoEh3OspCCSdJVLzOqQn1ztZaFW3W9wXgN-D50a2w',
+      useTemplateId: '7q0uah8g86WtCEG1-xDmGQWOmGtubBFubNKk3muG2bQ',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
       horoscopeDate: '07-04',
       festivals: [
