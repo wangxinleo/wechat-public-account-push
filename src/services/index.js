@@ -799,6 +799,7 @@ export const getAggregatedData = async () => {
       { name: toLowerLine('noteEn'), value: noteEn, color: getColor() },
       { name: toLowerLine('noteCh'), value: noteCh, color: getColor() },
       { name: toLowerLine('holidaytts'), value: holidaytts, color: getColor() },
+      { name: toLowerLine('hdaytts'), value: hdaytts, color: getColor() },
       { name: toLowerLine('oneTalk'), value: oneTalk, color: getColor() },
       { name: toLowerLine('talkFrom'), value: talkFrom, color: getColor() },
       { name: toLowerLine('earthyLoveWords'), value: earthyLoveWords, color: getColor() },
