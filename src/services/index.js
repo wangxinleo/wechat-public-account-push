@@ -707,7 +707,7 @@ export const getAggregatedData = async () => {
   // 获取下一休息日
   const hs = await getHolidaytts() || DEFAULT_OUTPUT.holidaytts
   const holidaytts = hs.split(';')[0]
-  const hdaytts = hs[1]
+  const hdaytts = hs.split(';')[1]
   // 获取每日一言
   const {
     hitokoto: oneTalk = DEFAULT_OUTPUT.oneTalk,
