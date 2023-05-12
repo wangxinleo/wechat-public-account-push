@@ -15,6 +15,7 @@ const USER_CONFIG = {
 
   PROVINCE: '北京',
   CITY: '石景山',
+  to_name: '人族大帝',
 
   USERS: [
     {
