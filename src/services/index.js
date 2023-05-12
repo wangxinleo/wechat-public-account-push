@@ -705,7 +705,9 @@ export const getAggregatedData = async () => {
     note: noteCh = DEFAULT_OUTPUT.noteCh,
   } = await getCIBA()
   // 获取下一休息日
-  const holidaytts = await getHolidaytts() || DEFAULT_OUTPUT.holidaytts
+  //const holidaytts = await getHolidaytts() || DEFAULT_OUTPUT.holidaytts
+  const holidaytts = await getHolidaytts()
+  const hdaytts = DEFAULT_OUTPUT.holidaytts
   // 获取每日一言
   const {
     hitokoto: oneTalk = DEFAULT_OUTPUT.oneTalk,
