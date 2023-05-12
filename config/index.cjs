@@ -13,31 +13,31 @@ const USER_CONFIG = {
   // 使用微信测试号：公众号APP_SECRET
   APP_SECRET: '3a16e23586033baba2471424c379b1dc',
 
-  PROVINCE: '湖南',
-  CITY: '长沙',
+  PROVINCE: '北京',
+  CITY: '石景山',
 
   USERS: [
     {
       // 想要发送的人的名字
-      name: '宝贝儿',
+      name: '人族大帝',
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: 'o1sO_6j4iPicJyNuUaynMNrApcmc',
+      id: 'o1sO_6gMlAfHuUhBznoKnjtnCw_Q',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
       useTemplateId: '0V1aiiD6WCaHj64StyBCu9-RN6bWKfhJSbHjWt_wf_Q',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
-      horoscopeDate: '10-31',
+      horoscopeDate: '03-07',
       festivals: [
         // 注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
         {
-          type: '*生日', name: '楠宝贝儿', year: '2004', date: '09-18',
+          type: '生日', name: '人族大帝', year: '2003', date: '03-07',
         },
-        {
-          type: '生日', name: '小楠的Mr.Right', year: '2001', date: '07-04',
-        },
+//         {
+//           type: '生日', name: '小楠的Mr.Right', year: '2001', date: '07-04',
+//         },
         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
-        {
-          type: '节日', name: '相识一年', year: '2022', date: '12-25',
-        },
+//         {
+//           type: '节日', name: '相识一年', year: '2022', date: '12-25',
+//         },
       ],
       // 我们在一起已经有xxxx天了的配置
       customizedDateList: [
