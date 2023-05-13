@@ -114,7 +114,7 @@ wechat-public-account-push
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/how-to-use/run-img.jpg)
 
 ![图片无法查看请移步顶部访问 国内备用仓库地址](img/how-to-use/run-img-2.jpg)
-
+### 新手教学[⭐点击开始学习](./docs/novice-teaching/novice.md)
 ## 1. 如何使用
 
 wechat-public-account-push 实现自消息推送的原理，是通过调用一系列开放的api实现的, 所以也非常适合初学者学习。
@@ -546,6 +546,8 @@ PR 来纠正我，一样都算是对开源做贡献了。
 @ZzqiZQute zz
 
 @shuangxunian ShuangxuNian
+
+@只会前端的小废物
 
 感谢那些默默支持我, 鼓励我继续更新这个小玩具的朋友。
 
