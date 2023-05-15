@@ -8,35 +8,39 @@
 const USER_CONFIG = {
 
   // 使用微信测试号：公众号APP_ID
-  APP_ID: '',
+  APP_ID: 'wx6da87ed98ee23242',
 
   // 使用微信测试号：公众号APP_SECRET
-  APP_SECRET: '',
+  APP_SECRET: '5d2898409471024c585dd82fec350ca1',
 
-  PROVINCE: '广东',
-  CITY: '惠州',
+  PROVINCE: '北京',
+  CITY: '顺义',
+  
+  /** 是否给文字设置多彩颜色, 和emoji不兼容 */
+  // 如果您使用了微信测试号的模板中含有emoji表情，请填 false
+  //IS_SHOW_COLOR: true,
 
   USERS: [
     {
       // 想要发送的人的名字
-      name: '宝贝',
+      name: '小饼干',
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: '',
+      id: 'oflue509txg2m4lyZ7SXx2OKdjmM',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: '',
+      useTemplateId: '_RjELDhk4p9dKwauRT016idVzgj71NiUyoN9nB5Cp-s',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
-      horoscopeDate: '12-27',
+      horoscopeDate: '10-19',
       festivals: [
         // 注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
         {
-          type: '*生日', name: '宝贝', year: '1996', date: '09-09',
+          type: '*生日', name: '宝贝', year: '1998', date: '10-19',
         },
         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
         {
-          type: '生日', name: '李四', year: '1996', date: '09-31',
+          type: '生日', name: '小饼干', year: '1998', date: '10-19',
         },
         {
-          type: '节日', name: '相识纪念日', year: '2020', date: '09-03',
+          type: '节日', name: '相识纪念日', year: '2023', date: '02-27',
         },
       ],
       // 我们在一起已经有xxxx天了的配置
@@ -46,6 +50,15 @@ const USER_CONFIG = {
         // 结婚纪念日
         { keyword: 'marry_day', date: '2022-09-09' },
       ],
+    },
+    {
+      name: '小饼干',
+      id: 'oflue5xNSeh9L-tni7sWeM-ikV5EE',
+      useTemplateId: '_RjELDhk4p9dKwauRT016idVzgj71NiUyoN9nB5Cp-s',
+      province: '北京',
+      city: '顺义',
+      festivals: [],
+      customizedDateList: [],
     },
   ],
 
@@ -64,4 +77,3 @@ const USER_CONFIG = {
 }
 
 module.exports = USER_CONFIG
-
