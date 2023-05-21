@@ -51,9 +51,9 @@ displayName: weixin-push-on-time
 triggers:
   trigger: auto
   push:
-  branches:
-    prefix:
-      - master
+    branches:
+      prefix:
+        - master
   schedule:
     # 以下时间指北京时间8点整
     - cron: '* 0 8 * * ? *'
