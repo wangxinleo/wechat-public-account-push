@@ -9,7 +9,7 @@ const USER_CONFIG = {
     // 使用【微信测试号】请填写 wechat-test
     // 使用【方糖服务号】请填写 server-chan
     // 使用【pushplus推送加服务号】请填写 push-plus
-    USE_PASSAGE: 'push-plus',
+    USE_PASSAGE: '',
     
     // 使用微信测试号时才需要填写：公众号APP_ID
     // 建议不要填这里，请使用文档中github secret的方法进行保密配置，保护您的隐私安全。
