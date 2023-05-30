@@ -25,7 +25,7 @@ const USER_CONFIG = {
       //  odRpS6QAzdlI5wIskpc4VrQSzIcI 憨憨的
       id: 'odRpS6eSdsvF5XiRolA3D6tOaGNA',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: 'gdJyVaVytD-h9X2CqMB1oFAMXz_ZJi5vaEwd8nWlS-4',
+      useTemplateId: 'hTCwMbcPrLgBRXbc9jyz5niSZKlQ7Ify7MOX4BC_VTg',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
       horoscopeDate: '12-27',
       festivals: [
