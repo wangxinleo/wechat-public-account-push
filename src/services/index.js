@@ -62,7 +62,7 @@ export const getAccessToken = async () => {
       console.log('---')
     } else {
       console.log('---')
-      console.error('获取 accessToken: 请求失败', res.data.errmsg)
+      console.error('获取 accessToken: 请求失败', res.data.errmsg || res.data)
       console.log('---')
       console.log(`40001: 请检查appId，appSecret 填写是否正确；
                   如果第一次使用微信测试号请关闭测试号平台后重新扫码登陆测试号平台获取最新的appId，appSecret`)
@@ -426,7 +426,7 @@ export const getConstellationFortune = async (date, dateType) => {
 /**
  * 获取课程表
  * @param courseSchedule {Array<Array<String>>|{benchmark: {date: string, isOdd: boolean}, courses: {odd: Array<Array<string>>, even:Array<Array<string>>}}}
- * @returns {string}
+ * @returns
  */
 export const getCourseSchedule = (courseSchedule) => {
   if (config.SWITCH && config.SWITCH.courseSchedule === false) {
@@ -446,7 +446,19 @@ export const getCourseSchedule = (courseSchedule) => {
     .set('millisecond', 0), 'millisecond')
   const isSameKind = Math.floor(diff / 7 / 86400000) % 2 === 0
   const kind = ((isSameKind && courseSchedule.benchmark.isOdd) || (!isSameKind && !courseSchedule.benchmark.isOdd)) ? 'odd' : 'even'
-  return ((courseSchedule.courses && courseSchedule.courses[kind] && courseSchedule.courses[kind][week]) || []).join(getLB())
+  
+  const temp = ((courseSchedule.courses && courseSchedule.courses[kind] && courseSchedule.courses[kind][week]) || [])
+  const schedule = temp.join(getLB())
+  const wechatTestCourseSchedule = []
+  temp.forEach((item, index) => {
+    wechatTestCourseSchedule.push({
+      name: toLowerLine(`wxCourseSchedule_${index}`),
+      value: item,
+      color: getColor()
+    })
+  })
+
+  return {schedule, wechatTestCourseSchedule}
 }
 
 /**
@@ -502,6 +514,8 @@ export const getBirthdayMessage = (festivals) => {
     }
   })
   let resMessage = ''
+  const wechatTestBirthdayMessage = []
+  
 
   birthdayList.forEach((item, index) => {
     if (
@@ -521,29 +535,34 @@ export const getBirthdayMessage = (festivals) => {
         }
 
         if (item.diffDay === 0) {
-          message = `今天是 ${item.name} 的${age && item.isShowAge ? `${(item.useLunar ? 1 : 0) + age}岁` : ''}生日哦，祝${item.name}生日快乐！`
+          message = `今天是 「${item.name}」 的${age && item.isShowAge ? `${(item.useLunar ? 1 : 0) + age}岁` : ''}${item.useLunar ? '阴历' : '公历'}生日哦，祝${item.name}生日快乐！`
         } else {
-          message = `距离 ${item.name} 的${age && item.isShowAge ? `${age + 1}岁` : ''}生日还有${item.diffDay}天`
+          message = `距离 「${item.name}」 的${age && item.isShowAge ? `${age + 1}岁` : ''}${item.useLunar ? '阴历' : '公历'}生日还有${item.diffDay}天`
         }
       }
 
       // 节日相关
       if (item.type === '节日') {
         if (item.diffDay === 0) {
-          message = `今天是 ${item.name} 哦，要开心！`
+          message = `今天是 「${item.name}」 哦，要开心！`
         } else {
-          message = `距离 ${item.name} 还有${item.diffDay}天`
+          message = `距离 「${item.name}」 还有${item.diffDay}天`
         }
       }
 
       // 存储数据
       if (message) {
         resMessage += `${message} ${getLB()}`
+        wechatTestBirthdayMessage.push({
+          name: toLowerLine(`wxBirthday_${index}`),
+          value: message,
+          color: getColor()
+        })
       }
     }
   })
 
-  return resMessage
+  return {resMessage, wechatTestBirthdayMessage}
 }
 
 /**
@@ -616,9 +635,9 @@ export const buildTianApi = async (apiType, params = null) => {
     return []
   }
 
-  if (RUN_TIME_STORAGE[`${apiType}_${count}`]) {
-    console.log(`获取了相同的数据，读取缓存 >>> ${apiType}_${count}`)
-    return RUN_TIME_STORAGE[`${apiType}_${count}`]
+  if (RUN_TIME_STORAGE[`${apiType}_${JSON.stringify(params)}_${count}`]) {
+    console.log(`获取了相同的数据，读取缓存 >>> ${apiType}_${JSON.stringify(params)}_${count}`)
+    return RUN_TIME_STORAGE[`${apiType}_${JSON.stringify(params)}_${count}`]
   }
 
   const url = `http://api.tianapi.com/${apiType}/index`
@@ -629,7 +648,7 @@ export const buildTianApi = async (apiType, params = null) => {
   if (res && res.data && res.data.code === 200) {
     const result = (res.data.newslist || []).slice(0, count)
 
-    RUN_TIME_STORAGE[`${apiType}_${count}`] = cloneDeep(result)
+    RUN_TIME_STORAGE[`${apiType}_${JSON.stringify(params)}_${count}`] = cloneDeep(result)
 
     return result
   }
@@ -732,13 +751,13 @@ export const getAggregatedData = async () => {
     }))
 
     // 获取生日/生日信息
-    const birthdayMessage = getBirthdayMessage(user.festivals)
+    const { resMessage: birthdayMessage, wechatTestBirthdayMessage } = getBirthdayMessage(user.festivals)
 
     // 获取星座运势
     const constellationFortune = await getConstellationFortune(user.horoscopeDate, user.horoscopeDateType)
 
     // 获取课表信息
-    const courseSchedule = getCourseSchedule(user.courseSchedule || config.courseSchedule) || DEFAULT_OUTPUT.courseSchedule
+    const {schedule:courseSchedule, wechatTestCourseSchedule} = getCourseSchedule(user.courseSchedule || config.courseSchedule) || DEFAULT_OUTPUT.courseSchedule
 
     // 天行-早晚安
     const tianApiGreeting = [{
@@ -795,6 +814,8 @@ export const getAggregatedData = async () => {
       .concat(tianApiGreeting)
       .concat(tianApiWeather)
       .concat(tianApiNetworkHot)
+      .concat(wechatTestBirthdayMessage)
+      .concat(wechatTestCourseSchedule)
 
     user.wxTemplateParams = wxTemplateParams
   }
@@ -1084,9 +1105,11 @@ export const sendMessage = async (templateId, user, params, usePassage) => {
   const wxTemplateData = {}
   if (Object.prototype.toString.call(params) === '[object Array]') {
     params.forEach((item) => {
-      wxTemplateData[item.name] = {
-        value: item.value,
-        color: item.color,
+      if (item && item.name) {
+        wxTemplateData[item.name] = {
+          value: item.value,
+          color: item.color,
+        }
       }
     })
   }
