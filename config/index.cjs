@@ -15,26 +15,26 @@ const USER_CONFIG = {
 
   PROVINCE: '北京',
   CITY: '石景山',
-  TO_NAME: '我的小庄大人',
+  TO_NAME: '我的小庄宝贝儿&大人',
 
   USERS: [
     {
       // 想要发送的人的名字
-      name: '我的小庄大人',
+      name: '我的小庄宝贝儿&大人',
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
       // id: 'o1sO_6lBVWOqRsUs3n2DX9XvzHIE',
       id: 'o1sO_6gMlAfHuUhBznoKnjtnCw_Q',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: 'Gq2gheUbhGQpBT--cbaOH7C56CSedGP2FXrC3pEXZIg',
+      useTemplateId: 'ujeQ4mzjYhsVEnzJle0WAbh8bP9fHefL0d2zWO1aoKQ',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
       horoscopeDate: '03-07',
       festivals: [
         // 注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
         {
-          type: '生日', name: '小廖的美丽小庄', year: '2003', date: '03-07',
+          type: '生日', name: 'Xn的宝贝儿', year: '2003', date: '03-07',
         },
         {
-          type: '生日', name: '小庄的听话小廖', year: '2001', date: '07-04',
+          type: '生日', name: 'Zn的男友', year: '2001', date: '07-04',
         },
         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
 //         {
@@ -56,7 +56,7 @@ const USER_CONFIG = {
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
       id: 'o1sO_6gMlAfHuUhBznoKnjtnCw_Q',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: 'GOTpA1LXzjt-rGJF3AuQMO_pVJYZFnIuRXYdMn5952E',
+      useTemplateId: 'ujeQ4mzjYhsVEnzJle0WAbh8bP9fHefL0d2zWO1aoKQ',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
       horoscopeDate: '07-04',
       festivals: [
