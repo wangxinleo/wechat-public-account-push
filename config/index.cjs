@@ -25,7 +25,7 @@ const USER_CONFIG = {
       // id: 'o1sO_6lBVWOqRsUs3n2DX9XvzHIE',
       id: 'o1sO_6gMlAfHuUhBznoKnjtnCw_Q',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: '0fFCSS21BoaDkdHj494NCVEuCdxgE5P4Ya2UNDOBt1g',
+      useTemplateId: 'bQ2TlZ6Y0mNsYN70rirX_iLLoORhmbAtCuTl0XsbslQ',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
       horoscopeDate: '03-07',
       festivals: [
@@ -37,16 +37,16 @@ const USER_CONFIG = {
           type: '生日', name: 'Zn独属男友', year: '2001', date: '07-04',
         },
         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
-        {
-          type: '节日', name: '相识一年', year: '2022', date: '04-26',
-        },
+        // {
+        //   type: '节日', name: '相识两年', year: '2022', date: '04-26',
+        // },
       ],
       // 我们在一起已经有xxxx天了的配置
       customizedDateList: [
         // 在一起的日子
         { keyword: 'love_day', date: '2023-07-15' },
         // 结婚纪念日
-        { keyword: 'marry_day', date: '有点久远' },
+        { keyword: 'marry_day', date: '2022-04-26' },
       ],
     },
     
@@ -56,7 +56,7 @@ const USER_CONFIG = {
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
       id: 'o1sO_6gMlAfHuUhBznoKnjtnCw_Q',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: 'ujeQ4mzjYhsVEnzJle0WAbh8bP9fHefL0d2zWO1aoKQ',
+      useTemplateId: 'bQ2TlZ6Y0mNsYN70rirX_iLLoORhmbAtCuTl0XsbslQ',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
       horoscopeDate: '07-04',
       festivals: [
@@ -68,16 +68,16 @@ const USER_CONFIG = {
           type: '生日', name: 'xnhyacinth', year: '2001', date: '07-04',
         },
 //         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
-        {
-          type: '节日', name: '相识一年', year: '2022', date: '04-26',
-        },
+        // {
+        //   type: '节日', name: '相识两年', year: '2022', date: '04-26',
+        // },
       ],
       // 我们在一起已经有xxxx天了的配置
       customizedDateList: [
         // 在一起的日子
         { keyword: 'love_day', date: '2023-07-15' },
         // 结婚纪念日
-        { keyword: 'marry_day', date: '有点久远' },
+        { keyword: 'marry_day', date: '2022-04-26' },
       ],
     },
   ],
