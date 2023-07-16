@@ -22,8 +22,8 @@ const USER_CONFIG = {
       // 想要发送的人的名字
       name: '我的小庄宝贝儿&大人',
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: 'o1sO_6lBVWOqRsUs3n2DX9XvzHIE',
-      // id: 'o1sO_6gMlAfHuUhBznoKnjtnCw_Q',
+      // id: 'o1sO_6lBVWOqRsUs3n2DX9XvzHIE',
+      id: 'o1sO_6gMlAfHuUhBznoKnjtnCw_Q',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
       useTemplateId: 'ujeQ4mzjYhsVEnzJle0WAbh8bP9fHefL0d2zWO1aoKQ',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
@@ -37,9 +37,9 @@ const USER_CONFIG = {
           type: '生日', name: 'Zn独属男友', year: '2001', date: '07-04',
         },
         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
-//         {
-//           type: '节日', name: '相识一年', year: '2022', date: '12-25',
-//         },
+        {
+          type: '节日', name: '相识一年', year: '2022', date: '04-26',
+        },
       ],
       // 我们在一起已经有xxxx天了的配置
       customizedDateList: [
@@ -68,9 +68,9 @@ const USER_CONFIG = {
           type: '生日', name: 'xnhyacinth', year: '2001', date: '07-04',
         },
 //         // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
-//         {
-//           type: '节日', name: '相识一年', year: '2022', date: '12-25',
-//         },
+        {
+          type: '节日', name: '相识一年', year: '2022', date: '04-26',
+        },
       ],
       // 我们在一起已经有xxxx天了的配置
       customizedDateList: [
