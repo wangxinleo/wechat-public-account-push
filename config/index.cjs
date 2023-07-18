@@ -15,12 +15,12 @@ const USER_CONFIG = {
 
   PROVINCE: '北京',
   CITY: '石景山',
-  TO_NAME: '我的小庄宝贝儿&大人&夫人&老婆&最爱的人&anyone everyone',
+  TO_NAME: '小庄宝贝儿&大人&夫人&老婆&最爱的人&anyone everyone',
 
   USERS: [
     {
       // 想要发送的人的名字
-      name: '我的小庄宝贝儿&大人',
+      name: '小庄宝贝儿&大人&夫人&老婆&最爱的人&anyone everyone',
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
       // id: 'o1sO_6lBVWOqRsUs3n2DX9XvzHIE',
       id: 'o1sO_6gMlAfHuUhBznoKnjtnCw_Q',
