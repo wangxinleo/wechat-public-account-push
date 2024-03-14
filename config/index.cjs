@@ -40,6 +40,9 @@ const USER_CONFIG = {
         {
           type: '节日', name: '相识纪念日', year: '2023', date: '02-14',
         },
+        {
+          type: '节日', name: '相恋1周年纪念日', year: '2024', date: '06-23',
+        },
       ],
       // 我们在一起已经有xxxx天了的配置
       customizedDateList: [
