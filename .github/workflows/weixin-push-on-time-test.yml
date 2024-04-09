@@ -1,10 +1,13 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: weixin-push-on-time-params-log
+name: weixin-push-on-time
 
-on:
-  workflow_dispatch:
+于:
+  工作流程调度:
+  日程:
+    # 每天国际时间 23:30 运行, 即北京时间 7:30 运行
+    - cron: '30 23 * * *'
     
 jobs:
   build:
@@ -13,23 +16,23 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [20.x]  # 更新 Node.js 版本为 20.x
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     # 添加定时任务指定运行分支 默认为master
-    - uses: actions/checkout@v3
-      with:
-          ref: 'feature/develop'
+    - uses: actions/checkout@v4  # 更新为支持 Node.js 20 的版本
+      包含:
+          ref: 'master'
           
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
+      uses: actions/setup-node@v4  # 更新为支持 Node.js 20 的版本
+      包含:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run params-log --if-present
+    - run: npm run dev --if-present
     env: 
       APP_ID: ${{secrets.APP_ID}}
       APP_SECRET: ${{secrets.APP_SECRET}}
-
+      USER_INFO: ${{secrets.USER_INFO}}
