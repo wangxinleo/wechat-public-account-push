@@ -2,19 +2,29 @@
 const TEMPLATE_CONFIG = [
   {
     id: '0001',
-    title: '亲爱的, 早上好',
+    title: '最亲最爱的老婆, 早上好:',
     desc: `
-      **{{date.DATA}}**
+      **今天是{{date.DATA}}**
+
+      **今天是我们在一起的第{{love_day.DATA}}天**
+
+      ![img.png](https://img95.699pic.com/photo/40140/6094.gif_wh860.gif)
       
-      下个休息日：{{holidaytts.DATA}}
+      {{holidaytts.DATA}}
+
+      今日情话：**{{earthy_love_words.DATA}}**
       
       ---
       
       城市：{{city.DATA}}
       
-      天气：{{weather.DATA}}
+      今日{{city.DATA}}天气：{{weatherIcon.DATA}}{{weather.DATA}}
       
       气温(最高/最低):{{max_temperature.DATA}} / {{min_temperature.DATA}}
+
+      温度提醒：{{ganmao.DATA}}
+
+      温馨提示：{{notice.DATA}} 
       
       风向: {{wind_direction.DATA}}
       
@@ -24,15 +34,20 @@ const TEMPLATE_CONFIG = [
       
       ---
       
-      今天是我们相识的第{{love_day.DATA}}天
-      
       {{birthday_message.DATA}}
       
       ---
+
+      {{note_en.DATA}}
+
+      {{note_ch.DATA}}
+
+      ---
+
+      {{career_horoscope.DATA}}
+
+      {{wealth_horoscope.DATA}}
       
-      {{moment_copyrighting.DATA}}
-      
-      {{poetry_title.DATA}} {{poetry_content.DATA}}
     `
   },
   {
