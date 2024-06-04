@@ -1,6 +1,6 @@
 [📌返回首页 >>>](../../README.md)
 
-# 使用PushDeer
+# 使用PushPlus
 
 运行图示：
 
