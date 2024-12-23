@@ -226,7 +226,7 @@ export const getHolidaytts = async () => {
     return null
   }
 
-  const url = 'https://wangxinleo.cn/api/wx-push/holiday/getHolidaytts'
+  const url = 'https://api.wangxinleo.cn/api/wx-push/holiday/getHolidaytts'
   const res = await axios.get(url).catch((err) => err)
   let data = DEFAULT_OUTPUT.holidaytts
 
