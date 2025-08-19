@@ -6,6 +6,8 @@
  * 自行添加属性，以支持更多个性化功能
  */
 const USER_CONFIG = {
+  
+  USE_PASSAGE: 'push-plus',
 
   // 使用微信测试号：公众号APP_ID
   APP_ID: '',
@@ -13,17 +15,17 @@ const USER_CONFIG = {
   // 使用微信测试号：公众号APP_SECRET
   APP_SECRET: '',
 
-  PROVINCE: '广东',
-  CITY: '惠州',
+  PROVINCE: '内蒙古自治区',
+  CITY: '呼和浩特',
 
   USERS: [
     {
       // 想要发送的人的名字
       name: '宝贝',
       // 使用微信测试号：扫码关注你的微信测试号后生成的一段字符串，在测试号后台能看到
-      id: '',
+      id: '23f0e58eff96486e82e0f1991e9982ba',
       // 使用微信测试号：你想对他发送的模板消息的模板ID
-      useTemplateId: '',
+      useTemplateId: '0001',
       // 新历生日, 仅用作获取星座运势, 格式必须为MM-DD
       horoscopeDate: '12-27',
       festivals: [
