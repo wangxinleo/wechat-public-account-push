@@ -168,7 +168,7 @@ const USER_CONFIG = {
     {
       name: '韩老板',
       id: 'o1eBAvjc0KgC4oiHfV4BkrOUmEAk',
-      useTemplateId: 'IFCO3_ov5cvybvKyxvqb-nbsryR62ZnIoFdCM-7R-oQ',
+      useTemplateId: 'i7tA6uHU3uabfKrQm6gpNJEi7mCCIdCIdvewUPvfPSA',
       province: '浙江',
       city: '温州',
       horoscopeDate: '09-27',
