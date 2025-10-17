@@ -128,9 +128,9 @@ const USER_CONFIG = {
       // 专属节日提醒，如果你在这里填写了节日提醒，就不会执行FESTIVALS的提醒了, 和FESTIVALS的配置方法相同，可以往下查看，我这里就不重复写了
       festivals: [
         // 注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
-        // {
-        //   type: '*生日', name: '老婆', year: '1996', date: '09-09',
-        // },
+        {
+          type: '*生日', name: '南松', year: '1999', date: '10-03',
+        },
         // {
         //   type: '节日', name: '结婚纪念日', year: '2020', date: '09-03',
         // },
@@ -176,6 +176,10 @@ const USER_CONFIG = {
     //   horoscopeDateType: '今日',
     //   openUrl: 'https://wangxinleo.cn',
     //   festivals: [
+     // 注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
+        // {
+        //   type: '*生日', name: '韩娜', year: '1999', date: '10-03',
+        // },
     //      // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
     //     {
     //       type: '生日', name: '韩娜', year: '1999', date: '10-03',
