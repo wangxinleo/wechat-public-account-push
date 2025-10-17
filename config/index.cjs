@@ -163,31 +163,30 @@ const USER_CONFIG = {
           // 该日期是否为单周
           isOdd: true
         }
-        // 课表配置已移除，因为未使用
       }
-    }
-    // {
-    //   name: '韩老板',
-    //   id: '',
-    //   useTemplateId: 'IFCO3_ov5cvybvKyxvqb-nbsryR62ZnIoFdCM-7R-oQ',
-    //   province: '浙江',
-    //   city: '温州',
-    //   horoscopeDate: '',
-    //   horoscopeDateType: '今日',
-    //   openUrl: 'https://wangxinleo.cn',
-    //   festivals: [
-     // 注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
-        // {
-        //   type: '*生日', name: '韩娜', year: '1999', date: '10-03',
-        // },
-    //      // 注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
-    //     {
-    //       type: '生日', name: '韩娜', year: '1999', date: '10-03',
-    //     },
-    //   ],
-    //   customizedDateList: [],
-    //   courseSchedule: null
-    //  },
+    },
+    {
+      name: '韩老板',
+      id: 'o1eBAvjc0KgC4oiHfV4BkrOUmEAk',
+      useTemplateId: 'IFCO3_ov5cvybvKyxvqb-nbsryR62ZnIoFdCM-7R-oQ',
+      province: '浙江',
+      city: '温州',
+      horoscopeDate: '09-27',
+      horoscopeDateType: '今日',
+      openUrl: 'https://wangxinleo.cn',
+      festivals: [
+     //注意：此条配置日期为阴历日期，因为`type`中 “生日” 之前有 * 符号
+        {
+          type: '*生日', name: '韩娜', year: '2000', date: '09-27',
+        },
+    //注意：此条配置日期为阳历日期，因为`type`中 “生日” 之前没有 * 符号
+        {
+          type: '生日', name: '韩娜', year: '2000', date: '09-27',
+        },
+      ],
+      customizedDateList: [],
+      courseSchedule: null
+     },
     // {
     //   name: '老婆2',
     //   id: '',
