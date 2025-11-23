@@ -117,7 +117,7 @@ jobs:
       working-directory: ./qinglong
       run: |
         echo "🚀 开始运行青龙推送脚本..."
-        npm start
+        node qinglong-push.js
         echo "✅ 推送任务完成"
       env:
         ALL_CONFIG: ${{ secrets.ALL_CONFIG || vars.ALL_CONFIG }}
@@ -137,14 +137,3 @@ jobs:
           echo "   3. API 密钥和网络连接是否正常"
           echo "   4. 查看上方详细错误信息进行排查"
         fi
-
-    # 步骤 7: 上传日志（可选）
-    - name: 上传运行日志
-      if: failure()
-      uses: actions/upload-artifact@v4
-      with:
-        name: qinglong-push-logs
-        path: |
-          qinglong/*.log
-          qinglong/logs/
-        retention-days: 7
