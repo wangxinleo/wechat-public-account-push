@@ -32,6 +32,8 @@ jobs:
 
     # 步骤 3: 环境变量验证
     - name: 验证必需的环境变量
+      env:
+        ALL_CONFIG: ${{ secrets.ALL_CONFIG || vars.ALL_CONFIG }}
       run: |
         echo "🔍 开始验证环境变量配置..."
 
@@ -115,7 +117,7 @@ jobs:
         npm start
         echo "✅ 推送任务完成"
       env:
-        ALL_CONFIG: ${{ secrets.ALL_CONFIG }}
+        ALL_CONFIG: ${{ secrets.ALL_CONFIG || vars.ALL_CONFIG }}
 
     # 步骤 6: 运行结果通知
     - name: 运行结果通知
