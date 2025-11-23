@@ -100,6 +100,8 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 
 const CourseDayColumn = ({ dayName, courses, onUpdate }) => {
   const [inputValue, setInputValue] = useState("");
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editValue, setEditValue] = useState("");
   const safeCourses = Array.isArray(courses) ? courses : [];
 
   const addCourse = () => {
@@ -108,14 +110,40 @@ const CourseDayColumn = ({ dayName, courses, onUpdate }) => {
     setInputValue("");
   };
 
+  const startEdit = (idx) => {
+    setEditingIndex(idx);
+    setEditValue(safeCourses[idx]);
+  };
+
+  const saveEdit = () => {
+    const trimmed = editValue.trim();
+    if (trimmed && trimmed !== safeCourses[editingIndex]) {
+      const updated = [...safeCourses];
+      updated[editingIndex] = trimmed;
+      onUpdate(updated);
+    }
+    setEditingIndex(null);
+  };
+
   return (
     <div className="flex flex-col gap-2 min-w-[100px]">
       <div className="text-center text-sm font-bold text-stone-400 uppercase tracking-wider mb-1">{dayName}</div>
       <div className="bg-stone-50 rounded-lg p-2 border border-stone-100 min-h-[120px] space-y-2">
         {safeCourses.map((c, idx) => (
           <div key={idx} className="bg-white px-2 py-1.5 rounded border border-stone-200 text-sm text-stone-700 shadow-sm flex justify-between group items-center">
-            <span className="truncate">{c}</span>
-            <button 
+            {editingIndex === idx ? (
+              <input
+                autoFocus
+                className="flex-1 text-sm bg-transparent border-b border-stone-400 outline-none px-1"
+                value={editValue}
+                onChange={e => setEditValue(e.target.value)}
+                onBlur={saveEdit}
+                onKeyDown={e => e.key === 'Enter' && saveEdit()}
+              />
+            ) : (
+              <span className="truncate cursor-pointer" onClick={() => startEdit(idx)}>{c}</span>
+            )}
+            <button
               type="button"
               onClick={() => onUpdate(safeCourses.filter((_, i) => i !== idx))}
               className="text-stone-300 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
@@ -125,7 +153,7 @@ const CourseDayColumn = ({ dayName, courses, onUpdate }) => {
           </div>
         ))}
         <div className="flex gap-1">
-          <input 
+          <input
             className="w-full text-sm bg-transparent border-b border-stone-200 focus:border-stone-400 outline-none px-1 py-1"
             placeholder="添加..."
             value={inputValue}
@@ -649,10 +677,11 @@ export default function App() {
         </div>
       </nav>
 
-      <main className="max-w-screen-2xl mx-auto mt-6 px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 flex-grow">
-        
+      <main className="w-full mt-6 flex-grow">
+        <div className="max-w-5xl mx-auto px-6 space-y-8">
+
         {/* Safety Notice */}
-        <div className="lg:col-span-12">
+        <div>
            <div className="bg-emerald-50 border border-emerald-100 rounded-lg p-4 flex items-start gap-3 shadow-sm">
               <ShieldCheck className="text-emerald-600 shrink-0 mt-0.5" size={20} />
               <div>
@@ -667,6 +696,7 @@ export default function App() {
         </div>
 
         {/* Sidebar Menu */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-3">
           <div className="sticky top-24 space-y-1">
             {[
@@ -1004,6 +1034,8 @@ export default function App() {
             </Card>
           )}
 
+        </div>
+        </div>
         </div>
       </main>
       
