@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/daily-push-auto-env-page/',
+  base: '/wechat-public-account-push/',
 })

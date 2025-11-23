@@ -11,7 +11,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
-  "homepage": "https://wangxinleo.github.io/daily-push-auto-env-page",
+  "homepage": "https://wangxinleo.github.io/wechat-public-account-push",
   "dependencies": {
     "lucide-react": "^0.554.0",
     "react": "^19.2.0",
