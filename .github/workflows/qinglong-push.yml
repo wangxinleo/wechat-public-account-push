@@ -48,11 +48,13 @@ jobs:
 
         # 验证 JSON 格式
         echo "🔍 验证 ALL_CONFIG JSON 格式..."
+        echo "${ALL_CONFIG}" > /tmp/config.json
         python3 -c "
         import json
         import sys
         try:
-            config = json.loads('$ALL_CONFIG')
+            with open('/tmp/config.json', 'r') as f:
+                config = json.load(f)
             print('✅ ALL_CONFIG JSON 格式正确')
 
             # 验证必需的配置项
@@ -100,6 +102,7 @@ jobs:
             print(f'❌ 错误：验证过程中发生异常 - {e}')
             sys.exit(1)
         "
+        rm -f /tmp/config.json
 
     # 步骤 4: 安装青龙脚本依赖
     - name: 安装青龙脚本依赖
