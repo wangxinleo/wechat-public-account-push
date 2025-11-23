@@ -136,7 +136,7 @@ jobs:
     # 步骤 7: 上传日志（可选）
     - name: 上传运行日志
       if: failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: qinglong-push-logs
         path: |
