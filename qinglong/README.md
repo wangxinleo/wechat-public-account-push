@@ -33,7 +33,7 @@
 
 ## 🚀 快速配置（推荐）
 
-**一键配置工具**：访问 [https://wangxinleo.github.io/daily-push-auto-env-page](https://wangxinleo.github.io/daily-push-auto-env-page)
+**一键配置工具**：访问 [https://wangxinleo.github.io/wechat-public-account-push](https://wangxinleo.github.io/wechat-public-account-push)
 
 - ✅ 可视化表单界面，无需手动编写 JSON
 - ✅ 自动生成 `ALL_CONFIG` 配置
