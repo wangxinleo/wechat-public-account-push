@@ -28,7 +28,7 @@ wechat-public-account-push 自 2022年 建库，到2025年 完整陪伴大家 3 
 如果您有需要，我们更建议您转向使用轻量的青龙脚本，而不是使用旧版的部署方式。
 
 - **[👉 前往青龙脚本目录，查看使用说明](./qinglong/)**
-- **[🔧 一键配置工具](https://wangxinleo.github.io/daily-push-auto-env-page)** - 可视化配置界面，自动生成 `ALL_CONFIG`，无需手动编写 JSON
+- **[🔧 一键配置工具](https://wangxinleo.github.io/wechat-public-account-push/)** - 可视化配置界面，自动生成 `ALL_CONFIG`，无需手动编写 JSON
 
 ## 📚 旧版功能归档
 
